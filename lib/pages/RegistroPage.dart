@@ -373,7 +373,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                   'Ya tienes cuenta ? ',
                                   style:TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w200,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                 ),
                               ),
