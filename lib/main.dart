@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/RegistroPage.dart';
+//import 'pages/RegistroPage.dart';
+import 'pages/inicio.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: "ThimbleStock",
       debugShowCheckedModeBanner: false,
-      home: RegistroWidget(),
+      home: InicioWidget(),
     );
   }
 }
