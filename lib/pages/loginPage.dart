@@ -3,15 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:thimblestock/pages/inicio.dart';
 
+import 'RegistroPage.dart';
 
-class RegistroWidget extends StatefulWidget {
-  const RegistroWidget({Key? key}) : super(key: key);
+
+class LoginWidget extends StatefulWidget {
+  const LoginWidget({Key? key}) : super(key: key);
 
   @override
-  _RegistroWidgetState createState() => _RegistroWidgetState();
+  _LoginWidgetState createState() => _LoginWidgetState();
 }
 
-class _RegistroWidgetState extends State<RegistroWidget> {
+class _LoginWidgetState extends State<LoginWidget> {
   TextEditingController? textController1;
   TextEditingController? textController2;
   TextEditingController? textController3;
@@ -65,9 +67,9 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                 ),
                 ),
                 const Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                   child: Text(
-                    'Bienvenido a Bordo',
+                    'BIENVENIDO',
                     style: TextStyle(
                           fontFamily: 'Poppins',
                           color: Color(0xFF0B0A07),
@@ -76,13 +78,14 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                         ),
                   ),
                 ),
-                const Text(
-                  'Empieza a tomar medidas',
-                  style:TextStyle(
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.normal,
-                      ),
-                ),
+                
+              Image.asset(
+                        'assets/maniqui.png',
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          fit: BoxFit.cover,
+                        ),
+                  
+                
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(25, 40, 25, 0),
                   child: Form(
@@ -92,60 +95,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                          child: TextFormField(
-                            controller: textController1,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              hintText: 'Ingresa tu nombre',
-                              hintStyle: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFFFBFBF2),
-                                  ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              filled: true,
-                              fillColor:const Color(0xFF808080),
-                              contentPadding:
-                                  const EdgeInsetsDirectional.fromSTEB(35, 0, 0, 0),
-                            ),
-                            style:
-                                const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFFFBFBF2),
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
+                        
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                           child: TextFormField(
@@ -266,71 +216,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                     ),
                           ),
                         ),
-                        TextFormField(
-                          controller: textController4,
-                          autofocus: false,
-                          obscureText: !passwordVisibility2,
-                          decoration: InputDecoration(
-                            hintText: 'Confirma tu contraseña',
-                            hintStyle:
-                                const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFFFBFBF2),
-                                    ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            errorBorder: UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            focusedErrorBorder: UnderlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0x00000000),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0xFF808080),
-                            contentPadding:
-                                const EdgeInsetsDirectional.fromSTEB(35, 13, 0, 0),
-                            suffixIcon: InkWell(
-                              onTap: () => setState(
-                                () =>
-                                    passwordVisibility2 = !passwordVisibility2,
-                              ),
-                              focusNode: FocusNode(skipTraversal: true),
-                              child: Icon(
-                                passwordVisibility2
-                                    ? Icons.visibility_outlined
-                                    : Icons.visibility_off_outlined,
-                                color: const Color(0xFFFBFBF2),
-                                size: 20,
-                              ),
-                            ),
-                          ),
-                          style:
-                              const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    color: Color(0xFFFBFBF2),
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                        ),
+                        
                         SizedBox(
                           width: 280,                          
                           child: Padding(
@@ -351,10 +237,10 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                           side: const BorderSide(color: Colors.red)))),
                               onPressed: () {
                                 Navigator.push(context,
-                                MaterialPageRoute(builder: (context)=>const InicioWidget()));
+                                MaterialPageRoute(builder: (context)=>const RegistroWidget()));
                               },
                               child: const Text(
-                                "Registrar",
+                                "Entrar",
                                 style: TextStyle(
                                     fontFamily: 'Poppins', fontSize: 14),
                               ),
@@ -362,15 +248,15 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(50, 6, 50, 0),
-                          child:  Row(
+                          padding: const EdgeInsetsDirectional.fromSTEB(25, 6, 25, 0),
+                          child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: const [
                                Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 child: Text(
-                                  'Ya tienes cuenta ? ',
+                                  '¿ Listo para crear tu cuenta ? ',
                                   style:TextStyle(
                                     fontFamily: 'Poppins',
                                     fontWeight: FontWeight.normal,
@@ -378,7 +264,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                 ),
                               ),
                               Text(
-                                'Entra aquí',
+                                'Ingresa aquí',
                                 style: TextStyle(
                                       fontFamily: 'Poppins',
                                       color: Color(0xFF17B890),
