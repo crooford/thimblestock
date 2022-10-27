@@ -90,10 +90,10 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-fonts:
-    - family: ThimbleStockIcons
-      fonts:
-        - asset: assets/ThimbleStockIcons.ttf 
+  fonts:
+      - family: ThimbleStockIcons
+        fonts:
+          - asset: assets/ThimbleStockIcons.ttf 
 
 
   # For details regarding fonts from package dependencies,
