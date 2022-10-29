@@ -240,7 +240,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   side: const BorderSide(
                                                       color: Colors.red)))),
                                       onPressed: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -274,7 +274,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>

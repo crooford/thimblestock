@@ -92,7 +92,7 @@ class _InicioWidgetState extends State<InicioWidget> {
                                         side: const BorderSide(
                                             color: Colors.red)))),
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>

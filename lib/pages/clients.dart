@@ -11,9 +11,27 @@ class ClientsPage extends StatelessWidget {
     return Scaffold(
       
       appBar:
-          AppBar(title: const Text("Clientes"),
-          centerTitle: true,
-          backgroundColor: const Color(0xFF17B890)), // Reemplazar por appBar widget
+          AppBar(
+          
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Clientes',
+          style: TextStyle(
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 22,
+              ),
+        ),
+        
+        flexibleSpace: FlexibleSpaceBar(
+          background: Image.asset(
+            'assets/appbarlogo.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+      ), // Reemplazar por appBar widget
       // Aqui va el cuerpo de la app
       body: const Center(
         child: Text(

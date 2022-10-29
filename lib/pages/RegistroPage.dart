@@ -361,7 +361,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                                   side: const BorderSide(
                                                       color: Colors.red)))),
                                       onPressed: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
@@ -396,7 +396,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
