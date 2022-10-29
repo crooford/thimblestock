@@ -9,10 +9,29 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      
       appBar:
-          AppBar(title: const Text("Inicio"),
-          centerTitle: true,
-          backgroundColor: const Color(0xFF17B890)), // Reemplazar por appBar widget
+        AppBar(
+          
+        automaticallyImplyLeading: false,
+        title: const Text(
+          'Inicio',
+          style: TextStyle(
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 22,
+              ),
+        ),
+        
+        flexibleSpace: FlexibleSpaceBar(
+          background: Image.asset(
+            'assets/appbarlogo.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+        centerTitle: true,
+        elevation: 0,
+      ), // Reemplazar por appBar widget
       // Aqui va el cuerpo de la app
       body: const Center(
         
