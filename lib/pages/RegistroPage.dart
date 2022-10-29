@@ -365,7 +365,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const InicioWidget()));
+                                                    const LoginWidget()));
                                       },
                                       child: const Text(
                                         "Registrar",

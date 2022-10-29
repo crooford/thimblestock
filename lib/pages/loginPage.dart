@@ -1,8 +1,10 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
+import 'package:thimblestock/pages/dashboard.dart';
+import 'package:thimblestock/pages/home.dart';
 import 'RegistroPage.dart';
-import 'dashboard.dart';
+//import 'dashboard.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({Key? key}) : super(key: key);
