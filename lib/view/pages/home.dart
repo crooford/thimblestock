@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'oneclient.dart';
+import '../widgets/customAppBar.dart';
+import '../pages/dashboard.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
-class ClientsPage extends StatelessWidget {
-  const ClientsPage({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
@@ -15,12 +15,12 @@ class ClientsPage extends StatelessWidget {
     return exitResult ?? false;
   }
 
-  Future<bool?> _showExitDialog(BuildContext context) async {
+  /* Future<bool?> _showExitDialog(BuildContext context) async {
     return await showDialog(
       context: context,
       builder: (context) => _buildExitDialog(context),
     );
-  }
+  } */
 
   AlertDialog _buildExitDialog(BuildContext context) {
     return AlertDialog(
@@ -45,58 +45,69 @@ class ClientsPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: const Text(
-            'Clientes',
-            style: TextStyle(
-              fontFamily: 'Poppins',
-              color: Colors.white,
-              fontSize: 22,
-            ),
-          ),
-          flexibleSpace: FlexibleSpaceBar(
-            background: Image.asset(
-              'assets/appbarlogo.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          centerTitle: true,
-          elevation: 0,
-        ), // Reemplazar por appBar widget
-        // Aqui va el cuerpo de la app
+        appBar:
+            CusAppBar(pageTitle: "Inicio"), 
+     
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+       
+              Center(
+                child: Column(
+                  children: const [
+                    CircleAvatar(
+                      backgroundColor: Color(0xFF17B890),
+                      radius: 85,
+                      child: CircleAvatar(
+                        radius: 80,
+                        backgroundImage: AssetImage('assets/user_avatar.png'),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      "Bienvenido ",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "nomb_usuario", //esto se debe reemplazar por el nombre del usuario
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               const Text(
-                "Listado de Clientes",
+                "Actividad reciente",
                 style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               Expanded(
                 child: ListView.builder(
                   itemCount: lista.length,
                   itemBuilder: (context, index) => ListTile(
-                    leading: const CircleAvatar(),
                     title: Text(lista[index]),
-                    subtitle: const Text("318 000 000"),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.phone),
-                      onPressed: () {
-                        // TODO Realizar la llamada Telefonica
-                      },
-                    ),
+                    subtitle: Text("fecha / hora de actividad"),
                     onTap: () {
-                      // TODO: Debe redirigir a los datos del cliente especifico
-
+                      // TODO: Debe redirigir la activdad especifica
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const OneClientPage(),
+                          builder: (context) =>
+                              const DashboardPage(), // por ahora redirige a dashboard page
                         ),
                       );
                     },
@@ -105,18 +116,6 @@ class ClientsPage extends StatelessWidget {
               )
             ],
           ),
-        ),
-
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add_card),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const OneClientPage(),
-              ),
-            );
-          },
         ),
       ),
     );
@@ -127,7 +126,7 @@ class ClientsPage extends StatelessWidget {
 
     return List<String>.generate(
       5,
-      (index) => "Cliente ${index + 1}",
+      (index) => "Evento ${index + 1}",
     );
   }
 }

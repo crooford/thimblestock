@@ -4,7 +4,7 @@ import 'clients.dart';
 import 'home.dart';
 import 'projects.dart';
 import 'settings.dart';
-import '../icons.dart';
+import '../../icons.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});

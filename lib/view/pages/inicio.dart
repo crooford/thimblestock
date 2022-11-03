@@ -96,7 +96,7 @@ class _InicioWidgetState extends State<InicioWidget> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const LoginWidget()));
+                                          LoginWidget()));
                             },
                             child: const Text(
                               "Iniciar",

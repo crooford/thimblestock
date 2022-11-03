@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thimblestock/pages/oneproject.dart';
+import 'package:thimblestock/view/pages/oneproject.dart';
 
 
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 //import 'pages/RegistroPage.dart';
-import 'pages/inicio.dart';
+import 'view/pages/inicio.dart';
 
 void main(List<String> args) {
   runApp(const MyApp());
