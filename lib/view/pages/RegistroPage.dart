@@ -1,7 +1,7 @@
 // ignore: file_names
 
 import 'package:flutter/material.dart';
-import '/pages/inicio.dart';
+//import '/view/pages/inicio.dart';
 
 import 'loginPage.dart';
 
@@ -365,7 +365,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const LoginWidget()));
+                                                    LoginWidget()));
                                       },
                                       child: const Text(
                                         "Registrar",
@@ -400,7 +400,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginWidget()),
+                                                  LoginWidget()),
                                         );
                                       },
                                     ),
