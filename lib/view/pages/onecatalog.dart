@@ -55,6 +55,17 @@ class _OneCatalogPageState extends StatelessWidget {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add_card),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const OneCatalogPage(),
+              ),
+            );
+          },
+        ),
     );
   }
 }
