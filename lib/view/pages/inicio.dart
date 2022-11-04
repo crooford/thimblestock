@@ -6,7 +6,7 @@ class InicioWidget extends StatefulWidget {
   const InicioWidget({Key? key}) : super(key: key);
 
   @override
-  _InicioWidgetState createState() => _InicioWidgetState();
+  _InicioWidgetState get createState => _InicioWidgetState();
 }
 
 class _InicioWidgetState extends State<InicioWidget> {
