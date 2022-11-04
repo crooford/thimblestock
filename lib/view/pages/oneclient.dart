@@ -6,7 +6,7 @@ class OneClientPage extends StatefulWidget {
   const OneClientPage({super.key});
 
   @override
-  State<OneClientPage> createState() => _OneClientPageState();
+  State<OneClientPage> get createState => _OneClientPageState();
 }
 
 class _OneClientPageState extends State<OneClientPage> {  

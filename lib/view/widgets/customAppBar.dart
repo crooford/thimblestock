@@ -7,7 +7,7 @@ class CusAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(56);
   @override
-  State<CusAppBar> createState() => _CusAppBarState();
+  State<CusAppBar> get createState => _CusAppBarState();
 }
 
 class _CusAppBarState extends State<CusAppBar> {
