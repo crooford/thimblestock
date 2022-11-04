@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../widgets/customAppBar.dart';
-import 'oneclient.dart';
+import 'newclient.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
@@ -80,7 +80,7 @@ class ClientsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const OneClientPage(),
+                          builder: (context) => NewClientPage(),
                         ),
                       );
                     },
@@ -97,7 +97,7 @@ class ClientsPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const OneClientPage(),
+                builder: (context) => NewClientPage(),
               ),
             );
           },
