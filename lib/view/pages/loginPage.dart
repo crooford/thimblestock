@@ -124,7 +124,7 @@ class LoginWidget extends StatelessWidget {
                   try {
                     _controller.validateEmailPassord(request);
 
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const DashboardPage(),

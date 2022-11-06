@@ -7,19 +7,6 @@ import '../widgets/customAppBar.dart';
 class OneCatalogPage extends StatelessWidget {
   dynamic lista;
   OneCatalogPage(this.lista, {Key? key}) : super(key: key);
-  
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: _OneCatalogPageState(lista),
-    );
-  }
-}
-
-class _OneCatalogPageState extends StatelessWidget {
-  dynamic lista;
-  _OneCatalogPageState(this.lista, {Key? key}) : super(key: key);
   final _blusas = [
     'assets/catalogo/blusas/blusas 1.png',
     'assets/catalogo/blusas/blusas 2.png',
@@ -42,14 +29,13 @@ class _OneCatalogPageState extends StatelessWidget {
     'assets/catalogo/pantalones/pantalones 4.png',
     'assets/catalogo/pantalones/pantalones 5.png',
   ];
-   final _vestidos = [
+  final _vestidos = [
     'assets/catalogo/vestidos/vestidos 1.png',
     'assets/catalogo/vestidos/vestidos 2.png',
     'assets/catalogo/vestidos/vestidos 3.png',
     'assets/catalogo/vestidos/vestidos 4.png',
     'assets/catalogo/vestidos/vestidos 5.png',
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -67,15 +53,8 @@ class _OneCatalogPageState extends StatelessWidget {
         // ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ClientsPage(),
-            ),
-          );
-        },
+        child: const Icon(Icons.add_a_photo_outlined),
+        onPressed: () {},
       ),
     );
   }
