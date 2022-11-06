@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thimblestock/view/pages/newproject.dart';
 import 'package:thimblestock/view/pages/oneproject.dart';
 
 
@@ -39,14 +40,21 @@ class ProjectsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Listado de Proyectos",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+              child: Row(
+                children: [
+                  const Text("Barra de Busqueda"),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(210, 0, 0, 0),
+                    child: IconButton(
+                      icon:const Icon(Icons.search),
+                      onPressed: (){},
+                    ),
+                  )
+                ],
               ),
-            ),Row(
-              children: const[Text("Barra de Busqueda"),],
             ),
             Expanded(
               child: ListView.builder(
@@ -54,9 +62,9 @@ class ProjectsPage extends StatelessWidget {
                 itemBuilder: (context, index) => ListTile(
                   leading: const CircleAvatar(),
                   title: Text(lista[index]),
-                  subtitle: const Text("318 000 000"),
+                  subtitle: const Text("Nombre proyecto - fecha de entrega"),
                   trailing: IconButton(
-                    icon: const Icon(Icons.phone),
+                    icon: const Icon(Icons.view_headline),
                     onPressed: () {
                       // TODO Realizar la llamada Telefonica
                     },
@@ -79,12 +87,12 @@ class ProjectsPage extends StatelessWidget {
       ),
 
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
+        child: const Icon(Icons.add),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const OneProjectPage(),
+              builder: (context) => const NewProject(),
             ),
           );
         },
