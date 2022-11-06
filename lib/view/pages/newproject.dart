@@ -37,11 +37,11 @@ class _NewProjectState extends State<NewProject> {
                   color: const Color(0xFFFBFBF2),
                   child: SizedBox(
                             width: 350,
-                            height: 600,
+                            height: 560,
                             child: Column(
                               children: [
                                 const SizedBox(
-                                  height: 50,
+                                  height: 10,
                                 ),
                                 _clientName(),
                                 _description(),
@@ -114,8 +114,8 @@ class _NewProjectState extends State<NewProject> {
           child: TextFormField(
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
-            minLines: 6,
-            maxLines: 10,
+            minLines: 4,
+            maxLines: 5,
             decoration: const InputDecoration(
                 isDense: true,
                 contentPadding: EdgeInsets.all(6),

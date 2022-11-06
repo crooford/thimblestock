@@ -47,7 +47,7 @@ class ProjectsPage extends StatelessWidget {
                 children: [
                   const Text("Barra de Busqueda"),
                   Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(210, 0, 0, 0),
+                    padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                     child: IconButton(
                       icon:const Icon(Icons.search),
                       onPressed: (){},
