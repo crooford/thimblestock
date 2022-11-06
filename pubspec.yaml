@@ -71,6 +71,9 @@ flutter:
     - assets/user_avatar.png
     - assets/catalogo/
     - assets/catalogo/blusas/
+    - assets/catalogo/camisas/
+    - assets/catalogo/pantalones/
+    - assets/catalogo/vestidos/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
