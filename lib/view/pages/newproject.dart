@@ -21,9 +21,9 @@ class _NewProjectState extends State<NewProject> {
           child: _formclient(context),
         ),
       ),
-      
     );
   }
+
   Widget _formclient(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Form(
@@ -31,53 +31,50 @@ class _NewProjectState extends State<NewProject> {
       child: Column(
         children: [
           Center(
-              child:Column(children: [
-              Card(
+            child: Column(
+              children: [
+                Card(
                   elevation: 5,
                   color: const Color(0xFFFBFBF2),
                   child: SizedBox(
-                            width: 350,
-                            height: 560,
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                _clientName(),
-                                _description(),
-                                _dateProject(),
-
-                                
-                                
-                              ],
-                            ),
-                          ),
+                    width: 350,
+                    height: 600,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        _clientName(),
+                        _description(),
+                        _dateProject(),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  ElevatedButton(
-                    child: const Text("Guardar"),
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        // TODO: Guardar los datos en la BD
+                ),
+                ElevatedButton(
+                  child: const Text("Guardar"),
+                  onPressed: () {
+                    if (formKey.currentState!.validate()) {
+                      // TODO: Guardar los datos en la BD
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Proyecto registrado"),
-                          ),
-                        );
-                        // Volver a la pantalla anterior
-                        Navigator.pop(context);
-                      }
-                    },
-                  ),
-              
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Proyecto registrado"),
+                        ),
+                      );
+                      // Volver a la pantalla anterior
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
               ],
             ),
-          ),],
-        
-        ),
-      );
+          ),
+        ],
+      ),
+    );
   }
+
   Widget _clientName() {
     return Column(
       children: [
@@ -107,40 +104,43 @@ class _NewProjectState extends State<NewProject> {
       ],
     );
   }
+
   Widget _description() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Flexible(
-          child: TextFormField(
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.done,
-            minLines: 4,
-            maxLines: 5,
-            decoration: const InputDecoration(
-                isDense: true,
-                contentPadding: EdgeInsets.all(6),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(6)),
-                ),
-                labelText: 'Especificaciones',
-              ),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        textInputAction: TextInputAction.done,
+        minLines: 4,
+        maxLines: 5,
+        decoration: const InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.all(6),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
+          labelText: 'Especificaciones',
         ),
+      ),
     );
   }
 
-  Widget _dateProject(){
+  Widget _dateProject() {
     return Padding(
       padding: const EdgeInsets.all(9.0),
-      child: Column(children:[
-        const SizedBox(height: 10,),
-        const Text("Fecha de entrega"),
-        TableCalendar(
-          firstDay: DateTime.utc(2010,01,01),
-          lastDay: DateTime.utc(2040,12,31),
-          focusedDay: DateTime.now(),
-        ),
-      ],),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          const Text("Fecha de entrega"),
+          TableCalendar(
+            firstDay: DateTime.utc(2010, 01, 01),
+            lastDay: DateTime.utc(2040, 12, 31),
+            focusedDay: DateTime.now(),
+          ),
+        ],
+      ),
     );
   }
 }
