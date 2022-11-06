@@ -9,7 +9,7 @@ class RegistroWidget extends StatefulWidget {
   const RegistroWidget({Key? key}) : super(key: key);
 
   @override
-  _RegistroWidgetState get createState => _RegistroWidgetState();
+  _RegistroWidgetState createState() => _RegistroWidgetState();
 }
 
 class _RegistroWidgetState extends State<RegistroWidget> {
