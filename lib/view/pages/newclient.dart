@@ -1,70 +1,19 @@
 import 'package:flutter/material.dart';
 
+import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
-class ClientRegisterRequest {
-  // personal information
-  late Image? clientAvatar;
-  late String clientName;
-  late String clientPhone;
-  late String? clientEmail;
-
-// card 1
-  late String? clientAge;
-  late String? clientHeight;
-  late String? clientWeight;
-  late String? blouseSize;
-  late String? pantSize;
-  late String? skirtSize;
-  late String? braSize;
-  late String? pantySize;
-  late String? shoeSize;
-
-////card 2
-  late String? contCuel;
-  late String? anchHomb;
-  late String? anchCuel;
-  late String? anchEspa;
-  late String? contBust;
-  late String? contTora;
-  late String? contCint;
-  late String? largTalEsp;
-  late String? largTalDel;
-
-// card 3
-  late String? altuBust;
-  late String? sepaBust;
-  late String? largTotBra;
-  late String? largBraCod;
-  late String? contBraz;
-  late String? contCade;
-  late String? altuCade;
-  late String? contMedCade;
-  late String? largTiro;
-
-  // card 4
-  late String? largTotPie;
-  late String? contPier;
-  late String? largRodi;
-  late String? observ;
-
-  @override
-  String toString() {
-    return "Nombre: $clientName, Telefono: $clientPhone, Email: $clientEmail\n\nEdad: $clientAge, Estatura: $clientHeight, Peso: $clientWeight\nTalla blusa: $blouseSize, Talla pantalon: $pantSize, Talla falda: $skirtSize\nTalla brassiere: $braSize, Talla panty : $pantySize, Talla calzado: $shoeSize\n\ncontcue: $contCuel, anch homb: $anchHomb, anch cue: $anchCuel\nanch esp $anchEspa, cont bust: $contBust, cont torax$contTora\nCont cint: $contCint, Larg Talle Espa: $largTalEsp, Largo talt del: $largTalDel\n\nAltura Busto: $altuBust, Separ busto: $sepaBust, Largo ttl braz: $largTotBra\nLargo braz codo: $largBraCod, Contorno brazo: $contBraz, Contorno cadera: $contCade\nAltura cadera: $altuCade, Contorno 1/2 cadera: $contMedCade, Largo tiro: $largTiro\n\nLargo ttl Pierna: $largTotPie, Contorno piern: $contPier, Largo rodill: $largRodi\nObservaciones: $observ";
-  }
-}
-
 class NewClientPage extends StatelessWidget {
-  late ClientRegisterRequest _datos;
+  late ClientEntity _datos;
 
   NewClientPage({super.key}) {
-    _datos = ClientRegisterRequest();
+    _datos = ClientEntity();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Datos Cliente'),
+      appBar: CusAppBar(pageTitle: 'Editar Datos de Cliente'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -514,8 +463,8 @@ class NewClientPage extends StatelessWidget {
                         content: Text("Información de cliente registrada"),
                       ),
                     );
-                    /* // Volver a la pantalla anterior
-                    Navigator.pop(context); */
+                    // Volver a la pantalla anterior
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text("Guardar"),
@@ -541,7 +490,6 @@ class NewClientPage extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
-                initialValue: '',
                 maxLength: 60,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
@@ -568,7 +516,6 @@ class NewClientPage extends StatelessWidget {
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
-                initialValue: '',
                 maxLength: 25,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -592,7 +539,6 @@ class NewClientPage extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
-            initialValue: '',
             maxLength: 25,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
@@ -609,7 +555,6 @@ class NewClientPage extends StatelessWidget {
   Widget _age(FormFieldSetter<String?> save) {
     return Flexible(
         child: TextFormField(
-            initialValue: '',
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -626,7 +571,6 @@ class NewClientPage extends StatelessWidget {
   Widget _height(FormFieldSetter<String?> save) {
     return Flexible(
         child: TextFormField(
-            initialValue: '',
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -643,7 +587,6 @@ class NewClientPage extends StatelessWidget {
   Widget _weight(FormFieldSetter<String?> save) {
     return Flexible(
         child: TextFormField(
-            initialValue: '',
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -662,7 +605,6 @@ class NewClientPage extends StatelessWidget {
 
     return Flexible(
         child: TextFormField(
-            initialValue: '',
             textAlign: TextAlign.center,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -697,7 +639,6 @@ class NewClientPage extends StatelessWidget {
             width: 100,
             decoration: const BoxDecoration(),
             child: TextFormField(
-                initialValue: '',
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -714,7 +655,6 @@ class NewClientPage extends StatelessWidget {
   Widget _observ(FormFieldSetter<String?> save) {
     return Flexible(
         child: TextFormField(
-            initialValue: '',
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             minLines: 4,

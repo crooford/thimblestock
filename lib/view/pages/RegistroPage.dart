@@ -102,7 +102,7 @@ class _RegistroWidgetState extends State<RegistroWidget> {
                                       0, 0, 0, 10),
                                   child: TextFormField(
                                     controller: textController1,
-                                    autofocus: false,
+                                    
                                     decoration: InputDecoration(
                                       hintText: 'Ingresa tu nombre',
                                       hintStyle: const TextStyle(
