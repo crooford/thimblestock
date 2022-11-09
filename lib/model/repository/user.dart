@@ -1,4 +1,4 @@
-import '../entity/users.dart';
+import '../entity/user.dart';
 
 class UserRepository {
   final _users = <String, UserEntity>{};
@@ -36,7 +36,10 @@ class UserRepository {
     if (user == null) {
       throw Exception("Usuario no existe");
     }
-
     return user;
+  }
+
+  void save(UserEntity user) {
+     print(user);
   }
 }

@@ -659,7 +659,9 @@ class NewClientPage extends StatelessWidget {
             textInputAction: TextInputAction.done,
             minLines: 4,
             maxLines: 4,
+            maxLength: 200,
             decoration: const InputDecoration(
+              counterText: "",
               isDense: true,
               contentPadding: EdgeInsets.all(8),
               hintText: "Alergias, gustos, etc.",

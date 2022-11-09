@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/customAppBar.dart';
 import 'newclient.dart';
+import 'oneclient.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
@@ -12,60 +13,59 @@ class ClientsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lista = _listClients();
     return Scaffold(
-      appBar: CusAppBar(pageTitle: "Clientes"),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Listado de Clientes",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: lista.length,
-                itemBuilder: (context, index) => ListTile(
-                  leading: const CircleAvatar(),
-                  title: Text(lista[index]),
-                  subtitle: const Text("318 000 000"),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.phone),
-                    onPressed: () {
-                      // TODO Realizar la llamada Telefonica
-                    },
-                  ),
-                  onTap: () {
-                    // TODO: Debe redirigir a los datos del cliente especifico
-
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => NewClientPage(),
-                      ),
-                    );
-                  },
+        appBar: CusAppBar(pageTitle: "Clientes"),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Listado de Clientes",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            )
-          ],
+              Expanded(
+                child: ListView.builder(
+                  itemCount: lista.length,
+                  itemBuilder: (context, index) => ListTile(
+                    leading: const CircleAvatar(),
+                    title: Text(lista[index]),
+                    subtitle: const Text("318 000 000"),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.phone),
+                      onPressed: () {
+                        // TODO Realizar la llamada Telefonica
+                      },
+                    ),
+                    onTap: () {
+                      // TODO: Debe redirigir a los datos del cliente especifico
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => OneClientPage(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NewClientPage(),
-            ),
-          );
-        },
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add_card),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => NewClientPage(),
+              ),
+            );
+          },
+        ));
   }
 
   List<String> _listClients() {

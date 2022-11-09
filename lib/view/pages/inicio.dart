@@ -6,7 +6,7 @@ class InicioWidget extends StatefulWidget {
   const InicioWidget({Key? key}) : super(key: key);
 
   @override
-  _InicioWidgetState createState () => _InicioWidgetState();
+  _InicioWidgetState createState() => _InicioWidgetState();
 }
 
 class _InicioWidgetState extends State<InicioWidget> {
@@ -87,16 +87,13 @@ class _InicioWidgetState extends State<InicioWidget> {
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(25.0),
-                                        side: const BorderSide(
-                                            color: Colors.red)))),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ))),
                             onPressed: () {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginWidget()));
+                                      builder: (context) => LoginWidget()));
                             },
                             child: const Text(
                               "Iniciar",
