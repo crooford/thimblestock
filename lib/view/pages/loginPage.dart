@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import '../../controller/login.dart';
 import '../../controller/request/login.dart';
-
 import 'RegistroPage.dart';
 import 'dashboard.dart';
 
 class LoginWidget extends StatelessWidget {
   final _imageUrl = "assets/maniqui.png";
   late LoginController _controller;
-  late LoginRequest request;
+  late LoginRequest _request;
 
   LoginWidget({super.key}) {
     _controller = LoginController();
-    request = LoginRequest();
+    _request = LoginRequest();
   }
 
   @override
@@ -28,7 +27,7 @@ class LoginWidget extends StatelessWidget {
                 alignment: const AlignmentDirectional(-1, -1),
                 child: Image.asset(
                   'assets/logoverde.png',
-                  width: 150,
+                  width: 100,
                 ),
               ),
               Flexible(
@@ -53,11 +52,11 @@ class LoginWidget extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const RegistroWidget()),
+                                          RegistroWidget()),
                                 );
                               },
                             ),
@@ -116,18 +115,23 @@ class LoginWidget extends StatelessWidget {
                 "Entrar",
                 style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
               ),
-              onPressed: () {
+              onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
 
                   // TODO: Validar usuario y contraseña en BD
                   try {
-                    _controller.validateEmailPassord(request);
+                    var name =
+                        await _controller.validateEmailPassword(_request);
 
+                    // ignore: use_build_context_synchronously
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DashboardPage(),
+                        builder: (context) => DashboardPage(
+                          email: _request.email,
+                          name: name,
+                        ),
                       ),
                     );
                   } catch (ex) {
@@ -153,28 +157,28 @@ class LoginWidget extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.black),
         enabledBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
@@ -193,7 +197,7 @@ class LoginWidget extends StatelessWidget {
         return null;
       },
       onSaved: (value) {
-        request.email = value!;
+        _request.email = value!;
       },
     );
   }
@@ -207,28 +211,28 @@ class LoginWidget extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.black),
         enabledBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
@@ -241,13 +245,10 @@ class LoginWidget extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return "La contraseña es obligatoria";
         }
-        if (value.length < 6) {
-          return "Minimo debe contener 6 caracteres";
-        }
         return null;
       },
       onSaved: (value) {
-        request.password = value!;
+        _request.password = value!;
       },
     );
   }
@@ -256,7 +257,7 @@ class LoginWidget extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Text("O iniciar sesion con"),
+        const Text("O inicia sesión con"),
         const SizedBox(
           height: 15,
         ),

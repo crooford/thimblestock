@@ -5,7 +5,9 @@ import '../pages/dashboard.dart';
 //import '../widgets/barraNavAbajo.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final String email;
+  final String name;
+  const HomePage({super.key, required this.email, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +71,10 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            const DashboardPage(), // por ahora redirige a dashboard page
+                        builder: (context) => const HomePage(
+                          name: '',
+                          email: '',
+                        ), // por ahora redirige a homepage
                       ),
                     );
                   },

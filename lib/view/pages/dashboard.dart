@@ -7,10 +7,10 @@ import 'settings.dart';
 import '../../icons.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+  const DashboardPage({super.key, required String name, required String email});
 
   @override
-  State<DashboardPage> createState () => _DashboardPageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
@@ -48,7 +48,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   int _currentPage = 0;
   final List<Widget> _pages = [
-    const HomePage(),
+    const HomePage(email: '', name: '',),
     const ClientsPage(),
     const CatalogPage(),
     const ProjectsPage(),
