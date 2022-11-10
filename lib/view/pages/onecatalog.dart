@@ -65,7 +65,12 @@ class OneCatalogPage extends StatelessWidget {
         listOfItem: _blusas,
         numberOfColumn: 2,
         itemBuilder: (item) {
-          return Image.asset(item);
+          return Card(
+            elevation: 5,
+            color: const Color(0xFFFBFBF2),
+            child:
+            Image.asset(item),
+            );
         },
       );
     }
@@ -74,7 +79,12 @@ class OneCatalogPage extends StatelessWidget {
         listOfItem: _camisas,
         numberOfColumn: 2,
         itemBuilder: (item) {
-          return Image.asset(item);
+          return Card(
+            elevation: 5,
+            color: const Color(0xFFFBFBF2),
+            child:
+            Image.asset(item),
+            );
         },
       );
     }
@@ -83,7 +93,12 @@ class OneCatalogPage extends StatelessWidget {
         listOfItem: _pantalones,
         numberOfColumn: 2,
         itemBuilder: (item) {
-          return Image.asset(item);
+          return Card(
+            elevation: 5,
+            color: const Color(0xFFFBFBF2),
+            child:
+            Image.asset(item),
+            );
         },
       );
     }
@@ -92,7 +107,12 @@ class OneCatalogPage extends StatelessWidget {
         listOfItem: _vestidos,
         numberOfColumn: 2,
         itemBuilder: (item) {
-          return Image.asset(item);
+          return Card(
+            elevation: 5,
+            color: const Color(0xFFFBFBF2),
+            child:
+            Image.asset(item),
+            );
         },
       );
     }
