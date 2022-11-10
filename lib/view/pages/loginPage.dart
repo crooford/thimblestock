@@ -55,8 +55,7 @@ class LoginWidget extends StatelessWidget {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          RegistroWidget()),
+                                      builder: (context) => RegistroWidget()),
                                 );
                               },
                             ),
@@ -128,10 +127,8 @@ class LoginWidget extends StatelessWidget {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DashboardPage(
-                          email: _request.email,
-                          name: name,
-                        ),
+                        builder: (context) =>
+                            DashboardPage(email:_request.email, name:name),
                       ),
                     );
                   } catch (ex) {
