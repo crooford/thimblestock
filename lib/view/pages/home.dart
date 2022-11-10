@@ -21,8 +21,8 @@ class HomePage extends StatelessWidget {
           children: [
             Center(
               child: Column(
-                children: const [
-                  CircleAvatar(
+                children: [
+                  const CircleAvatar(
                     backgroundColor: Color(0xFF17B890),
                     radius: 85,
                     child: CircleAvatar(
@@ -30,10 +30,10 @@ class HomePage extends StatelessWidget {
                       backgroundImage: AssetImage('assets/user_avatar.png'),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     "Bienvenido ",
                     style: TextStyle(
                       fontSize: 20,
@@ -41,8 +41,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "nomb_usuario", //esto se debe reemplazar por el nombre del usuario
-                    style: TextStyle(
+                    name, //esto se debe reemplazar por el nombre del usuario
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -71,10 +71,9 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const HomePage(
-                          name: '',
-                          email: '',
-                        ), // por ahora redirige a homepage
+                        builder: (context) => DashboardPage(
+                            email: email,
+                            name: name), // por ahora redirige a homepage
                       ),
                     );
                   },

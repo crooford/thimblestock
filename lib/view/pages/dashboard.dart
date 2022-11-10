@@ -7,7 +7,9 @@ import 'settings.dart';
 import '../../icons.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key, required String name, required String email});
+  const DashboardPage({super.key, required this.email, required this.name});
+  final String email;
+  final String name;
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -47,20 +49,21 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   int _currentPage = 0;
-  final List<Widget> _pages = [
-    const HomePage(email: '', name: '',),
-    const ClientsPage(),
-    const CatalogPage(),
-    const ProjectsPage(),
-    const SettingsPage()
-  ];
+  List<Widget> _pages() => [
+        HomePage(email: widget.email, name: widget.name),
+        const ClientsPage(),
+        const CatalogPage(),
+        const ProjectsPage(),
+        const SettingsPage()
+      ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = _pages();
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
-        body: _pages[_currentPage],
+        body: pages[_currentPage],
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
             border: Border(
