@@ -117,8 +117,6 @@ class LoginWidget extends StatelessWidget {
               onPressed: () async {
                 if (formKey.currentState!.validate()) {
                   formKey.currentState!.save();
-
-                  // TODO: Validar usuario y contraseña en BD
                   try {
                     var name =
                         await _controller.validateEmailPassword(_request);

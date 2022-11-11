@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 //import '/view/pages/inicio.dart';
 
 import '../../controller/login.dart';
-import '../../controller/register.dart';
+import '../../controller/request/register.dart';
 import 'loginPage.dart';
 
 class RegistroWidget extends StatelessWidget {
@@ -223,7 +223,7 @@ class RegistroWidget extends StatelessWidget {
   Widget _phone() {
     return TextFormField(
       maxLength: 20,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.phone,
       decoration: _inputDecor('Ingresa tu telefono'),
       style: const TextStyle(
         fontFamily: 'Poppins',
