@@ -6,8 +6,9 @@ import 'newclient.dart';
 
 class OneClientPage extends StatelessWidget {
   late ClientEntity _datos;
+ final String email;
 
-  OneClientPage({super.key}) {
+  OneClientPage( {super.key, required this.email}) {   
     _datos = ClientEntity();
   }
 
@@ -27,7 +28,7 @@ class OneClientPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewClientPage(),
+                builder: (context) => NewClientPage(email),
               ),
             );
           },

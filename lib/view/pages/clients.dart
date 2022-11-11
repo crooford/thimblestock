@@ -47,7 +47,7 @@ class ClientsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OneClientPage(),
+                          builder: (context) => OneClientPage(email: email),
                         ),
                       );
                     },
@@ -63,7 +63,7 @@ class ClientsPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewClientPage(),
+                builder: (context) => NewClientPage(email),
               ),
             );
           },
