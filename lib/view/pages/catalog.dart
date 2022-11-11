@@ -5,7 +5,9 @@ import 'onecatalog.dart';
 
 //import '../widgets/barraNavAbajo.dart';\
 class CatalogPage extends StatelessWidget {
-  const CatalogPage({super.key});
+  const CatalogPage({super.key, required this.email, required this.name});
+  final String email;
+  final String name;
 
   @override
   Widget build(BuildContext context) {

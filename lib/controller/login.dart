@@ -13,10 +13,10 @@ class LoginController {
     _authRepository = FirebaseAuthenticationRepository();
   }
 
-Future<String> validateEmailPassword(LoginRequest request) async {
+  Future<String> validateEmailPassword(LoginRequest request) async {
     await _authRepository.signInEmailPassword(request.email, request.password);
     // Consultar el usuario que tenga el correo dado
-    var user = _userRepository.findByEmail(request.email);
+    var user = await _userRepository.findByEmail(request.email);
 
     return user.name!;
   }

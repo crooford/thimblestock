@@ -7,7 +7,9 @@ import 'oneclient.dart';
 //import '../widgets/barraNavAbajo.dart';
 
 class ClientsPage extends StatelessWidget {
-  const ClientsPage({super.key});
+  const ClientsPage({super.key, required this.email, required this.name});
+  final String email;
+  final String name;
 
   @override
   Widget build(BuildContext context) {

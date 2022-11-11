@@ -51,10 +51,10 @@ class _DashboardPageState extends State<DashboardPage> {
   int _currentPage = 0;
   List<Widget> _pages() => [
         HomePage(email: widget.email, name: widget.name),
-        const ClientsPage(),
-        const CatalogPage(),
-        const ProjectsPage(),
-        const SettingsPage()
+        ClientsPage(email: widget.email, name: widget.name),
+        CatalogPage(email: widget.email, name: widget.name),
+        ProjectsPage(email: widget.email, name: widget.name),
+        SettingsPage(email: widget.email, name: widget.name)
       ];
 
   @override
