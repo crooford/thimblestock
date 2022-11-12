@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:thimblestock/view/pages/clients.dart';
 import '../widgets/customAppBar.dart';
 import 'onecatalog.dart';
 
@@ -47,20 +46,20 @@ class CatalogPage extends StatelessWidget {
         ]),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
+        child: const Icon(Icons.shopping_basket_rounded),
         onPressed: () {},
       ),
     );
   }
 
-  List _listCatalogo() {
-    List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
-    // return List<String>.generate(
-    //   5,
-    //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
-    // );
-    return lista;
-  }
+  // List _listCatalogo() {
+  //   List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
+  //   // return List<String>.generate(
+  //   //   5,
+  //   //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
+  //   // );
+  //   return lista;
+  // }
 
   iconscatalogo(lista) {
     if ('Blusas' == lista) {

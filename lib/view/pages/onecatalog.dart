@@ -53,7 +53,7 @@ class OneCatalogPage extends StatelessWidget {
         // ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_a_photo_outlined),
+        child: const Icon(Icons.shopping_basket_rounded),
         onPressed: () {},
       ),
     );

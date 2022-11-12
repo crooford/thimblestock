@@ -7,7 +7,7 @@ class OneProjectPage extends StatefulWidget {
 ({super.key});
 
   @override
-  State<OneProjectPage> createState () => _OneProjectPageState();
+  State<OneProjectPage> get createState => _OneProjectPageState();
 }
 
 class _OneProjectPageState extends State<OneProjectPage> {
