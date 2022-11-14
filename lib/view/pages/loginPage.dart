@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/login.dart';
 import '../../controller/request/login.dart';
 import 'RegistroPage.dart';
 import 'dashboard.dart';
 
 class LoginWidget extends StatelessWidget {
+  final _pref = SharedPreferences.getInstance();
+
   final _imageUrl = "assets/maniqui.png";
   late LoginController _controller;
   late LoginRequest _request;
@@ -98,45 +101,7 @@ class LoginWidget extends StatelessWidget {
           const SizedBox(height: 8),
           _campoClave(),
           const SizedBox(height: 10),
-          SizedBox(
-            width: 150,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFFFBFBF2)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF17B890)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ))),
-              child: const Text(
-                "Entrar",
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-              ),
-              onPressed: () async {
-                if (formKey.currentState!.validate()) {
-                  formKey.currentState!.save();
-                  try {
-                    var name =
-                        await _controller.validateEmailPassword(_request);
-
-                    // ignore: use_build_context_synchronously
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DashboardPage(email:_request.email, name:name),
-                      ),
-                    );
-                  } catch (ex) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text(ex.toString())));
-                  }
-                }
-              },
-            ),
-          ),
+          _iniciarSesion(context, formKey),
         ],
       ),
     );
@@ -276,6 +241,53 @@ class LoginWidget extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _iniciarSesion(BuildContext context, GlobalKey<FormState> formKey) {
+    return SizedBox(
+      width: 150,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(const Color(0xFFFBFBF2)),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(const Color(0xFF17B890)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ))),
+        child: const Text(
+          "Entrar",
+          style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+        ),
+        onPressed: () async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+
+            // validación en BD
+            try {
+              final nav = Navigator.of(context);
+
+              var userInfo = await _controller.validateEmailPassword(_request);
+
+              var pref = await _pref;
+              pref.setString("uid", userInfo.id!);
+              pref.setString("name", userInfo.name!);
+              pref.setString("email", userInfo.email!);
+              pref.setBool("isAdmin", userInfo.isAdmin!);
+
+
+              nav.pushReplacement(MaterialPageRoute(
+                builder: (context) => const DashboardPage(),
+              ));
+            } catch (ex) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(ex.toString())));
+            }
+          }
+        },
+      ),
     );
   }
 }

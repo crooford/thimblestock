@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/view/pages/dashboard.dart';
 
 import 'loginPage.dart';
 
@@ -11,6 +13,20 @@ class InicioWidget extends StatefulWidget {
 
 class _InicioWidgetState extends State<InicioWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _pref = SharedPreferences.getInstance();
+  Widget _init = LoginWidget();
+
+  @override
+  void initState() {
+    super.initState();
+    _pref.then((pref) {
+      if (pref.getString("uid") != null) {
+        setState(() {
+          _init = const DashboardPage();
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +109,7 @@ class _InicioWidgetState extends State<InicioWidget> {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => LoginWidget()));
+                                      builder: (context) => _init));
                             },
                             child: const Text(
                               "Iniciar",

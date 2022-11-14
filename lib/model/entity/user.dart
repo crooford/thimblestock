@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserEntity {
+  late String? id;
   late String? email;
   late String? name;
   late String? phone;
@@ -13,7 +14,7 @@ class UserEntity {
       SnapshotOptions? options) {
     var data = snapshot.data();
 
-     return UserEntity(
+    return UserEntity(
         email: data?["email"],
         name: data?["name"],
         phone: data?["phone"] ?? "-",

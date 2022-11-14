@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/customAppBar.dart';
 import '../pages/dashboard.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
-class HomePage extends StatelessWidget {
-  final String email;
-  final String name;
-  const HomePage({super.key, required this.email, required this.name});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _pref = SharedPreferences.getInstance();
+  String _name = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    _pref.then((pref) {
+      setState(() {
+        _name = pref.getString("name") ?? "N/A";
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +59,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    name, //esto se debe reemplazar por el nombre del usuario
+                    _name, //esto se debe reemplazar por el nombre del usuario
                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -71,9 +89,8 @@ class HomePage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DashboardPage(
-                            email: email,
-                            name: name), // por ahora redirige a homepage
+                        builder: (context) =>
+                            const DashboardPage(), // por ahora redirige a homepage
                       ),
                     );
                   },
