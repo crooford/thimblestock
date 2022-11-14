@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
 class NewClientPage extends StatelessWidget {
+  final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
 
-  NewClientPage(String user, {super.key}) {
-    _client = ClientEntity(user: user);
+  NewClientPage({super.key}) {
+    _client = ClientEntity();
     _controller = ClientController();
+    _pref.then((pref) {
+      _client.user = pref.getString("uid");
+    });
   }
 
   @override

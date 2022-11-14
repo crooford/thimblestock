@@ -7,15 +7,14 @@ import 'settings.dart';
 import '../../icons.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key, required this.email, required this.name});
-  final String email;
-  final String name;
+  const DashboardPage({super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
       context: context,
@@ -50,11 +49,11 @@ class _DashboardPageState extends State<DashboardPage> {
 
   int _currentPage = 0;
   List<Widget> _pages() => [
-        HomePage(email: widget.email, name: widget.name),
-        ClientsPage(email: widget.email, name: widget.name),
-        CatalogPage(email: widget.email, name: widget.name),
-        ProjectsPage(email: widget.email, name: widget.name),
-        SettingsPage(email: widget.email, name: widget.name)
+        const HomePage(),
+        const ClientsPage(),
+        const CatalogPage(),
+        const ProjectsPage(),
+        const SettingsPage()
       ];
 
   @override

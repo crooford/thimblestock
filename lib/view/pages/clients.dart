@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/controller/clients.dart';
+import 'package:thimblestock/model/entity/clients.dart';
 
 import '../widgets/customAppBar.dart';
 import 'newclient.dart';
 import 'oneclient.dart';
 
-//import '../widgets/barraNavAbajo.dart';
+class ClientsPage extends StatefulWidget {
+  const ClientsPage({super.key});
 
-class ClientsPage extends StatelessWidget {
-  const ClientsPage({super.key, required this.email, required this.name});
-  final String email;
-  final String name;
+  @override
+  State<ClientsPage> createState() => _ClientsPageState();
+}
+
+class _ClientsPageState extends State<ClientsPage> {
+  List<ClientEntity> _list = [];
+  final _pref = SharedPreferences.getInstance();
+  final _clientController = ClientController();
+
+  @override
+  void initState() {
+    super.initState();
+    _listClients();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final lista = _listClients();
     return Scaffold(
         appBar: CusAppBar(pageTitle: "Clientes"),
         body: Padding(
@@ -30,11 +43,11 @@ class ClientsPage extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: lista.length,
+                  itemCount: _list.length,
                   itemBuilder: (context, index) => ListTile(
                     leading: const CircleAvatar(),
-                    title: Text(lista[index]),
-                    subtitle: const Text("318 000 000"),
+                    title: Text(_list[index].clientName!),
+                    subtitle: Text(_list[index].clientPhone!),
                     trailing: IconButton(
                       icon: const Icon(Icons.phone),
                       onPressed: () {
@@ -47,7 +60,7 @@ class ClientsPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OneClientPage(email: email),
+                          builder: (context) => OneClientPage(),
                         ),
                       );
                     },
@@ -58,24 +71,28 @@ class ClientsPage extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add_card),
-          onPressed: () {
-            Navigator.push(
+          child: const Icon(Icons.person_add_alt_rounded),
+          onPressed: () async {
+            await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewClientPage(email),
+                builder: (context) => NewClientPage(),
               ),
             );
+            if (!mounted) return;
+            _listClients();
           },
         ));
   }
 
-  List<String> _listClients() {
-    //TODO:  Base de Datos
-
-    return List<String>.generate(
-      5,
-      (index) => "Cliente ${index + 1}",
-    );
+  void _listClients() {
+    _pref.then((pref) {
+      var id = pref.getString("uid") ?? "";
+      _clientController.listAll(id).then((value) {
+        setState(() {
+          _list = value;
+        });
+      });
+    });
   }
 }

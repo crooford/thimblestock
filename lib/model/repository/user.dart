@@ -11,18 +11,22 @@ class UserRepository {
   Future<UserEntity> findByEmail(String email) async {
     final query = await _collection
         .where("email", isEqualTo: email)
-        .withConverter(
+        .withConverter<UserEntity>(
             fromFirestore: UserEntity.fromFirestore,
             toFirestore: (value, options) => value.toFirestore())
         .get();
 
-    var users = query.docs.cast().map((e) => e.data());
+    var users = query.docs.cast();
 
     if (users.isEmpty) {
       return Future.error("Usuario no existe");
     }
 
-    return users.first;
+    var user = users.first;
+    var response = user.data();
+    response.id = user.id;
+
+    return response;
   }
 
   Future<void> save(UserEntity user) async {

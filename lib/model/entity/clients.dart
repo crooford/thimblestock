@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ClientEntity {
+  late String? id;
   // personal information
   late String? user;
   late String? clientAvatar;

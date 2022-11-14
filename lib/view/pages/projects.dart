@@ -6,9 +6,8 @@ import 'package:thimblestock/view/pages/oneproject.dart';
 
 
 class ProjectsPage extends StatelessWidget {
-  const ProjectsPage ({super.key, required this.email, required this.name});
-  final String email;
-  final String name;
+  const ProjectsPage ({super.key});
+
   
   @override
   Widget build(BuildContext context) {

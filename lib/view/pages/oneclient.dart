@@ -5,10 +5,10 @@ import '../widgets/customAppBar.dart';
 import 'newclient.dart';
 
 class OneClientPage extends StatelessWidget {
-  late ClientEntity _datos;
- final String email;
+late ClientEntity _datos;
 
-  OneClientPage( {super.key, required this.email}) {   
+
+  OneClientPage( {super.key}) {   
     _datos = ClientEntity();
   }
 
@@ -28,7 +28,7 @@ class OneClientPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewClientPage(email),
+                builder: (context) => NewClientPage(),
               ),
             );
           },
