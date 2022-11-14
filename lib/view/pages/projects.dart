@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:thimblestock/view/pages/newproject.dart';
 import 'package:thimblestock/view/pages/oneproject.dart';
 
+import '../widgets/customAppBar.dart';
+
 
 
 
@@ -13,28 +15,7 @@ class ProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lista = _listProjects();
     return Scaffold(
-      appBar:
-          AppBar(
-          
-        automaticallyImplyLeading: false,
-        title: const Text(
-          'Proyectos',
-          style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 22,
-              ),
-        ),
-        
-        flexibleSpace: FlexibleSpaceBar(
-          background: Image.asset(
-            'assets/appbarlogo.png',
-            fit: BoxFit.cover,
-          ),
-        ),
-        centerTitle: true,
-        elevation: 0,
-      ), // Reemplazar por appBar widget
+      appBar: CusAppBar(pageTitle:"Proyectos",), // Reemplazar por appBar widget
       // Aqui va el cuerpo de la app
       body: Padding(
         padding: const EdgeInsets.all(8.0),
