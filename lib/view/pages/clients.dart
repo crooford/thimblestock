@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thimblestock/controller/clients.dart';
 import 'package:thimblestock/model/entity/clients.dart';
@@ -51,7 +52,8 @@ class _ClientsPageState extends State<ClientsPage> {
                     trailing: IconButton(
                       icon: const Icon(Icons.phone),
                       onPressed: () {
-                        // TODO Realizar la llamada Telefonica
+                        // Realizar la llamada Telefonica
+                        _callPhone(_list[index].clientPhone!);
                       },
                     ),
                     onTap: () {
@@ -94,5 +96,9 @@ class _ClientsPageState extends State<ClientsPage> {
         });
       });
     });
+  }
+
+  _callPhone(String s) async {
+    bool? res = await FlutterPhoneDirectCaller.callNumber(s);
   }
 }
