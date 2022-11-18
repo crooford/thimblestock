@@ -5,12 +5,9 @@ import '../widgets/customAppBar.dart';
 import 'newclient.dart';
 
 class OneClientPage extends StatelessWidget {
-late ClientEntity _datos;
+  ClientEntity client;
 
-
-  OneClientPage( {super.key}) {   
-    _datos = ClientEntity();
-  }
+  OneClientPage({super.key, required this.client});
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +63,15 @@ late ClientEntity _datos;
                           const SizedBox(
                             height: 8,
                           ),
-                          _clientName("varClientName"),
+                          _clientName(client.clientName!),
                           const SizedBox(
                             height: 20,
                           ),
-                          _clientPhone("varClientPhone"),
+                          _clientPhone(client.clientPhone!),
                           const SizedBox(
                             height: 20,
                           ),
-                          _clientEmail("varClientEmail"),
+                          _clientEmail(client.clientEmail!),
                         ],
                       ),
                     ))),
@@ -106,11 +103,14 @@ late ClientEntity _datos;
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _basicData("Edad", "varAge", "años"),
+                                      _basicData(
+                                          "Edad", client.clientAge!, "años"),
                                       const SizedBox(width: 10),
-                                      _basicData("Estatura", "varHeight", "m"),
+                                      _basicData("Estatura",
+                                          client.clientHeight!, "m"),
                                       const SizedBox(width: 10),
-                                      _basicData("Peso", "varWeight", "Kg"),
+                                      _basicData(
+                                          "Peso", client.clientWeight!, "Kg"),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
@@ -124,21 +124,23 @@ late ClientEntity _datos;
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _garmentSize('Blusa', "varSize01"),
+                                      _garmentSize('Blusa', client.blouseSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Pantalón', "varSize02"),
+                                      _garmentSize(
+                                          'Pantalón', client.pantSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Falda', "varSize03"),
+                                      _garmentSize('Falda', client.skirtSize!),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      _garmentSize('Brassiere', "varSize04"),
+                                      _garmentSize(
+                                          'Brassiere', client.braSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Panty', "varSize05"),
+                                      _garmentSize('Panty', client.pantySize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Calzado', "varSize06"),
+                                      _garmentSize('Calzado', client.shoeSize!),
                                     ],
                                   ),
                                 ],
@@ -174,14 +176,14 @@ late ClientEntity _datos;
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              _basicField(
-                                                  'Contorno cuello', "var1"),
+                                              _basicField('Contorno cuello',
+                                                  client.contCuel!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'Ancho hombro', "var2"),
+                                              _basicField('Ancho hombro',
+                                                  client.anchHomb!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'Ancho cuello', "var3"),
+                                              _basicField('Ancho cuello',
+                                                  client.anchCuel!),
                                             ],
                                           ))
                                         ],
@@ -201,14 +203,14 @@ late ClientEntity _datos;
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              _basicField(
-                                                  'Ancho de espalda', "var4"),
+                                              _basicField('Ancho de espalda',
+                                                  client.anchEspa!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'Contorno busto', "var5"),
+                                              _basicField('Contorno busto',
+                                                  client.contBust!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'Con torno tórax', "var6"),
+                                              _basicField('Con torno tórax',
+                                                  client.contTora!),
                                             ],
                                           ))
                                         ],
@@ -228,14 +230,14 @@ late ClientEntity _datos;
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
-                                              _basicField(
-                                                  'Contorno cintura', "var7"),
+                                              _basicField('Contorno cintura',
+                                                  client.contCint!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'L. talle-espalda', "var8"),
+                                              _basicField('L. talle-espalda',
+                                                  client.largTalEsp!),
                                               const SizedBox(width: 10),
-                                              _basicField(
-                                                  'L. talle delantero', "var9"),
+                                              _basicField('L. talle delantero',
+                                                  client.largTalDel!),
                                             ],
                                           ))
                                         ],
@@ -275,13 +277,14 @@ late ClientEntity _datos;
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        _basicField('Altura de busto', "var10"),
+                                        _basicField('Altura de busto',
+                                            client.altuBust!),
                                         const SizedBox(width: 10),
-                                        _basicField(
-                                            'Separación busto', "var11"),
+                                        _basicField('Separación busto',
+                                            client.sepaBust!),
                                         const SizedBox(width: 10),
-                                        _basicField(
-                                            'Largo total brazo', "var12"),
+                                        _basicField('Largo total brazo',
+                                            client.largTotBra!),
                                       ],
                                     ))
                                   ],
@@ -301,12 +304,14 @@ late ClientEntity _datos;
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
+                                        _basicField('L. brazo al codo',
+                                            client.largBraCod!),
+                                        const SizedBox(width: 10),
                                         _basicField(
-                                            'L. brazo al codo', "var13"),
+                                            'Contorno brazo', client.contBraz!),
                                         const SizedBox(width: 10),
-                                        _basicField('Contorno brazo', "var14"),
-                                        const SizedBox(width: 10),
-                                        _basicField('Contorno cadera', "var15"),
+                                        _basicField('Contorno cadera',
+                                            client.contCade!),
                                       ],
                                     ))
                                   ],
@@ -326,12 +331,14 @@ late ClientEntity _datos;
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
+                                        _basicField('Altura de cadera',
+                                            client.altuCade!),
+                                        const SizedBox(width: 10),
+                                        _basicField('Cont 1/2 cadera',
+                                            client.contMedCade!),
+                                        const SizedBox(width: 10),
                                         _basicField(
-                                            'Altura de cadera', "var16"),
-                                        const SizedBox(width: 10),
-                                        _basicField('Cont 1/2 cadera', "var17"),
-                                        const SizedBox(width: 10),
-                                        _basicField('Largo de tiro', "var18"),
+                                            'Largo de tiro', client.largTiro!),
                                       ],
                                     ))
                                   ],
@@ -374,13 +381,14 @@ late ClientEntity _datos;
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        _basicField(
-                                            'Largo total pierna', "var19"),
+                                        _basicField('Largo total pierna',
+                                            client.largTotPie!),
                                         const SizedBox(width: 10),
-                                        _basicField('Contorno pierna', "var20"),
+                                        _basicField('Contorno pierna',
+                                            client.contPier!),
                                         const SizedBox(width: 10),
-                                        _basicField(
-                                            'Largo a la rodilla', "var21"),
+                                        _basicField('Largo a la rodilla',
+                                            client.largRodi!),
                                       ],
                                     ))
                                   ],
@@ -404,8 +412,7 @@ late ClientEntity _datos;
                             const SizedBox(height: 5),
                             Row(
                               children: [
-                                _observ(
-                                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi uter"),
+                                _observ(client.observ!),
                               ],
                             ),
                           ],
@@ -525,6 +532,8 @@ late ClientEntity _datos;
     String _fieldValue = fieldValue;
     String _sufix = sufix;
 
+    if (_fieldValue == "-") _sufix = "";
+
     return Flexible(
         child: Column(
       mainAxisSize: MainAxisSize.max,
@@ -545,7 +554,7 @@ late ClientEntity _datos;
             width: 100,
             decoration: const BoxDecoration(),
             child: Text(
-              "$_fieldValue $sufix",
+              "$_fieldValue $_sufix",
               textAlign: TextAlign.center,
             ))
       ],
@@ -576,7 +585,7 @@ late ClientEntity _datos;
             width: 100,
             decoration: const BoxDecoration(),
             child: Text(
-              "$_fieldValue",
+              _fieldValue,
               textAlign: TextAlign.center,
             ))
       ],
@@ -586,6 +595,9 @@ late ClientEntity _datos;
   Widget _basicField(String fieldLabel, String fieldValue) {
     String _fieldLabel = fieldLabel;
     String _fieldValue = fieldValue;
+    String _sufix = "cm";
+
+    if (_fieldValue == "-") _sufix = "";
 
     return Flexible(
         child: Column(
@@ -607,7 +619,7 @@ late ClientEntity _datos;
             width: 100,
             decoration: const BoxDecoration(),
             child: Text(
-              "$_fieldValue cm",
+              "$_fieldValue $_sufix",
               textAlign: TextAlign.center,
             ))
       ],
@@ -615,6 +627,10 @@ late ClientEntity _datos;
   }
 
   Widget _observ(String observ) {
+    String _observ = observ;
+
+    if (_observ == "-") _observ = "";
+
     return Flexible(
         child: SizedBox(
             width: 330,
