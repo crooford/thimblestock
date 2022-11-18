@@ -152,52 +152,136 @@ class ClientEntity {
         "clientEmail": clientEmail,
 
 // card 1
-      if (clientAge != null && clientAge!.isNotEmpty) "clientAge": clientAge,
+      if (clientAge != null && clientAge!.isNotEmpty)
+        "clientAge": clientAge
+      else
+        "clientAge": "-",
       if (clientHeight != null && clientHeight!.isNotEmpty)
-        "clientHeight": clientHeight,
+        "clientHeight": clientHeight
+      else
+        "clientHeight": "-",
       if (clientWeight != null && clientWeight!.isNotEmpty)
-        "clientWeight": clientWeight,
+        "clientWeight": clientWeight
+      else
+        "clientWeight": "-",
       if (blouseSize != null && blouseSize!.isNotEmpty)
-        "blouseSize": blouseSize,
-      if (pantSize != null && pantSize!.isNotEmpty) "pantSize": pantSize,
-      if (skirtSize != null && skirtSize!.isNotEmpty) "skirtSize": skirtSize,
-      if (braSize != null && braSize!.isNotEmpty) "braSize": braSize,
-      if (pantySize != null && pantySize!.isNotEmpty) "pantySize": pantySize,
-      if (shoeSize != null && shoeSize!.isNotEmpty) "shoeSize": shoeSize,
+        "blouseSize": blouseSize
+      else
+        "blouseSize": "-",
+      if (pantSize != null && pantSize!.isNotEmpty)
+        "pantSize": pantSize
+      else
+        "pantSize": "-",
+      if (skirtSize != null && skirtSize!.isNotEmpty)
+        "skirtSize": skirtSize
+      else
+        "skirtSize": "-",
+      if (braSize != null && braSize!.isNotEmpty)
+        "braSize": braSize
+      else
+        "braSize": "-",
+      if (pantySize != null && pantySize!.isNotEmpty)
+        "pantySize": pantySize
+      else
+        "pantySize": "-",
+      if (shoeSize != null && shoeSize!.isNotEmpty)
+        "shoeSize": shoeSize
+      else
+        "shoeSize": "-",
 
 ////card 2
-      if (contCuel != null && contCuel!.isNotEmpty) "contCuel": contCuel,
-      if (anchHomb != null && anchHomb!.isNotEmpty) "anchHomb": anchHomb,
-      if (anchCuel != null && anchCuel!.isNotEmpty) "anchCuel": anchCuel,
-      if (anchEspa != null && anchEspa!.isNotEmpty) "anchEspa": anchEspa,
-      if (contBust != null && contBust!.isNotEmpty) "contBust": contBust,
-      if (contTora != null && contTora!.isNotEmpty) "contTora": contTora,
-      if (contCint != null && contCint!.isNotEmpty) "contCint": contCint,
+      if (contCuel != null && contCuel!.isNotEmpty)
+        "contCuel": contCuel
+      else
+        "contCuel": "-",
+      if (anchHomb != null && anchHomb!.isNotEmpty)
+        "anchHomb": anchHomb
+      else
+        "anchHomb": "-",
+      if (anchCuel != null && anchCuel!.isNotEmpty)
+        "anchCuel": anchCuel
+      else
+        "anchCuel": "-",
+      if (anchEspa != null && anchEspa!.isNotEmpty)
+        "anchEspa": anchEspa
+      else
+        "anchEspa": "-",
+      if (contBust != null && contBust!.isNotEmpty)
+        "contBust": contBust
+      else
+        "contBust": "-",
+      if (contTora != null && contTora!.isNotEmpty)
+        "contTora": contTora
+      else
+        "contTora": "-",
+      if (contCint != null && contCint!.isNotEmpty)
+        "contCint": contCint
+      else
+        "contCint": "-",
       if (largTalEsp != null && largTalEsp!.isNotEmpty)
-        "largTalEsp": largTalEsp,
+        "largTalEsp": largTalEsp
+      else
+        "largTalEsp": "-",
       if (largTalDel != null && largTalDel!.isNotEmpty)
-        "largTalDel": largTalDel,
+        "largTalDel": largTalDel
+      else
+        "largTalDel": "-",
 
 // card 3
-      if (altuBust != null && altuBust!.isNotEmpty) "altuBust": altuBust,
-      if (sepaBust != null && sepaBust!.isNotEmpty) "sepaBust": sepaBust,
+      if (altuBust != null && altuBust!.isNotEmpty)
+        "altuBust": altuBust
+      else
+        "altuBust": "-",
+      if (sepaBust != null && sepaBust!.isNotEmpty)
+        "sepaBust": sepaBust
+      else
+        "sepaBust": "-",
       if (largTotBra != null && largTotBra!.isNotEmpty)
-        "largTotBra": largTotBra,
+        "largTotBra": largTotBra
+      else
+        "largTotBra": "-",
       if (largBraCod != null && largBraCod!.isNotEmpty)
-        "largBraCod": largBraCod,
-      if (contBraz != null && contBraz!.isNotEmpty) "contBraz": contBraz,
-      if (contCade != null && contCade!.isNotEmpty) "contCade": contCade,
-      if (altuCade != null && altuCade!.isNotEmpty) "altuCade": altuCade,
+        "largBraCod": largBraCod
+      else
+        "largBraCod": "-",
+      if (contBraz != null && contBraz!.isNotEmpty)
+        "contBraz": contBraz
+      else
+        "contBraz": "-",
+      if (contCade != null && contCade!.isNotEmpty)
+        "contCade": contCade
+      else
+        "contCade": "-",
+      if (altuCade != null && altuCade!.isNotEmpty)
+        "altuCade": altuCade
+      else
+        "altuCade": "-",
       if (contMedCade != null && contMedCade!.isNotEmpty)
-        "contMedCade": contMedCade,
-      if (largTiro != null && largTiro!.isNotEmpty) "largTiro": largTiro,
+        "contMedCade": contMedCade
+      else
+        "contMedCade": "-",
+      if (largTiro != null && largTiro!.isNotEmpty)
+        "largTiro": largTiro
+      else
+        "largTiro": "-",
 
       // card 4
       if (largTotPie != null && largTotPie!.isNotEmpty)
-        "largTotPie": largTotPie,
-      if (contPier != null && contPier!.isNotEmpty) "contPier": contPier,
-      if (largRodi != null && largRodi!.isNotEmpty) "largRodi": largRodi,
-      if (observ != null && observ!.isNotEmpty) "observ": observ,
+        "largTotPie": largTotPie
+      else
+        "largTotPie": "-",
+      if (contPier != null && contPier!.isNotEmpty)
+        "contPier": contPier
+      else
+        "contPier": "-",
+      if (largRodi != null && largRodi!.isNotEmpty)
+        "largRodi": largRodi
+      else
+        "largRodi": "-",
+      if (observ != null && observ!.isNotEmpty)
+        "observ": observ
+      else
+        "observ": "-",
     };
   }
 

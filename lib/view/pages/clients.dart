@@ -58,11 +58,10 @@ class _ClientsPageState extends State<ClientsPage> {
                     ),
                     onTap: () {
                       // TODO: Debe redirigir a los datos del cliente especifico
-
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OneClientPage(),
+                          builder: (context) => OneClientPage(client: _list[index]),
                         ),
                       );
                     },
@@ -99,6 +98,6 @@ class _ClientsPageState extends State<ClientsPage> {
   }
 
   _callPhone(String s) async {
-    bool? res = await FlutterPhoneDirectCaller.callNumber(s);
+    await FlutterPhoneDirectCaller.callNumber(s);
   }
 }
