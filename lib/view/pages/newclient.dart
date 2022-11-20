@@ -9,6 +9,7 @@ class NewClientPage extends StatelessWidget {
   late final ClientEntity _client;
   late final ClientController _controller;
 
+
   NewClientPage({super.key}) {
     _client = ClientEntity();
     _controller = ClientController();
@@ -19,6 +20,7 @@ class NewClientPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _client.clientAvatar = 'assets/clientDefault.jpg';
     return Scaffold(
       appBar: CusAppBar(pageTitle: 'Nuevo Cliente'),
       body: Padding(
