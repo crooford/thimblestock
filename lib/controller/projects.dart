@@ -11,4 +11,7 @@ class ProjectController {
   Future<void> save(ProjectEntity client) async {
     await _repository.editProject(client);
   }
+  Future<List<ProjectEntity>> listAll(String id) async {
+    return await _repository.getAllByUserId(id);
+  }
 }
