@@ -48,7 +48,7 @@ class _ClientsPageState extends State<ClientsPage> {
                   itemBuilder: (context, index) => ListTile(
                     leading: const CircleAvatar(),
                     title: Text(_list[index].clientName!),
-                    subtitle: Text(_list[index].clientId!),
+                    subtitle: Text(_list[index].clientPhone!),
                     trailing: IconButton(
                       icon: const Icon(Icons.phone),
                       onPressed: () {

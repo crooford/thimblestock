@@ -1,14 +1,17 @@
+
+import 'dart:io';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/view/pages/capture_image.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
-class NewClientPage extends StatelessWidget {
+class NewClientPage extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
-
 
   NewClientPage({super.key}) {
     _client = ClientEntity();
@@ -19,8 +22,12 @@ class NewClientPage extends StatelessWidget {
   }
 
   @override
+  State<NewClientPage> createState() => _NewClientPageState();
+}
+
+class _NewClientPageState extends State<NewClientPage> {
+  @override
   Widget build(BuildContext context) {
-    _client.clientAvatar = 'assets/clientDefault.jpg';
     return Scaffold(
       appBar: CusAppBar(pageTitle: 'Nuevo Cliente'),
       body: Padding(
@@ -33,6 +40,8 @@ class NewClientPage extends StatelessWidget {
   }
 
   Widget _formclient(BuildContext context) {
+    // widget._client.clientAvatar ??= 'assets/clientDefault.jpg';
+
     final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
@@ -42,28 +51,39 @@ class NewClientPage extends StatelessWidget {
               child: Stack(
             children: [
               Column(
-                children:  [
+                children: const [
                   CircleAvatar(
-                    backgroundColor: const Color(0xFF17B890),
+                    backgroundColor: Color(0xFF17B890),
                     radius: 55,
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage(_client.clientAvatar!),
+                      backgroundImage: AssetImage('assets/clientDefault.jpg'),
                     ),
                   )
                 ],
               ),
               SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: IconButton(
-                    icon: const Icon(Icons.camera_alt),
-                    alignment: Alignment.bottomRight,
-                    color: const Color(0xFF3185FC),
-                    onPressed: () {
-                      // TODO Tomar foto o agregar desde archivo
-                    },
-                  ))
+                width: 120,
+                height: 120,
+                child: IconButton(
+                  icon: const Icon(Icons.camera_alt),
+                  alignment: Alignment.bottomRight,
+                  color: const Color(0xFF3185FC),
+                  onPressed: () async {
+                    final nav = Navigator.of(context);
+
+                    final cameras = await availableCameras();
+                    final camera = cameras.first;
+                    var imagePath = await nav.push<String>(
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            CaptureImageWidget(camera: camera),
+                      ),
+                    );
+                    widget._client.clientAvatar = imagePath;
+                  },
+                ),
+              )
             ],
           )),
           Column(
@@ -80,13 +100,13 @@ class NewClientPage extends StatelessWidget {
                             height: 8,
                           ),
                           _clientName(validateRequiredField, (newValue) {
-                            _client.clientName = newValue!;
+                            widget._client.clientName = newValue!;
                           }),
                           _clientPhone(validateRequiredField, (newValue) {
-                            _client.clientPhone = newValue!;
+                            widget._client.clientPhone = newValue!;
                           }),
                           _clientEmail(validateRequiredField, (newValue) {
-                            _client.clientEmail = newValue!;
+                            widget._client.clientEmail = newValue!;
                           }),
                         ],
                       ))),
@@ -112,15 +132,17 @@ class NewClientPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         _age((newValue) {
-                                          _client.clientAge = newValue!;
+                                          widget._client.clientAge = newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _height((newValue) {
-                                          _client.clientHeight = newValue!;
+                                          widget._client.clientHeight =
+                                              newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _weight((newValue) {
-                                          _client.clientWeight = newValue!;
+                                          widget._client.clientWeight =
+                                              newValue!;
                                         }),
                                       ],
                                     ),
@@ -130,15 +152,15 @@ class NewClientPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         _garmentSize('Blusa', (newValue) {
-                                          _client.blouseSize = newValue!;
+                                          widget._client.blouseSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _garmentSize('Pantalón', (newValue) {
-                                          _client.pantSize = newValue!;
+                                          widget._client.pantSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _garmentSize('Falda', (newValue) {
-                                          _client.skirtSize = newValue!;
+                                          widget._client.skirtSize = newValue!;
                                         }),
                                       ],
                                     ),
@@ -146,15 +168,15 @@ class NewClientPage extends StatelessWidget {
                                     Row(
                                       children: [
                                         _garmentSize('Brassiere', (newValue) {
-                                          _client.braSize = newValue!;
+                                          widget._client.braSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _garmentSize('Panty', (newValue) {
-                                          _client.pantySize = newValue!;
+                                          widget._client.pantySize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
                                         _garmentSize('Calzado', (newValue) {
-                                          _client.shoeSize = newValue!;
+                                          widget._client.shoeSize = newValue!;
                                         }),
                                       ],
                                     ),
@@ -187,17 +209,20 @@ class NewClientPage extends StatelessWidget {
                                               children: [
                                                 _basicField('Contorno cuello',
                                                     (newValue) {
-                                                  _client.contCuel = newValue!;
+                                                  widget._client.contCuel =
+                                                      newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField('Ancho hombro',
                                                     (newValue) {
-                                                  _client.anchHomb = newValue!;
+                                                  widget._client.anchHomb =
+                                                      newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField('Ancho cuello',
                                                     (newValue) {
-                                                  _client.anchCuel = newValue!;
+                                                  widget._client.anchCuel =
+                                                      newValue!;
                                                 }),
                                               ],
                                             ))
@@ -220,17 +245,20 @@ class NewClientPage extends StatelessWidget {
                                               children: [
                                                 _basicField('Ancho de espalda',
                                                     (newValue) {
-                                                  _client.anchEspa = newValue!;
+                                                  widget._client.anchEspa =
+                                                      newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField('Contorno busto',
                                                     (newValue) {
-                                                  _client.contBust = newValue!;
+                                                  widget._client.contBust =
+                                                      newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField('Con torno tórax',
                                                     (newValue) {
-                                                  _client.contTora = newValue!;
+                                                  widget._client.contTora =
+                                                      newValue!;
                                                 }),
                                               ],
                                             ))
@@ -253,19 +281,20 @@ class NewClientPage extends StatelessWidget {
                                               children: [
                                                 _basicField('Contorno cintura',
                                                     (newValue) {
-                                                  _client.contCint = newValue!;
+                                                  widget._client.contCint =
+                                                      newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField('L. talle-espalda',
                                                     (newValue) {
-                                                  _client.largTalEsp =
+                                                  widget._client.largTalEsp =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField(
                                                     'L. talle delantero',
                                                     (newValue) {
-                                                  _client.largTalDel =
+                                                  widget._client.largTalDel =
                                                       newValue!;
                                                 }),
                                               ],
@@ -302,17 +331,18 @@ class NewClientPage extends StatelessWidget {
                                         children: [
                                           _basicField('Altura de busto',
                                               (newValue) {
-                                            _client.altuBust = newValue!;
+                                            widget._client.altuBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Separación busto',
                                               (newValue) {
-                                            _client.sepaBust = newValue!;
+                                            widget._client.sepaBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Largo total brazo',
                                               (newValue) {
-                                            _client.largTotBra = newValue!;
+                                            widget._client.largTotBra =
+                                                newValue!;
                                           }),
                                         ],
                                       ))
@@ -335,17 +365,18 @@ class NewClientPage extends StatelessWidget {
                                         children: [
                                           _basicField('L. brazo al codo',
                                               (newValue) {
-                                            _client.largBraCod = newValue!;
+                                            widget._client.largBraCod =
+                                                newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Contorno brazo',
                                               (newValue) {
-                                            _client.contBraz = newValue!;
+                                            widget._client.contBraz = newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Contorno cadera',
                                               (newValue) {
-                                            _client.contCade = newValue!;
+                                            widget._client.contCade = newValue!;
                                           }),
                                         ],
                                       ))
@@ -368,17 +399,18 @@ class NewClientPage extends StatelessWidget {
                                         children: [
                                           _basicField('Altura de cadera',
                                               (newValue) {
-                                            _client.altuCade = newValue!;
+                                            widget._client.altuCade = newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Cont 1/2 cadera',
                                               (newValue) {
-                                            _client.contMedCade = newValue!;
+                                            widget._client.contMedCade =
+                                                newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Largo de tiro',
                                               (newValue) {
-                                            _client.largTiro = newValue!;
+                                            widget._client.largTiro = newValue!;
                                           }),
                                         ],
                                       ))
@@ -417,17 +449,18 @@ class NewClientPage extends StatelessWidget {
                                         children: [
                                           _basicField('Largo total pierna',
                                               (newValue) {
-                                            _client.largTotPie = newValue!;
+                                            widget._client.largTotPie =
+                                                newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Contorno pierna',
                                               (newValue) {
-                                            _client.contPier = newValue!;
+                                            widget._client.contPier = newValue!;
                                           }),
                                           const SizedBox(width: 10),
                                           _basicField('Largo a la rodilla',
                                               (newValue) {
-                                            _client.largRodi = newValue!;
+                                            widget._client.largRodi = newValue!;
                                           }),
                                         ],
                                       ))
@@ -450,7 +483,7 @@ class NewClientPage extends StatelessWidget {
                               Row(
                                 children: [
                                   _observ((newValue) {
-                                    _client.observ = newValue!;
+                                    widget._client.observ = newValue!;
                                   }),
                                 ],
                               ),
@@ -468,14 +501,17 @@ class NewClientPage extends StatelessWidget {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     try {
-                      await _controller.save(_client);
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      final mess = ScaffoldMessenger.of(context);
+                      final nav = Navigator.of(context);
+
+                      await widget._controller.save(widget._client);
+                      mess.showSnackBar(
                         const SnackBar(
                           content: Text("Información de cliente registrada"),
                         ),
                       );
                       // Volver a la pantalla anterior
-                      Navigator.pop(context);
+                      nav.pop();
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
