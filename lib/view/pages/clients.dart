@@ -48,20 +48,21 @@ class _ClientsPageState extends State<ClientsPage> {
                   itemBuilder: (context, index) => ListTile(
                     leading: const CircleAvatar(),
                     title: Text(_list[index].clientName!),
-                    subtitle: Text(_list[index].clientPhone!),
+                    subtitle: Text(_list[index].clientId!),
                     trailing: IconButton(
                       icon: const Icon(Icons.phone),
                       onPressed: () {
-                        // Realizar la llamada Telefonica
+                        // Realizar llamada Telefonica al cliente
                         _callPhone(_list[index].clientPhone!);
                       },
                     ),
                     onTap: () {
-                      // TODO: Debe redirigir a los datos del cliente especifico
+                      // redirige a los datos del cliente especifico
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => OneClientPage(client: _list[index]),
+                          builder: (context) =>
+                              OneClientPage(client: _list[index]),
                         ),
                       );
                     },

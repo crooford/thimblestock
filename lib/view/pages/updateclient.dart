@@ -3,15 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
+import 'clients.dart';
 
-class NewClientPage extends StatelessWidget {
+class UpdateClientPage extends StatelessWidget {
   final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
 
-
-  NewClientPage({super.key}) {
-    _client = ClientEntity();
+  UpdateClientPage(ClientEntity client, {super.key}) {
+    _client = client;
     _controller = ClientController();
     _pref.then((pref) {
       _client.user = pref.getString("uid");
@@ -20,9 +20,8 @@ class NewClientPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _client.clientAvatar = 'assets/clientDefault.jpg';
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Nuevo Cliente'),
+      appBar: CusAppBar(pageTitle: 'Actualizar Información'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -42,13 +41,13 @@ class NewClientPage extends StatelessWidget {
               child: Stack(
             children: [
               Column(
-                children:  [
+                children: const [
                   CircleAvatar(
-                    backgroundColor: const Color(0xFF17B890),
+                    backgroundColor: Color(0xFF17B890),
                     radius: 55,
                     child: CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage(_client.clientAvatar!),
+                      backgroundImage: AssetImage('assets/clientDefault.jpg'),
                     ),
                   )
                 ],
@@ -129,15 +128,21 @@ class NewClientPage extends StatelessWidget {
                                     const SizedBox(height: 10),
                                     Row(
                                       children: [
-                                        _garmentSize('Blusa', (newValue) {
+                                        _garmentSize(
+                                            _client.blouseSize!, 'Blusa',
+                                            (newValue) {
                                           _client.blouseSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Pantalón', (newValue) {
+                                        _garmentSize(
+                                            _client.pantSize!, 'Pantalón',
+                                            (newValue) {
                                           _client.pantSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Falda', (newValue) {
+                                        _garmentSize(
+                                            _client.skirtSize!, 'Falda',
+                                            (newValue) {
                                           _client.skirtSize = newValue!;
                                         }),
                                       ],
@@ -145,15 +150,21 @@ class NewClientPage extends StatelessWidget {
                                     const SizedBox(height: 20),
                                     Row(
                                       children: [
-                                        _garmentSize('Brassiere', (newValue) {
+                                        _garmentSize(
+                                            _client.braSize!, 'Brassiere',
+                                            (newValue) {
                                           _client.braSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Panty', (newValue) {
+                                        _garmentSize(
+                                            _client.pantySize!, 'Panty',
+                                            (newValue) {
                                           _client.pantySize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Calzado', (newValue) {
+                                        _garmentSize(
+                                            _client.shoeSize!, 'Calzado',
+                                            (newValue) {
                                           _client.shoeSize = newValue!;
                                         }),
                                       ],
@@ -185,18 +196,19 @@ class NewClientPage extends StatelessWidget {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                _basicField('Contorno cuello',
+                                                _basicField(_client.contCuel,
+                                                    'Contorno cuello',
                                                     (newValue) {
                                                   _client.contCuel = newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Ancho hombro',
-                                                    (newValue) {
+                                                _basicField(_client.anchHomb,
+                                                    'Ancho hombro', (newValue) {
                                                   _client.anchHomb = newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Ancho cuello',
-                                                    (newValue) {
+                                                _basicField(_client.anchCuel,
+                                                    'Ancho cuello', (newValue) {
                                                   _client.anchCuel = newValue!;
                                                 }),
                                               ],
@@ -218,17 +230,20 @@ class NewClientPage extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                _basicField('Ancho de espalda',
+                                                _basicField(_client.anchEspa,
+                                                    'Ancho de espalda',
                                                     (newValue) {
                                                   _client.anchEspa = newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Contorno busto',
+                                                _basicField(_client.contBust,
+                                                    'Contorno busto',
                                                     (newValue) {
                                                   _client.contBust = newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Con torno tórax',
+                                                _basicField(_client.contTora,
+                                                    'Con torno tórax',
                                                     (newValue) {
                                                   _client.contTora = newValue!;
                                                 }),
@@ -251,18 +266,20 @@ class NewClientPage extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                _basicField('Contorno cintura',
+                                                _basicField(_client.contCint,
+                                                    'Contorno cintura',
                                                     (newValue) {
                                                   _client.contCint = newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('L. talle-espalda',
+                                                _basicField(_client.largTalEsp,
+                                                    'L. talle-espalda',
                                                     (newValue) {
                                                   _client.largTalEsp =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField(
+                                                _basicField(_client.largTalDel,
                                                     'L. talle delantero',
                                                     (newValue) {
                                                   _client.largTalDel =
@@ -300,18 +317,18 @@ class NewClientPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Altura de busto',
-                                              (newValue) {
+                                          _basicField(_client.altuBust,
+                                              'Altura de busto', (newValue) {
                                             _client.altuBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Separación busto',
-                                              (newValue) {
+                                          _basicField(_client.sepaBust,
+                                              'Separación busto', (newValue) {
                                             _client.sepaBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo total brazo',
-                                              (newValue) {
+                                          _basicField(_client.largTotBra,
+                                              'Largo total brazo', (newValue) {
                                             _client.largTotBra = newValue!;
                                           }),
                                         ],
@@ -333,18 +350,18 @@ class NewClientPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('L. brazo al codo',
-                                              (newValue) {
+                                          _basicField(_client.largBraCod,
+                                              'L. brazo al codo', (newValue) {
                                             _client.largBraCod = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno brazo',
-                                              (newValue) {
+                                          _basicField(_client.contBraz,
+                                              'Contorno brazo', (newValue) {
                                             _client.contBraz = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno cadera',
-                                              (newValue) {
+                                          _basicField(_client.contCade,
+                                              'Contorno cadera', (newValue) {
                                             _client.contCade = newValue!;
                                           }),
                                         ],
@@ -366,17 +383,18 @@ class NewClientPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Altura de cadera',
-                                              (newValue) {
+                                          _basicField(_client.altuCade,
+                                              'Altura de cadera', (newValue) {
                                             _client.altuCade = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Cont 1/2 cadera',
-                                              (newValue) {
+                                          _basicField(_client.contMedCade,
+                                              'Cont 1/2 cadera', (newValue) {
                                             _client.contMedCade = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo de tiro',
+                                          _basicField(
+                                              _client.largTiro, 'Largo de tiro',
                                               (newValue) {
                                             _client.largTiro = newValue!;
                                           }),
@@ -415,18 +433,18 @@ class NewClientPage extends StatelessWidget {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Largo total pierna',
-                                              (newValue) {
+                                          _basicField(_client.largTotPie,
+                                              'Largo total pierna', (newValue) {
                                             _client.largTotPie = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno pierna',
-                                              (newValue) {
+                                          _basicField(_client.contPier,
+                                              'Contorno pierna', (newValue) {
                                             _client.contPier = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo a la rodilla',
-                                              (newValue) {
+                                          _basicField(_client.largRodi,
+                                              'Largo a la rodilla', (newValue) {
                                             _client.largRodi = newValue!;
                                           }),
                                         ],
@@ -449,7 +467,7 @@ class NewClientPage extends StatelessWidget {
                               const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  _observ((newValue) {
+                                  _observ(_client.observ, (newValue) {
                                     _client.observ = newValue!;
                                   }),
                                 ],
@@ -468,14 +486,18 @@ class NewClientPage extends StatelessWidget {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
                     try {
+                      final mess = ScaffoldMessenger.of(context);
+                      final nav = Navigator.of(context);
+
                       await _controller.save(_client);
-                      ScaffoldMessenger.of(context).showSnackBar(
+                      mess.showSnackBar(
                         const SnackBar(
                           content: Text("Información de cliente registrada"),
                         ),
                       );
                       // Volver a la pantalla anterior
-                      Navigator.pop(context);
+                      nav.pushReplacement(MaterialPageRoute(
+                          builder: (context) => const ClientsPage()));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -503,11 +525,14 @@ class NewClientPage extends StatelessWidget {
 
   Widget _clientName(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientName == "-" ? inVal = "" : inVal = _client.clientName!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+                initialValue: inVal,
                 maxLength: 60,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
@@ -529,11 +554,14 @@ class NewClientPage extends StatelessWidget {
 
   Widget _clientPhone(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientPhone == "-" ? inVal = "" : inVal = _client.clientPhone!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+                initialValue: inVal,
                 maxLength: 25,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -555,9 +583,13 @@ class NewClientPage extends StatelessWidget {
 
   Widget _clientEmail(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientEmail == "-" ? inVal = "" : inVal = _client.clientEmail!;
+
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
+            initialValue: inVal,
             maxLength: 25,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
@@ -573,8 +605,12 @@ class NewClientPage extends StatelessWidget {
   }
 
   Widget _age(FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientAge == "-" ? inVal = "" : inVal = _client.clientAge!;
+
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -589,8 +625,11 @@ class NewClientPage extends StatelessWidget {
   }
 
   Widget _height(FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientHeight == "-" ? inVal = "" : inVal = _client.clientHeight!;
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -605,8 +644,11 @@ class NewClientPage extends StatelessWidget {
   }
 
   Widget _weight(FormFieldSetter<String?> save) {
+    String inVal;
+    _client.clientWeight == "-" ? inVal = "" : inVal = _client.clientWeight!;
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -620,11 +662,17 @@ class NewClientPage extends StatelessWidget {
             onSaved: save));
   }
 
-  Widget _garmentSize(String fieldLabel, FormFieldSetter<String?> save) {
+  Widget _garmentSize(
+      dynamic garment, String fieldLabel, FormFieldSetter<String?> save) {
+    var _garment = garment;
+    String inVal;
+    _garment == "-" || _garment == 'null' ? inVal = "" : inVal = _garment;
+
     String _fieldLabel = fieldLabel;
 
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -637,7 +685,12 @@ class NewClientPage extends StatelessWidget {
             onSaved: save));
   }
 
-  Widget _basicField(String fieldLabel, FormFieldSetter<String?> save) {
+  Widget _basicField(
+      dynamic measure, String fieldLabel, FormFieldSetter<String?> save) {
+    var _measure = measure;
+    String inVal;
+    _measure == "-" || _measure == 'null' ? inVal = "" : inVal = _measure;
+
     String _fieldLabel = fieldLabel;
 
     return Flexible(
@@ -659,6 +712,7 @@ class NewClientPage extends StatelessWidget {
             width: 100,
             decoration: const BoxDecoration(),
             child: TextFormField(
+                initialValue: inVal,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -672,9 +726,14 @@ class NewClientPage extends StatelessWidget {
     ));
   }
 
-  Widget _observ(FormFieldSetter<String?> save) {
+  Widget _observ(dynamic observ, FormFieldSetter<String?> save) {
+    var _observ = observ;
+    String inVal;
+    _observ == "-" || _observ == 'null' ? inVal = "" : inVal = _observ;
+
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             minLines: 4,
