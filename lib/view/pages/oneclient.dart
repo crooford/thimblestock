@@ -44,7 +44,7 @@ class OneClientPage extends StatelessWidget {
               radius: 55,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/cliente01.jpg'),
+                backgroundImage: AssetImage('assets/clientDefault.jpg'),
               ),
             )
           ],
