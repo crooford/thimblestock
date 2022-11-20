@@ -1,85 +1,150 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import '../../model/entity/projects.dart';
 import '../pages/newproject.dart';
 import '../widgets/customAppBar.dart';
-class OneProjectPage extends StatefulWidget {
-  const OneProjectPage
-({super.key});
 
-  @override
-  State<OneProjectPage> createState () => _OneProjectPageState();
-}
-
-class _OneProjectPageState extends State<OneProjectPage> {
+class OneProjectPage extends StatelessWidget {
+  ProjectEntity project;
+  OneProjectPage ({super.key , required this.project});
   @override
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Datos Proyecto'),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(children: [
-            Column(children:[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text("Nombre del cliente",
-                        style: TextStyle(
-                          
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                
-               
-                ],),
-
-              const Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
-                child: Text("Especificaciones del Proyecto",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-              ),
-              const Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 40),
-                  child: Text("Informacion detallada del proyecto, tal como: color de la tela, tipo de prenda, modificaciones adicionales. Informacion detallada del proyecto, tal como: color de la tela, tipo de prenda, modificaciones adicionales. Informacion detallada del proyecto, tal como: color de la tela, tipo de prenda, modificaciones adicionales.",
-                  style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.normal,
-                            
-                          ),)
-                ),
-            
-            ],),
-
-            Padding(
-              padding: const EdgeInsets.all(9.0),
-              child: Column(children:[
-                TableCalendar(
-                  firstDay: DateTime.utc(2010,01,01),
-                  lastDay: DateTime.utc(2040,12,31),
-                  focusedDay: DateTime.now(),
-                ),
-              ],),
-            ),   
-          ],),
+        appBar: CusAppBar(pageTitle: 'Datos del Proyecto'),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: _project(context),
+          ),
         ),
-      ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit),
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const NewProject(),
+              builder: (context) =>  NewProject(),
             ),
           );
         },
       ),  
     );
   }
+  Widget _project(BuildContext context) {
+    return Column(
+            children: [
+              Card(
+                elevation: 5,
+                color: const Color(0xFFFBFBF2),
+                child: SizedBox(
+                        width: 350,
+                        height: 200,
+                        child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                        children: [
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          _projectName(project.projectName!),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          _description(project.details!),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          // _dateProject(project.date!),
+                                        ],
+                                      ),
+                              )
+                      )
+              ),
+            ],
+          );
+  }
+
+  Widget _projectName(String nameProject) {
+    String _nameProject = nameProject;
+    return Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Nombre del Proyecto:",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _nameProject,
+              textAlign: TextAlign.start,
+            ))
+      ],
+    ));
+  }
+
+  Widget _description(String description) {
+    String _description = description;
+    return  Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Descripcion del Proyecto:",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _description,
+              textAlign: TextAlign.start,
+            ))
+      ],
+    ));
+  }
+
+  Widget _dateProject(DateTime date ) {
+    DateTime _dateProject = date;
+    return Padding(
+      padding: const EdgeInsets.all(9.0),
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 10,
+          ),
+          const Text("Fecha de entrega"),
+          TableCalendar(
+            firstDay: DateTime.utc(2010, 01, 01),
+            lastDay: DateTime.utc(2040, 12, 31),
+            focusedDay: DateTime.now(),
+            
+          ),
+          
+        ],
+    
+      ),
+    );
+  }
 }
+
+

@@ -22,4 +22,24 @@ class ProjectRepository {
         toFirestore: (value, options) => value.toFirestore())
         .add(project);
   }
+  
+  Future<List<ProjectEntity>> getAllByUserId(String id) async {
+    var query = await _collection
+        .where("user", isEqualTo: id)
+        .withConverter<ProjectEntity>(
+            fromFirestore: ProjectEntity.fromFirestore,
+            toFirestore: (value, options) => value.toFirestore())
+        .get();
+
+    var projects= query.docs.cast().map<ProjectEntity>((e) {
+      var projects = e.data();
+      projects.user = e.id;
+      return projects;
+    });
+    // clients.sort((a, b) => a.clientName.compareTo(b.clientName));
+    return projects.toList()
+      ..sort((a, b) =>
+          a.clientName!.toLowerCase().compareTo(b.clientName!.toLowerCase()));
+  }
+
 }

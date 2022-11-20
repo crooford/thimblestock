@@ -1,16 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thimblestock/view/pages/newproject.dart';
 import 'package:thimblestock/view/pages/oneproject.dart';
 
+import '../../controller/projects.dart';
+import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
 
 
 
 
-class ProjectsPage extends StatelessWidget {
+class ProjectsPage extends StatefulWidget {
   const ProjectsPage ({super.key});
+  @override
+  State<ProjectsPage> createState() => _ProjectsPageState();
 
-  
+} 
+
+class _ProjectsPageState extends State<ProjectsPage> {  
+  List<ProjectEntity> _list = [];
+  final _pref = SharedPreferences.getInstance();
+  final _projectController = ProjectController();
+
+  @override
+  void initState() {
+    super.initState();
+    _listProjects();
+  }
+
   @override
   Widget build(BuildContext context) {
     final lista = _listProjects();
@@ -22,29 +39,20 @@ class ProjectsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-              child: Row(
-                children: [
-                  const Text("Barra de Busqueda"),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                    child: IconButton(
-                      icon:const Icon(Icons.search),
-                      onPressed: (){},
-                    ),
-                  )
-                ],
-              ),
+            const Padding(
+              padding:  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+              child:  Text("Listado de Projectos" , style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),)
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: lista.length,
+                itemCount: _list.length,
                 itemBuilder: (context, index) => ListTile(
                   leading: const CircleAvatar(),
-                  title: Text(lista[index]),
-                  subtitle: const Text("Nombre proyecto - fecha de entrega"),
+                  title: Text(_list[index].projectName!),
+                  subtitle: Text(_list[index].projectName!),
                   trailing: IconButton(
                     icon: const Icon(Icons.view_headline),
                     onPressed: () {
@@ -57,7 +65,7 @@ class ProjectsPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const OneProjectPage(),
+                        builder: (context) =>  OneProjectPage(project: _list[index]),
                       ),
                     );
                   }, 
@@ -70,24 +78,29 @@ class ProjectsPage extends StatelessWidget {
 
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const NewProject(),
+              builder: (context) => NewProject(),
             ),
           );
+          if (!mounted) return;
+            _listProjects();
         },
       ),
     );
   }
 
-  List<String> _listProjects() {
-    //TODO:  Base de Datos
-
-    return List<String>.generate(
-      5,
-      (index) => "Cliente ${index + 1}",
-    );
+  void _listProjects() {
+    _pref.then((pref) {
+      var id = pref.getString("uid") ?? "";
+      _projectController.listAll(id).then((value) {
+        setState(() {
+          _list = value;
+        });
+      });
+    });
+    
   }
 }
