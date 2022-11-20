@@ -15,4 +15,8 @@ class ClientController {
   Future<List<ClientEntity>> listAll(String id) async {
     return await _repository.getAllByUserId(id);
   }
+
+  Future<void> update(ClientEntity client) async {
+    return;
+  }
 }

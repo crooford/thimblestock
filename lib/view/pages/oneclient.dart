@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'updateclient.dart';
 
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
-import 'newclient.dart';
+
 
 class OneClientPage extends StatelessWidget {
   ClientEntity client;
@@ -25,7 +26,7 @@ class OneClientPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => NewClientPage(),
+                builder: (context) => UpdateClientPage(client),  // añadir logica para enviar datos a formulario
               ),
             );
           },

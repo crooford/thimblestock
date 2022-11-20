@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 
 class ClientEntity {
-  late String? id;
+  late String? clientId;
   // personal information
   late String? user;
   late String? clientAvatar;
@@ -50,7 +49,7 @@ class ClientEntity {
   late String? observ;
 
   ClientEntity(
-      {this.user,
+      {this.clientId,
       this.clientAvatar,
       this.clientName,
       this.clientPhone,
@@ -93,7 +92,7 @@ class ClientEntity {
     var data = snapshot.data();
 
     return ClientEntity(
-        user: data?["user"],
+        clientId: snapshot.id,
         clientAvatar: data?["clientAvatar"],
         clientName: data?["clientName"],
         clientPhone: data?["clientPhone"],

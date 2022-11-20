@@ -17,11 +17,20 @@ class ClientRepository {
   } */
 
   Future<void> editClient(ClientEntity client) async {
-    _collection
-        .withConverter<ClientEntity>(
-            fromFirestore: ClientEntity.fromFirestore,
-            toFirestore: (value, options) => value.toFirestore())
-        .add(client);
+    if (client.clientId != null) {
+      _collection
+          .withConverter<ClientEntity>(
+              fromFirestore: ClientEntity.fromFirestore,
+              toFirestore: (value, options) => value.toFirestore())
+          .doc(client.clientId)
+          .set(client, SetOptions(merge: true));
+    } else {
+      _collection
+          .withConverter<ClientEntity>(
+              fromFirestore: ClientEntity.fromFirestore,
+              toFirestore: (value, options) => value.toFirestore())
+          .add(client);
+    }
   }
 
   Future<List<ClientEntity>> getAllByUserId(String id) async {
@@ -34,7 +43,7 @@ class ClientRepository {
 
     var clients = query.docs.cast().map<ClientEntity>((e) {
       var client = e.data();
-      client.id = e.id;
+      client.user = e.id;
       return client;
     });
     // clients.sort((a, b) => a.clientName.compareTo(b.clientName));
@@ -42,4 +51,6 @@ class ClientRepository {
       ..sort((a, b) =>
           a.clientName!.toLowerCase().compareTo(b.clientName!.toLowerCase()));
   }
+
+  Future<void> updateClient(ClientEntity client) async {}
 }
