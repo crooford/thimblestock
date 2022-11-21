@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/login.dart';
 import '../../controller/request/login.dart';
-
 import 'RegistroPage.dart';
 import 'dashboard.dart';
 
 class LoginWidget extends StatelessWidget {
+  final _pref = SharedPreferences.getInstance();
+
   final _imageUrl = "assets/maniqui.png";
   late LoginController _controller;
-  late LoginRequest request;
+  late LoginRequest _request;
 
   LoginWidget({super.key}) {
     _controller = LoginController();
-    request = LoginRequest();
+    _request = LoginRequest();
   }
 
   @override
@@ -28,7 +30,7 @@ class LoginWidget extends StatelessWidget {
                 alignment: const AlignmentDirectional(-1, -1),
                 child: Image.asset(
                   'assets/logoverde.png',
-                  width: 150,
+                  width: 100,
                 ),
               ),
               Flexible(
@@ -53,11 +55,10 @@ class LoginWidget extends StatelessWidget {
                                 ),
                               ),
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegistroWidget()),
+                                      builder: (context) => RegistroWidget()),
                                 );
                               },
                             ),
@@ -100,44 +101,7 @@ class LoginWidget extends StatelessWidget {
           const SizedBox(height: 8),
           _campoClave(),
           const SizedBox(height: 10),
-          SizedBox(
-            width: 150,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFFFBFBF2)),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(const Color(0xFF17B890)),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ))),
-              child: const Text(
-                "Entrar",
-                style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
-              ),
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  formKey.currentState!.save();
-
-                  // TODO: Validar usuario y contraseña en BD
-                  try {
-                    _controller.validateEmailPassord(request);
-
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const DashboardPage(),
-                      ),
-                    );
-                  } catch (ex) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(SnackBar(content: Text(ex.toString())));
-                  }
-                }
-              },
-            ),
-          ),
+          _iniciarSesion(context, formKey),
         ],
       ),
     );
@@ -153,28 +117,28 @@ class LoginWidget extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.black),
         enabledBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
@@ -193,7 +157,7 @@ class LoginWidget extends StatelessWidget {
         return null;
       },
       onSaved: (value) {
-        request.email = value!;
+        _request.email = value!;
       },
     );
   }
@@ -207,28 +171,28 @@ class LoginWidget extends StatelessWidget {
         labelStyle: const TextStyle(color: Colors.black),
         enabledBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         errorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: const BorderSide(
-            color: Color(0x00000000),
+            color: Color(0x000B0A07),
             width: 1,
           ),
           borderRadius: BorderRadius.circular(25),
@@ -241,13 +205,10 @@ class LoginWidget extends StatelessWidget {
         if (value == null || value.isEmpty) {
           return "La contraseña es obligatoria";
         }
-        if (value.length < 6) {
-          return "Minimo debe contener 6 caracteres";
-        }
         return null;
       },
       onSaved: (value) {
-        request.password = value!;
+        _request.password = value!;
       },
     );
   }
@@ -256,7 +217,7 @@ class LoginWidget extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: 20),
-        const Text("O iniciar sesion con"),
+        const Text("O inicia sesión con"),
         const SizedBox(
           height: 15,
         ),
@@ -280,6 +241,53 @@ class LoginWidget extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+
+  Widget _iniciarSesion(BuildContext context, GlobalKey<FormState> formKey) {
+    return SizedBox(
+      width: 150,
+      child: ElevatedButton(
+        style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all<Color>(const Color(0xFFFBFBF2)),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(const Color(0xFF17B890)),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+            ))),
+        child: const Text(
+          "Entrar",
+          style: TextStyle(fontFamily: 'Poppins', fontSize: 14),
+        ),
+        onPressed: () async {
+          if (formKey.currentState!.validate()) {
+            formKey.currentState!.save();
+
+            // validación en BD
+            try {
+              final nav = Navigator.of(context);
+
+              var userInfo = await _controller.validateEmailPassword(_request);
+
+              var pref = await _pref;
+              pref.setString("uid", userInfo.id!);
+              pref.setString("name", userInfo.name!);
+              pref.setString("email", userInfo.email!);
+              pref.setBool("isAdmin", userInfo.isAdmin!);
+
+
+              nav.pushReplacement(MaterialPageRoute(
+                builder: (context) => const DashboardPage(),
+              ));
+            } catch (ex) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(ex.toString())));
+            }
+          }
+        },
+      ),
     );
   }
 }

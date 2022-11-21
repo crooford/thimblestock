@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/view/pages/dashboard.dart';
 
 import 'loginPage.dart';
 
@@ -6,11 +8,25 @@ class InicioWidget extends StatefulWidget {
   const InicioWidget({Key? key}) : super(key: key);
 
   @override
-  _InicioWidgetState createState () => _InicioWidgetState();
+  _InicioWidgetState createState() => _InicioWidgetState();
 }
 
 class _InicioWidgetState extends State<InicioWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _pref = SharedPreferences.getInstance();
+  Widget _init = LoginWidget();
+
+  @override
+  void initState() {
+    super.initState();
+    _pref.then((pref) {
+      if (pref.getString("uid") != null) {
+        setState(() {
+          _init = const DashboardPage();
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,16 +103,13 @@ class _InicioWidgetState extends State<InicioWidget> {
                                 shape: MaterialStateProperty.all<
                                         RoundedRectangleBorder>(
                                     RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(25.0),
-                                        side: const BorderSide(
-                                            color: Colors.red)))),
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ))),
                             onPressed: () {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          LoginWidget()));
+                                      builder: (context) => _init));
                             },
                             child: const Text(
                               "Iniciar",

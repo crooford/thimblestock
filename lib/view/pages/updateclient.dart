@@ -1,20 +1,19 @@
-
-import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thimblestock/view/pages/capture_image.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
+import 'capture_image.dart';
+import 'clients.dart';
 
-class NewClientPage extends StatefulWidget {
+class UpdateClientPage extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
 
-  NewClientPage({super.key}) {
-    _client = ClientEntity();
+  UpdateClientPage(ClientEntity client, {super.key}) {
+    _client = client;
     _controller = ClientController();
     _pref.then((pref) {
       _client.user = pref.getString("uid");
@@ -22,14 +21,14 @@ class NewClientPage extends StatefulWidget {
   }
 
   @override
-  State<NewClientPage> createState() => _NewClientPageState();
+  State<UpdateClientPage> createState() => _UpdateClientPageState();
 }
 
-class _NewClientPageState extends State<NewClientPage> {
+class _UpdateClientPageState extends State<UpdateClientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Nuevo Cliente'),
+      appBar: CusAppBar(pageTitle: 'Actualizar Información'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -40,8 +39,6 @@ class _NewClientPageState extends State<NewClientPage> {
   }
 
   Widget _formclient(BuildContext context) {
-    // widget._client.clientAvatar ??= 'assets/clientDefault.jpg';
-
     final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
@@ -151,15 +148,20 @@ class _NewClientPageState extends State<NewClientPage> {
                                     const SizedBox(height: 10),
                                     Row(
                                       children: [
-                                        _garmentSize('Blusa', (newValue) {
+                                        _garmentSize(
+                                            widget._client.blouseSize!, 'Blusa',
+                                            (newValue) {
                                           widget._client.blouseSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Pantalón', (newValue) {
+                                        _garmentSize(widget._client.pantSize!,
+                                            'Pantalón', (newValue) {
                                           widget._client.pantSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Falda', (newValue) {
+                                        _garmentSize(
+                                            widget._client.skirtSize!, 'Falda',
+                                            (newValue) {
                                           widget._client.skirtSize = newValue!;
                                         }),
                                       ],
@@ -167,15 +169,20 @@ class _NewClientPageState extends State<NewClientPage> {
                                     const SizedBox(height: 20),
                                     Row(
                                       children: [
-                                        _garmentSize('Brassiere', (newValue) {
+                                        _garmentSize(widget._client.braSize!,
+                                            'Brassiere', (newValue) {
                                           widget._client.braSize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Panty', (newValue) {
+                                        _garmentSize(
+                                            widget._client.pantySize!, 'Panty',
+                                            (newValue) {
                                           widget._client.pantySize = newValue!;
                                         }),
                                         const SizedBox(width: 10),
-                                        _garmentSize('Calzado', (newValue) {
+                                        _garmentSize(
+                                            widget._client.shoeSize!, 'Calzado',
+                                            (newValue) {
                                           widget._client.shoeSize = newValue!;
                                         }),
                                       ],
@@ -207,20 +214,24 @@ class _NewClientPageState extends State<NewClientPage> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                _basicField('Contorno cuello',
+                                                _basicField(
+                                                    widget._client.contCuel,
+                                                    'Contorno cuello',
                                                     (newValue) {
                                                   widget._client.contCuel =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Ancho hombro',
-                                                    (newValue) {
+                                                _basicField(
+                                                    widget._client.anchHomb,
+                                                    'Ancho hombro', (newValue) {
                                                   widget._client.anchHomb =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Ancho cuello',
-                                                    (newValue) {
+                                                _basicField(
+                                                    widget._client.anchCuel,
+                                                    'Ancho cuello', (newValue) {
                                                   widget._client.anchCuel =
                                                       newValue!;
                                                 }),
@@ -243,19 +254,25 @@ class _NewClientPageState extends State<NewClientPage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                _basicField('Ancho de espalda',
+                                                _basicField(
+                                                    widget._client.anchEspa,
+                                                    'Ancho de espalda',
                                                     (newValue) {
                                                   widget._client.anchEspa =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Contorno busto',
+                                                _basicField(
+                                                    widget._client.contBust,
+                                                    'Contorno busto',
                                                     (newValue) {
                                                   widget._client.contBust =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('Con torno tórax',
+                                                _basicField(
+                                                    widget._client.contTora,
+                                                    'Con torno tórax',
                                                     (newValue) {
                                                   widget._client.contTora =
                                                       newValue!;
@@ -279,19 +296,24 @@ class _NewClientPageState extends State<NewClientPage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
-                                                _basicField('Contorno cintura',
+                                                _basicField(
+                                                    widget._client.contCint,
+                                                    'Contorno cintura',
                                                     (newValue) {
                                                   widget._client.contCint =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
-                                                _basicField('L. talle-espalda',
+                                                _basicField(
+                                                    widget._client.largTalEsp,
+                                                    'L. talle-espalda',
                                                     (newValue) {
                                                   widget._client.largTalEsp =
                                                       newValue!;
                                                 }),
                                                 const SizedBox(width: 10),
                                                 _basicField(
+                                                    widget._client.largTalDel,
                                                     'L. talle delantero',
                                                     (newValue) {
                                                   widget._client.largTalDel =
@@ -329,18 +351,18 @@ class _NewClientPageState extends State<NewClientPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Altura de busto',
-                                              (newValue) {
+                                          _basicField(widget._client.altuBust,
+                                              'Altura de busto', (newValue) {
                                             widget._client.altuBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Separación busto',
-                                              (newValue) {
+                                          _basicField(widget._client.sepaBust,
+                                              'Separación busto', (newValue) {
                                             widget._client.sepaBust = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo total brazo',
-                                              (newValue) {
+                                          _basicField(widget._client.largTotBra,
+                                              'Largo total brazo', (newValue) {
                                             widget._client.largTotBra =
                                                 newValue!;
                                           }),
@@ -363,19 +385,19 @@ class _NewClientPageState extends State<NewClientPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('L. brazo al codo',
-                                              (newValue) {
+                                          _basicField(widget._client.largBraCod,
+                                              'L. brazo al codo', (newValue) {
                                             widget._client.largBraCod =
                                                 newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno brazo',
-                                              (newValue) {
+                                          _basicField(widget._client.contBraz,
+                                              'Contorno brazo', (newValue) {
                                             widget._client.contBraz = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno cadera',
-                                              (newValue) {
+                                          _basicField(widget._client.contCade,
+                                              'Contorno cadera', (newValue) {
                                             widget._client.contCade = newValue!;
                                           }),
                                         ],
@@ -397,19 +419,20 @@ class _NewClientPageState extends State<NewClientPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Altura de cadera',
-                                              (newValue) {
+                                          _basicField(widget._client.altuCade,
+                                              'Altura de cadera', (newValue) {
                                             widget._client.altuCade = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Cont 1/2 cadera',
-                                              (newValue) {
+                                          _basicField(
+                                              widget._client.contMedCade,
+                                              'Cont 1/2 cadera', (newValue) {
                                             widget._client.contMedCade =
                                                 newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo de tiro',
-                                              (newValue) {
+                                          _basicField(widget._client.largTiro,
+                                              'Largo de tiro', (newValue) {
                                             widget._client.largTiro = newValue!;
                                           }),
                                         ],
@@ -447,19 +470,19 @@ class _NewClientPageState extends State<NewClientPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
-                                          _basicField('Largo total pierna',
-                                              (newValue) {
+                                          _basicField(widget._client.largTotPie,
+                                              'Largo total pierna', (newValue) {
                                             widget._client.largTotPie =
                                                 newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Contorno pierna',
-                                              (newValue) {
+                                          _basicField(widget._client.contPier,
+                                              'Contorno pierna', (newValue) {
                                             widget._client.contPier = newValue!;
                                           }),
                                           const SizedBox(width: 10),
-                                          _basicField('Largo a la rodilla',
-                                              (newValue) {
+                                          _basicField(widget._client.largRodi,
+                                              'Largo a la rodilla', (newValue) {
                                             widget._client.largRodi = newValue!;
                                           }),
                                         ],
@@ -482,7 +505,7 @@ class _NewClientPageState extends State<NewClientPage> {
                               const SizedBox(height: 5),
                               Row(
                                 children: [
-                                  _observ((newValue) {
+                                  _observ(widget._client.observ, (newValue) {
                                     widget._client.observ = newValue!;
                                   }),
                                 ],
@@ -507,11 +530,12 @@ class _NewClientPageState extends State<NewClientPage> {
                       await widget._controller.save(widget._client);
                       mess.showSnackBar(
                         const SnackBar(
-                          content: Text("Información de cliente registrada"),
+                          content: Text("Información de cliente actualizada"),
                         ),
                       );
                       // Volver a la pantalla anterior
-                      nav.pop();
+                      nav.pushReplacement(MaterialPageRoute(
+                          builder: (context) => const ClientsPage()));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -539,11 +563,16 @@ class _NewClientPageState extends State<NewClientPage> {
 
   Widget _clientName(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientName == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientName!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+                initialValue: inVal,
                 maxLength: 60,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
@@ -565,11 +594,16 @@ class _NewClientPageState extends State<NewClientPage> {
 
   Widget _clientPhone(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientPhone == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientPhone!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+                initialValue: inVal,
                 maxLength: 25,
                 keyboardType: TextInputType.phone,
                 decoration: const InputDecoration(
@@ -591,9 +625,15 @@ class _NewClientPageState extends State<NewClientPage> {
 
   Widget _clientEmail(
       FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientEmail == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientEmail!;
+
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: TextFormField(
+            initialValue: inVal,
             maxLength: 25,
             keyboardType: TextInputType.emailAddress,
             decoration: const InputDecoration(
@@ -609,8 +649,14 @@ class _NewClientPageState extends State<NewClientPage> {
   }
 
   Widget _age(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientAge == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientAge!;
+
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -625,8 +671,13 @@ class _NewClientPageState extends State<NewClientPage> {
   }
 
   Widget _height(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientHeight == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientHeight!;
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -641,8 +692,13 @@ class _NewClientPageState extends State<NewClientPage> {
   }
 
   Widget _weight(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._client.clientWeight == "-"
+        ? inVal = ""
+        : inVal = widget._client.clientWeight!;
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.right,
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -656,11 +712,17 @@ class _NewClientPageState extends State<NewClientPage> {
             onSaved: save));
   }
 
-  Widget _garmentSize(String fieldLabel, FormFieldSetter<String?> save) {
+  Widget _garmentSize(
+      dynamic garment, String fieldLabel, FormFieldSetter<String?> save) {
+    var _garment = garment;
+    String inVal;
+    _garment == "-" || _garment == 'null' ? inVal = "" : inVal = _garment;
+
     String _fieldLabel = fieldLabel;
 
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             textAlign: TextAlign.center,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -673,7 +735,12 @@ class _NewClientPageState extends State<NewClientPage> {
             onSaved: save));
   }
 
-  Widget _basicField(String fieldLabel, FormFieldSetter<String?> save) {
+  Widget _basicField(
+      dynamic measure, String fieldLabel, FormFieldSetter<String?> save) {
+    var _measure = measure;
+    String inVal;
+    _measure == "-" || _measure == 'null' ? inVal = "" : inVal = _measure;
+
     String _fieldLabel = fieldLabel;
 
     return Flexible(
@@ -695,6 +762,7 @@ class _NewClientPageState extends State<NewClientPage> {
             width: 100,
             decoration: const BoxDecoration(),
             child: TextFormField(
+                initialValue: inVal,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -708,9 +776,14 @@ class _NewClientPageState extends State<NewClientPage> {
     ));
   }
 
-  Widget _observ(FormFieldSetter<String?> save) {
+  Widget _observ(dynamic observ, FormFieldSetter<String?> save) {
+    var _observ = observ;
+    String inVal;
+    _observ == "-" || _observ == 'null' ? inVal = "" : inVal = _observ;
+
     return Flexible(
         child: TextFormField(
+            initialValue: inVal,
             keyboardType: TextInputType.text,
             textInputAction: TextInputAction.done,
             minLines: 4,

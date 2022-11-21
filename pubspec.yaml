@@ -38,6 +38,15 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_masonry_view: ^0.0.2
+  firebase_core: ^2.1.1
+  firebase_auth: ^4.1.1
+  cloud_firestore: ^4.0.5
+  shared_preferences: ^2.0.15
+  flutter_phone_direct_caller: ^2.1.1
+  camera: ^0.10.0+4
+  path_provider: ^2.0.11
+  path: ^1.8.2
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -63,12 +72,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logoverde.png
-    - assets/thimblelogo.png
-    - assets/maniqui.png
-    - assets/appbarlogo.png
-    - assets/cliente01.jpg
-    - assets/user_avatar.png
+    - assets/
     - assets/catalogo/
     - assets/catalogo/blusas/
     - assets/catalogo/camisas/

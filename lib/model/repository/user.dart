@@ -1,42 +1,39 @@
-import '../entity/users.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../entity/user.dart';
 
 class UserRepository {
-  final _users = <String, UserEntity>{};
-
+  late final CollectionReference _collection;
   UserRepository() {
-    _users["leonnarddo@gmail.com"] = UserEntity(
-        email: "leonnarddo@gmail.com",
-        name: "Leonardo Ramirez",
-        phone: "3181234567",
-        password: "123456",
-        isAdmin: true);
-    _users["escuderocarlos23@gmail.com"] = UserEntity(
-        email: "escuderocarlos23@gmail.com",
-        name: "Carlos Escudero",
-        phone: "3101234567",
-        password: "123456",
-        isAdmin: true);
-    _users["danigv12345@gmail.com"] = UserEntity(
-        email: "danigv12345@gmail.com",
-        name: "Daniela Gil",
-        phone: "3211234567",
-        password: "123456",
-        isAdmin: true);
-    _users["usuarioregular@gmail.com"] = UserEntity(
-        email: "usuarioregular@gmail.com",
-        name: "Juanito Alimaña",
-        phone: "0001234567",
-        password: "123456",
-        isAdmin: false);
+    _collection = FirebaseFirestore.instance.collection("users");
   }
 
-  UserEntity findByEmail(String email) {
-    var user = _users[email];
+  Future<UserEntity> findByEmail(String email) async {
+    final query = await _collection
+        .where("email", isEqualTo: email)
+        .withConverter<UserEntity>(
+            fromFirestore: UserEntity.fromFirestore,
+            toFirestore: (value, options) => value.toFirestore())
+        .get();
 
-    if (user == null) {
-      throw Exception("Usuario no existe");
+    var users = query.docs.cast();
+
+    if (users.isEmpty) {
+      return Future.error("Usuario no existe");
     }
 
-    return user;
+    var user = users.first;
+    var response = user.data();
+    response.id = user.id;
+
+    return response;
+  }
+
+  Future<void> save(UserEntity user) async {
+    await _collection
+        .withConverter(
+            fromFirestore: UserEntity.fromFirestore,
+            toFirestore: (value, options) => value.toFirestore())
+        .add(user);
   }
 }

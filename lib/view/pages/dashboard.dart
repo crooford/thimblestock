@@ -10,10 +10,11 @@ class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
-  State<DashboardPage> createState () => _DashboardPageState();
+  State<DashboardPage> createState() => _DashboardPageState();
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
       context: context,
@@ -47,20 +48,21 @@ class _DashboardPageState extends State<DashboardPage> {
   }
 
   int _currentPage = 0;
-  final List<Widget> _pages = [
-    const HomePage(),
-    const ClientsPage(),
-    const CatalogPage(),
-    const ProjectsPage(),
-    const SettingsPage()
-  ];
+  List<Widget> _pages() => [
+        const HomePage(),
+        const ClientsPage(),
+        const CatalogPage(),
+        const ProjectsPage(),
+        const SettingsPage()
+      ];
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> pages = _pages();
     return WillPopScope(
       onWillPop: () => _onWillPop(context),
       child: Scaffold(
-        body: _pages[_currentPage],
+        body: pages[_currentPage],
         bottomNavigationBar: Container(
           decoration: const BoxDecoration(
             border: Border(

@@ -1,11 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../widgets/customAppBar.dart';
 import '../pages/dashboard.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final _pref = SharedPreferences.getInstance();
+  String _name = "";
+
+  @override
+  void initState() {
+    super.initState();
+
+    _pref.then((pref) {
+      setState(() {
+        _name = pref.getString("name") ?? "N/A";
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +39,8 @@ class HomePage extends StatelessWidget {
           children: [
             Center(
               child: Column(
-                children: const [
-                  CircleAvatar(
+                children: [
+                  const CircleAvatar(
                     backgroundColor: Color(0xFF17B890),
                     radius: 85,
                     child: CircleAvatar(
@@ -28,10 +48,10 @@ class HomePage extends StatelessWidget {
                       backgroundImage: AssetImage('assets/user_avatar.png'),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     "Bienvenido ",
                     style: TextStyle(
                       fontSize: 20,
@@ -39,8 +59,8 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "nomb_usuario", //esto se debe reemplazar por el nombre del usuario
-                    style: TextStyle(
+                    _name, //esto se debe reemplazar por el nombre del usuario
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
@@ -70,7 +90,7 @@ class HomePage extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) =>
-                            const DashboardPage(), // por ahora redirige a dashboard page
+                            const DashboardPage(), // por ahora redirige a homepage
                       ),
                     );
                   },

@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../controller/projects.dart';
+import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
 
 class NewProject extends StatefulWidget {
-  const NewProject({super.key});
+  final _pref = SharedPreferences.getInstance();
+  late final ProjectEntity _project;
+  late final ProjectController _controller;
+  
+  NewProject({super.key}) {
+    _project = ProjectEntity();
+    _controller = ProjectController();
+    _pref.then((pref) {
+      _project.user = pref.getString("uid");
+    });
+  }
 
   @override
   State<NewProject> createState() => _NewProjectState();
@@ -18,13 +31,13 @@ class _NewProjectState extends State<NewProject> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-          child: _formclient(context),
+          child: _formProject(context),
         ),
       ),
     );
   }
 
-  Widget _formclient(BuildContext context) {
+  Widget _formProject(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
@@ -44,26 +57,43 @@ class _NewProjectState extends State<NewProject> {
                         const SizedBox(
                           height: 10,
                         ),
-                        _clientName(),
-                        _description(),
-                        _dateProject(),
+                        _projectName((newValue) {
+                                          widget._project.projectName = newValue!;
+                                        }),
+                        _description((newValue) {
+                                          widget._project.details = newValue!;
+                                        }),
+                        _dateProject((newValue) {
+                                          widget._project.date = newValue!;
+                                        }),
                       ],
                     ),
                   ),
                 ),
                 ElevatedButton(
                   child: const Text("Guardar"),
-                  onPressed: () {
+                    onPressed: () async {
                     if (formKey.currentState!.validate()) {
-                      // TODO: Guardar los datos en la BD
+                      formKey.currentState!.save();
+                      try {
+                        final mess = ScaffoldMessenger.of(context);
+                        final nav = Navigator.of(context);
 
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Proyecto registrado"),
-                        ),
-                      );
-                      // Volver a la pantalla anterior
-                      Navigator.pop(context);
+                        await widget._controller.save(widget._project);
+                        mess.showSnackBar(
+                          const SnackBar(
+                            content: Text("Información del Proyecto registrada"),
+                          ),
+                        );
+                        // Volver a la pantalla anterior
+                        nav.pop();
+                      } catch (e) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Error: $e"),
+                          ),
+                        );
+                      }
                     }
                   },
                 ),
@@ -75,7 +105,7 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget _clientName() {
+  Widget _projectName(FormFieldSetter<String?> save) {
     return Column(
       children: [
         Padding(
@@ -89,11 +119,12 @@ class _NewProjectState extends State<NewProject> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
-                labelText: 'Nombre',
+                labelText: 'Nombre del Proyecto',
               ),
+              onSaved: save,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Debes Ingresar un nombre";
+                  return "Debes Ingresar un nombre para el proyecto";
                 }
                 return null;
               },
@@ -105,7 +136,7 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget _description() {
+  Widget _description(FormFieldSetter<String?> save) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TextFormField(
@@ -121,11 +152,12 @@ class _NewProjectState extends State<NewProject> {
           ),
           labelText: 'Especificaciones',
         ),
+        onSaved: save,
       ),
     );
   }
 
-  Widget _dateProject() {
+  Widget _dateProject(FormFieldSetter<DateTime?> save) {
     return Padding(
       padding: const EdgeInsets.all(9.0),
       child: Column(
@@ -138,8 +170,11 @@ class _NewProjectState extends State<NewProject> {
             firstDay: DateTime.utc(2010, 01, 01),
             lastDay: DateTime.utc(2040, 12, 31),
             focusedDay: DateTime.now(),
+            
           ),
+          
         ],
+    
       ),
     );
   }

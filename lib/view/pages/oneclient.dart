@@ -1,57 +1,52 @@
 import 'package:flutter/material.dart';
+import 'updateclient.dart';
 
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
-class OneClientPage extends StatelessWidget {
-  late ClientEntity _datos;
 
-  OneClientPage({super.key}) {
-    _datos = ClientEntity();
-  }
+class OneClientPage extends StatelessWidget {
+  ClientEntity client;
+
+  OneClientPage({super.key, required this.client});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Datos de Cliente'),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: _client(context),
+        appBar: CusAppBar(pageTitle: 'Datos de Cliente'),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: _client(context),
+          ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.edit),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => UpdateClientPage(client),  // añadir logica para enviar datos a formulario
+              ),
+            );
+          },
+        ));
   }
 
   Widget _client(BuildContext context) {
     return Column(
       children: [
         Center(
-            child: Stack(
-          children: [
-            Column(
-              children: const [
-                CircleAvatar(
-                  backgroundColor: Color(0xFF17B890),
-                  radius: 55,
-                  child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: AssetImage('assets/cliente01.jpg'),
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-                width: 120,
-                height: 120,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt),
-                  alignment: Alignment.bottomRight,
-                  color: const Color(0xFF3185FC),
-                  onPressed: () {
-                    // TODO Tomar foto o agregar desde archivo
-                  },
-                ))
+            child: Column(
+          children: const [
+            CircleAvatar(
+              backgroundColor: Color(0xFF17B890),
+              radius: 55,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/clientDefault.jpg'),
+              ),
+            )
           ],
         )),
         Column(
@@ -62,21 +57,24 @@ class OneClientPage extends StatelessWidget {
                 child: SizedBox(
                     width: 350,
                     height: 200,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 8,
-                        ),
-                        _clientName(validateRequiredField, (newValue) {
-                          _datos.clientName = newValue!;
-                        }),
-                        _clientPhone(validateRequiredField, (newValue) {
-                          _datos.clientPhone = newValue!;
-                        }),
-                        _clientEmail((newValue) {
-                          _datos.clientEmail = newValue!;
-                        }),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          _clientName(client.clientName!),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          _clientPhone(client.clientPhone!),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          _clientEmail(client.clientEmail!),
+                        ],
+                      ),
                     ))),
             const SizedBox(
               height: 12,
@@ -95,55 +93,55 @@ class OneClientPage extends StatelessWidget {
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  const Text("Datos Básicos"),
+                                  const SizedBox(height: 10),
+                                  const Text("Datos Básicos",
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF17B890),
+                                      )),
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _age((newValue) {
-                                        _datos.clientAge = newValue!;
-                                      }),
+                                      _basicData(
+                                          "Edad", client.clientAge!, "años"),
                                       const SizedBox(width: 10),
-                                      _height((newValue) {
-                                        _datos.clientHeight = newValue!;
-                                      }),
+                                      _basicData("Estatura",
+                                          client.clientHeight!, "m"),
                                       const SizedBox(width: 10),
-                                      _weight((newValue) {
-                                        _datos.clientWeight = newValue!;
-                                      }),
+                                      _basicData(
+                                          "Peso", client.clientWeight!, "Kg"),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
-                                  const Text("Tallas generales"),
+                                  const Text("Tallas generales",
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF17B890),
+                                      )),
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _garmentSize('Blusa', (newValue) {
-                                        _datos.blouseSize = newValue!;
-                                      }),
+                                      _garmentSize('Blusa', client.blouseSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Pantalón', (newValue) {
-                                        _datos.pantSize = newValue!;
-                                      }),
+                                      _garmentSize(
+                                          'Pantalón', client.pantSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Falda', (newValue) {
-                                        _datos.skirtSize = newValue!;
-                                      }),
+                                      _garmentSize('Falda', client.skirtSize!),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
                                   Row(
                                     children: [
-                                      _garmentSize('Brassiere', (newValue) {
-                                        _datos.braSize = newValue!;
-                                      }),
+                                      _garmentSize(
+                                          'Brassiere', client.braSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Panty', (newValue) {
-                                        _datos.pantySize = newValue!;
-                                      }),
+                                      _garmentSize('Panty', client.pantySize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Calzado', (newValue) {
-                                        _datos.shoeSize = newValue!;
-                                      }),
+                                      _garmentSize('Calzado', client.shoeSize!),
                                     ],
                                   ),
                                 ],
@@ -158,8 +156,15 @@ class OneClientPage extends StatelessWidget {
                               padding: const EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  const Text("Medidas específicas 1 de 3"),
-                                  const SizedBox(height: 15),
+                                  const SizedBox(height: 10),
+                                  const Text("Medidas específicas 1 de 3",
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Color(0xFF17B890),
+                                      )),
+                                  const SizedBox(height: 25),
                                   Row(
                                     children: [
                                       Flexible(
@@ -173,26 +178,20 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               _basicField('Contorno cuello',
-                                                  (newValue) {
-                                                _datos.contCuel = newValue!;
-                                              }),
+                                                  client.contCuel!),
                                               const SizedBox(width: 10),
                                               _basicField('Ancho hombro',
-                                                  (newValue) {
-                                                _datos.anchHomb = newValue!;
-                                              }),
+                                                  client.anchHomb!),
                                               const SizedBox(width: 10),
                                               _basicField('Ancho cuello',
-                                                  (newValue) {
-                                                _datos.anchCuel = newValue!;
-                                              }),
+                                                  client.anchCuel!),
                                             ],
                                           ))
                                         ],
                                       ))
                                     ],
                                   ),
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 25),
                                   Row(
                                     children: [
                                       Flexible(
@@ -206,26 +205,20 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               _basicField('Ancho de espalda',
-                                                  (newValue) {
-                                                _datos.anchEspa = newValue!;
-                                              }),
+                                                  client.anchEspa!),
                                               const SizedBox(width: 10),
                                               _basicField('Contorno busto',
-                                                  (newValue) {
-                                                _datos.contBust = newValue!;
-                                              }),
+                                                  client.contBust!),
                                               const SizedBox(width: 10),
                                               _basicField('Con torno tórax',
-                                                  (newValue) {
-                                                _datos.contTora = newValue!;
-                                              }),
+                                                  client.contTora!),
                                             ],
                                           ))
                                         ],
                                       ))
                                     ],
                                   ),
-                                  const SizedBox(height: 12),
+                                  const SizedBox(height: 25),
                                   Row(
                                     children: [
                                       Flexible(
@@ -239,19 +232,13 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               _basicField('Contorno cintura',
-                                                  (newValue) {
-                                                _datos.contCint = newValue!;
-                                              }),
+                                                  client.contCint!),
                                               const SizedBox(width: 10),
                                               _basicField('L. talle-espalda',
-                                                  (newValue) {
-                                                _datos.largTalEsp = newValue!;
-                                              }),
+                                                  client.largTalEsp!),
                                               const SizedBox(width: 10),
                                               _basicField('L. talle delantero',
-                                                  (newValue) {
-                                                _datos.largTalDel = newValue!;
-                                              }),
+                                                  client.largTalDel!),
                                             ],
                                           ))
                                         ],
@@ -270,8 +257,15 @@ class OneClientPage extends StatelessWidget {
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
                           children: [
-                            const Text("Medidas específicas 2 de 3"),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
+                            const Text("Medidas específicas 2 de 3",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF17B890),
+                                )),
+                            const SizedBox(height: 25),
                             Row(
                               children: [
                                 Flexible(
@@ -285,26 +279,20 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Altura de busto',
-                                            (newValue) {
-                                          _datos.altuBust = newValue!;
-                                        }),
+                                            client.altuBust!),
                                         const SizedBox(width: 10),
                                         _basicField('Separación busto',
-                                            (newValue) {
-                                          _datos.sepaBust = newValue!;
-                                        }),
+                                            client.sepaBust!),
                                         const SizedBox(width: 10),
                                         _basicField('Largo total brazo',
-                                            (newValue) {
-                                          _datos.largTotBra = newValue!;
-                                        }),
+                                            client.largTotBra!),
                                       ],
                                     ))
                                   ],
                                 ))
                               ],
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 25),
                             Row(
                               children: [
                                 Flexible(
@@ -318,26 +306,20 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('L. brazo al codo',
-                                            (newValue) {
-                                          _datos.largBraCod = newValue!;
-                                        }),
+                                            client.largBraCod!),
                                         const SizedBox(width: 10),
-                                        _basicField('Contorno brazo',
-                                            (newValue) {
-                                          _datos.contBraz = newValue!;
-                                        }),
+                                        _basicField(
+                                            'Contorno brazo', client.contBraz!),
                                         const SizedBox(width: 10),
                                         _basicField('Contorno cadera',
-                                            (newValue) {
-                                          _datos.contCade = newValue!;
-                                        }),
+                                            client.contCade!),
                                       ],
                                     ))
                                   ],
                                 ))
                               ],
                             ),
-                            const SizedBox(height: 12),
+                            const SizedBox(height: 25),
                             Row(
                               children: [
                                 Flexible(
@@ -351,19 +333,13 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Altura de cadera',
-                                            (newValue) {
-                                          _datos.altuCade = newValue!;
-                                        }),
+                                            client.altuCade!),
                                         const SizedBox(width: 10),
                                         _basicField('Cont 1/2 cadera',
-                                            (newValue) {
-                                          _datos.contMedCade = newValue!;
-                                        }),
+                                            client.contMedCade!),
                                         const SizedBox(width: 10),
-                                        _basicField('Largo de tiro',
-                                            (newValue) {
-                                          _datos.largTiro = newValue!;
-                                        }),
+                                        _basicField(
+                                            'Largo de tiro', client.largTiro!),
                                       ],
                                     ))
                                   ],
@@ -385,8 +361,15 @@ class OneClientPage extends StatelessWidget {
                         padding: const EdgeInsets.all(10.0),
                         child: Column(
                           children: [
-                            const Text("Medidas específicas 3 de 3"),
-                            const SizedBox(height: 15),
+                            const SizedBox(height: 10),
+                            const Text("Medidas específicas 3 de 3",
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  color: Color(0xFF17B890),
+                                )),
+                            const SizedBox(height: 25),
                             Row(
                               children: [
                                 Flexible(
@@ -400,42 +383,37 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Largo total pierna',
-                                            (newValue) {
-                                          _datos.largTotPie = newValue!;
-                                        }),
+                                            client.largTotPie!),
                                         const SizedBox(width: 10),
                                         _basicField('Contorno pierna',
-                                            (newValue) {
-                                          _datos.contPier = newValue!;
-                                        }),
+                                            client.contPier!),
                                         const SizedBox(width: 10),
                                         _basicField('Largo a la rodilla',
-                                            (newValue) {
-                                          _datos.largRodi = newValue!;
-                                        }),
+                                            client.largRodi!),
                                       ],
                                     ))
                                   ],
                                 ))
                               ],
                             ),
-                            const SizedBox(height: 5),
+                            const SizedBox(height: 25),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [
-                                Text(
-                                  "Observaciones:",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 14),
-                                ),
+                                Text("Observaciones:",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xFF17B890),
+                                    )),
                               ],
                             ),
                             const SizedBox(height: 5),
                             Row(
                               children: [
-                                _observ((newValue) {
-                                  _datos.observ = newValue!;
-                                }),
+                                _observ(client.observ!),
                               ],
                             ),
                           ],
@@ -446,7 +424,7 @@ class OneClientPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 8),            
+            const SizedBox(height: 8),
           ],
         ),
       ],
@@ -460,154 +438,21 @@ class OneClientPage extends StatelessWidget {
     return null;
   }
 
-  Widget _clientName(
-      FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
-    return Column(
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: TextFormField(
-                maxLength: 60,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(6),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  labelText: 'Nombre',
-                ),
-                validator: validate,
-                onSaved: save)),
-        const SizedBox(
-          height: 5,
-        ),
-      ],
-    );
-  }
-
-  Widget _clientPhone(
-      FormFieldValidator<String?> validate, FormFieldSetter<String?> save) {
-    return Column(
-      children: [
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: TextFormField(
-                maxLength: 25,
-                keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(6),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(6)),
-                  ),
-                  labelText: 'Teléfono',
-                ),
-                validator: validate,
-                onSaved: save)),
-        const SizedBox(
-          height: 5,
-        ),
-      ],
-    );
-  }
-
-  Widget _clientEmail(FormFieldSetter<String?> save) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: TextFormField(
-            maxLength: 25,
-            keyboardType: TextInputType.emailAddress,
-            decoration: const InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all(6),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(6)),
-              ),
-              labelText: 'E-Mail',
-            ),
-            onSaved: save));
-  }
-
-  Widget _age(FormFieldSetter<String?> save) {
-    return Flexible(
-        child: TextFormField(
-            textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: '00',
-              isDense: true,
-              contentPadding: EdgeInsets.all(8),
-              suffix: Text(' años'),
-              border: OutlineInputBorder(),
-              labelText: 'Edad',
-            ),
-            onSaved: save));
-  }
-
-  Widget _height(FormFieldSetter<String?> save) {
-    return Flexible(
-        child: TextFormField(
-            textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: '00.0',
-              isDense: true,
-              contentPadding: EdgeInsets.all(8),
-              suffix: Text(' m'),
-              border: OutlineInputBorder(),
-              labelText: 'Estatura',
-            ),
-            onSaved: save));
-  }
-
-  Widget _weight(FormFieldSetter<String?> save) {
-    return Flexible(
-        child: TextFormField(
-            textAlign: TextAlign.right,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: '00.0',
-              isDense: true,
-              contentPadding: EdgeInsets.all(8),
-              suffix: Text(' Kg'),
-              border: OutlineInputBorder(),
-              labelText: 'Peso',
-            ),
-            onSaved: save));
-  }
-
-  Widget _garmentSize(String fieldLabel, FormFieldSetter<String?> save) {
-    String _fieldLabel = fieldLabel;
-
-    return Flexible(
-        child: TextFormField(
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              hintText: '',
-              isDense: true,
-              contentPadding: const EdgeInsets.all(8),
-              border: const OutlineInputBorder(),
-              labelText: _fieldLabel,
-            ),
-            onSaved: save));
-  }
-
-  Widget _basicField(String fieldLabel, FormFieldSetter<String?> save) {
-    String _fieldLabel = fieldLabel;
+  Widget _clientName(String name) {
+    String _name = name;
 
     return Flexible(
         child: Column(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(_fieldLabel,
-            style: const TextStyle(
+        const Text("Nombre:",
+            style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 12,
-              fontWeight: FontWeight.normal,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
             )),
         const SizedBox(
           height: 3,
@@ -615,33 +460,185 @@ class OneClientPage extends StatelessWidget {
         Container(
             width: 100,
             decoration: const BoxDecoration(),
-            child: TextFormField(
-                textAlign: TextAlign.center,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(8),
-                  suffix: Text(' cm'),
-                  border: OutlineInputBorder(),
-                ),
-                onSaved: save))
+            child: Text(
+              _name,
+              textAlign: TextAlign.start,
+            ))
       ],
     ));
   }
 
-  Widget _observ(FormFieldSetter<String?> save) {
+  Widget _clientPhone(String phone) {
+    String _phone = phone;
+
     return Flexible(
-        child: TextFormField(
-            keyboardType: TextInputType.text,
-            textInputAction: TextInputAction.done,
-            minLines: 4,
-            maxLines: 4,
-            decoration: const InputDecoration(
-              isDense: true,
-              contentPadding: EdgeInsets.all(8),
-              hintText: "Alergias, gustos, etc.",
-              border: OutlineInputBorder(),
-            ),
-            onSaved: save));
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Teléfono:",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _phone,
+              textAlign: TextAlign.start,
+            ))
+      ],
+    ));
+  }
+
+  Widget _clientEmail(String email) {
+    String _email = email;
+
+    return Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Email:",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _email,
+              textAlign: TextAlign.start,
+            ))
+      ],
+    ));
+  }
+
+  Widget _basicData(String fieldLabel, String fieldValue, String sufix) {
+    String _fieldLabel = fieldLabel;
+    String _fieldValue = fieldValue;
+    String _sufix = sufix;
+
+    if (_fieldValue == "-") _sufix = "";
+
+    return Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(_fieldLabel,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              "$_fieldValue $_sufix",
+              textAlign: TextAlign.center,
+            ))
+      ],
+    ));
+  }
+
+  Widget _garmentSize(String fieldLabel, String fieldValue) {
+    String _fieldLabel = fieldLabel;
+    String _fieldValue = fieldValue;
+
+    return Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(_fieldLabel,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _fieldValue,
+              textAlign: TextAlign.center,
+            ))
+      ],
+    ));
+  }
+
+  Widget _basicField(String fieldLabel, String fieldValue) {
+    String _fieldLabel = fieldLabel;
+    String _fieldValue = fieldValue;
+    String _sufix = "cm";
+
+    if (_fieldValue == "-") _sufix = "";
+
+    return Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(_fieldLabel,
+            style: const TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              "$_fieldValue $_sufix",
+              textAlign: TextAlign.center,
+            ))
+      ],
+    ));
+  }
+
+  Widget _observ(String observ) {
+    String _observ = observ;
+
+    if (_observ == "-") _observ = "";
+
+    return Flexible(
+        child: SizedBox(
+            width: 330,
+            child: Text(
+              observ,
+              maxLines: 5,
+              overflow: TextOverflow.ellipsis,
+            )));
   }
 }

@@ -6,7 +6,7 @@ import 'onecatalog.dart';
 //import '../widgets/barraNavAbajo.dart';\
 class CatalogPage extends StatelessWidget {
   const CatalogPage({super.key});
-
+ 
   @override
   Widget build(BuildContext context) {
     var lista = _listCatalogo();
