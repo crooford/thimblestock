@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +33,7 @@ class _ClientsPageState extends State<ClientsPage> {
     return Scaffold(
         appBar: CusAppBar(pageTitle: "Clientes"),
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,19 +44,73 @@ class _ClientsPageState extends State<ClientsPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(
+                height: 16,
+              ),
               Expanded(
                 child: ListView.builder(
                   itemCount: _list.length,
                   itemBuilder: (context, index) => ListTile(
-                    leading: const CircleAvatar(),
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundImage: _list[index].clientAvatar != null
+                          ? FileImage(File(_list[index].clientAvatar!))
+                          : const AssetImage('assets/clientDefault.jpg')
+                              as ImageProvider,
+                    ),
                     title: Text(_list[index].clientName!),
                     subtitle: Text(_list[index].clientPhone!),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.phone),
-                      onPressed: () {
-                        // Realizar llamada Telefonica al cliente
-                        _callPhone(_list[index].clientPhone!);
-                      },
+                    trailing: PopupMenuButton(
+                      itemBuilder: (context) => [
+                        PopupMenuItem(
+                          child: InkWell(
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.phone,
+                                  color: Color(0xFF17B890),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Llamar cliente"),
+                              ],
+                            ),
+                            onTap: () {
+                              _callPhone(_list[index].clientPhone!);
+                            },
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.edit,
+                                color: Color(0xFF17B890),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text("Editar cliente"),
+                            ],
+                          ),
+                        ),
+                        PopupMenuItem(
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.delete_forever_rounded,
+                                color: Color(0xFF17B890),
+                              ),
+                              Text("Borrar cliente"),
+                            ],
+                          ),
+                        ),
+                      ],
+                      child: const Icon(
+                        Icons.more_horiz_rounded,
+                        size: 30.0,
+                      ),
                     ),
                     onTap: () {
                       // redirige a los datos del cliente especifico

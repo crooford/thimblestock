@@ -1,9 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'updateclient.dart';
 
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
-
 
 class OneClientPage extends StatelessWidget {
   ClientEntity client;
@@ -26,7 +27,8 @@ class OneClientPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UpdateClientPage(client),  // añadir logica para enviar datos a formulario
+                builder: (context) => UpdateClientPage(
+                    client), // añadir logica para enviar datos a formulario
               ),
             );
           },
@@ -38,13 +40,19 @@ class OneClientPage extends StatelessWidget {
       children: [
         Center(
             child: Column(
-          children: const [
+          children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF17B890),
+              backgroundColor: const Color(0xFF17B890),
               radius: 55,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/clientDefault.jpg'),
+                backgroundImage: client.clientAvatar != null
+                    ? FileImage(File(client.clientAvatar!))
+                    : const AssetImage('assets/clientDefault.jpg')
+                        as ImageProvider,
+                // FileImage(File(client.clientAvatar!))
+                // backgroundImage: FileImage(File('/data/user/0/com.example.thimblestock/cache/CAP6212320448003122403.jpg')),
+                // backgroundImage: AssetImage('assets/clientDefault.jpg'),
               ),
             )
           ],
