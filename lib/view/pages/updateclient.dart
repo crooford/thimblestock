@@ -1,10 +1,9 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
-import 'capture_image.dart';
+import '../widgets/photo_avatar.dart';
 import 'clients.dart';
 
 class UpdateClientPage extends StatefulWidget {
@@ -44,45 +43,7 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
       key: formKey,
       child: Column(
         children: [
-          Center(
-              child: Stack(
-            children: [
-              Column(
-                children: const [
-                  CircleAvatar(
-                    backgroundColor: Color(0xFF17B890),
-                    radius: 55,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage('assets/clientDefault.jpg'),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 120,
-                height: 120,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt),
-                  alignment: Alignment.bottomRight,
-                  color: const Color(0xFF3185FC),
-                  onPressed: () async {
-                    final nav = Navigator.of(context);
-
-                    final cameras = await availableCameras();
-                    final camera = cameras.first;
-                    var imagePath = await nav.push<String>(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CaptureImageWidget(camera: camera),
-                      ),
-                    );
-                    widget._client.clientAvatar = imagePath;
-                  },
-                ),
-              )
-            ],
-          )),
+          PhotoAvatarWidget(client: widget._client),
           Column(
             children: [
               Card(

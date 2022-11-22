@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                     height: 20,
                   ),
                   const Text(
-                    "Bienvenido ",
+                    "Hola",
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

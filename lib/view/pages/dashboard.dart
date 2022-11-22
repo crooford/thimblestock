@@ -14,7 +14,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
       context: context,

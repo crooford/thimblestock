@@ -52,5 +52,9 @@ class ClientRepository {
           a.clientName!.toLowerCase().compareTo(b.clientName!.toLowerCase()));
   }
 
-  Future<void> updateClient(ClientEntity client) async {}
+  // Future<void> updateClient(ClientEntity client) async {}
+
+  Future<void> deleteClientById(String? clientId) async {
+    await _collection.doc(clientId).delete();
+  }
 }

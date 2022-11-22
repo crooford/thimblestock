@@ -1,4 +1,4 @@
-/* import 'dart:io';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -17,9 +17,25 @@ class PhotoAvatarWidget extends StatefulWidget {
 class _PhotoAvatarWidgetState extends State<PhotoAvatarWidget> {
   @override
   Widget build(BuildContext context) {
-    Widget avatar;
-    if (widget.client.clientAvatar == null) {
-      SizedBox(
+    return Center(
+        child: Stack(
+      children: [
+        Column(
+          children: [
+            CircleAvatar(
+              backgroundColor: const Color(0xFF17B890),
+              radius: 55,
+              child: CircleAvatar(
+                radius: 50,
+                backgroundImage: widget.client.clientAvatar != null
+                    ? FileImage(File(widget.client.clientAvatar!))
+                    : const AssetImage('assets/clientDefault.jpg')
+                        as ImageProvider,
+              ),
+            )
+          ],
+        ),
+        SizedBox(
           width: 120,
           height: 120,
           child: IconButton(
@@ -36,20 +52,13 @@ class _PhotoAvatarWidgetState extends State<PhotoAvatarWidget> {
                   builder: (context) => CaptureImageWidget(camera: camera),
                 ),
               );
-
-              if (imagePath != null && imagePath.isNotEmpty) {
-                setState(() {
-                  widget.client.clientAvatar = imagePath;
-                });
-              }
+              setState(() {
+                widget.client.clientAvatar = imagePath;
+              });
             },
-          ));
-    } else {
-      avatar = CircleAvatar(
-        backgroundImage: FileImage(File(widget.client.clientAvatar!)),
-      );
-    }
-    return avatar;
+          ),
+        )
+      ],
+    ));
   }
 }
- */
