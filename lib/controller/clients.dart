@@ -19,4 +19,11 @@ class ClientController {
   Future<void> update(ClientEntity client) async {
     return;
   }
+
+  deleteclient(String? clientId) async {
+
+    return await _repository.deleteClientById(clientId);
+
+
+  }
 }

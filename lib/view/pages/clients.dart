@@ -9,6 +9,7 @@ import 'package:thimblestock/model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 import 'newclient.dart';
 import 'oneclient.dart';
+import 'updateclient.dart';
 
 class ClientsPage extends StatefulWidget {
   const ClientsPage({super.key});
@@ -82,28 +83,67 @@ class _ClientsPageState extends State<ClientsPage> {
                           ),
                         ),
                         PopupMenuItem(
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.edit,
-                                color: Color(0xFF17B890),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text("Editar cliente"),
-                            ],
+                          child: InkWell(
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.edit,
+                                  color: Color(0xFF17B890),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text("Editar cliente"),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UpdateClientPage(_list[
+                                      index]), // añadir logica para enviar datos a formulario
+                                ),
+                              );
+                            },
                           ),
                         ),
                         PopupMenuItem(
-                          child: Row(
-                            children: const [
-                              Icon(
-                                Icons.delete_forever_rounded,
-                                color: Color(0xFF17B890),
-                              ),
-                              Text("Borrar cliente"),
-                            ],
+                          child: InkWell(
+                            child: Row(
+                              children: const [
+                                Icon(
+                                  Icons.delete_forever_rounded,
+                                  color: Color(0xFF17B890),
+                                ),
+                                Text("Borrar cliente"),
+                              ],
+                            ),
+                            onTap: () async {
+                              try {
+                                final mess = ScaffoldMessenger.of(context);
+                                final nav = Navigator.of(context);
+
+                                await _clientController
+                                    .deleteclient(_list[index].clientId);
+                                mess.showSnackBar(
+                                  const SnackBar(
+                                    content: Text("El cliente ha sido borrado"),
+                                  ),
+                                );
+                                nav.push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ClientsPage(), // por ahora redirige a homepage
+                                  ),
+                                );
+                              } catch (e) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text("Error: $e"),
+                                  ),
+                                );
+                              }
+                            },
                           ),
                         ),
                       ],
