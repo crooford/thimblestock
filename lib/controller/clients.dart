@@ -20,7 +20,7 @@ class ClientController {
     return;
   }
 
-  deleteclient(String? clientId) async {
+  Future <void> deleteclient(String? clientId) async {
 
     return await _repository.deleteClientById(clientId);
 
