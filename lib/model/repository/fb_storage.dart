@@ -10,19 +10,24 @@ class FirebaseStorageRepository {
         FirebaseStorage.instanceFor(bucket: "gs://thimblestock1.appspot.com");
   }
 
-  Future<String> uploadFile(String filePath) async {
+  Future<String> uploadFile(String filePath, String folder) async {
     final file = File(filePath);
 
     final index = filePath.lastIndexOf("/") + 1;
-    final filename = filePath.substring(index);
-    
+    final fileName = filePath.substring(index);
 
     try {
-      
-      await _storage.ref("clients/photo/archivo.jpg").putFile(file);
+      final ref = _storage.ref("$folder/$fileName");
+      await ref.putFile(file);
+      return await ref.getDownloadURL();
+
     } on FirebaseException catch (e) {
-      
-    }
-    return "";
+      return Future.error("Error cargando archivo: $e");
+    }   
+  }
+
+
+  Future<void> deleteFile(String filePath) async {
+    
   }
 }

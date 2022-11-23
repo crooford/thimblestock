@@ -5,6 +5,8 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thimblestock/controller/clients.dart';
 import 'package:thimblestock/model/entity/clients.dart';
+import 'package:thimblestock/view/pages/dashboard.dart';
+import 'package:thimblestock/view/pages/home.dart';
 
 import '../widgets/customAppBar.dart';
 import 'newclient.dart';
@@ -55,7 +57,7 @@ class _ClientsPageState extends State<ClientsPage> {
                     leading: CircleAvatar(
                       radius: 30,
                       backgroundImage: _list[index].clientAvatar != null
-                          ? FileImage(File(_list[index].clientAvatar!))
+                          ? NetworkImage(_list[index].clientAvatar!)
                           : const AssetImage('assets/clientDefault.jpg')
                               as ImageProvider,
                     ),
@@ -119,30 +121,7 @@ class _ClientsPageState extends State<ClientsPage> {
                               ],
                             ),
                             onTap: () async {
-                              try {
-                                final mess = ScaffoldMessenger.of(context);
-                                final nav = Navigator.of(context);
-
-                                await _clientController
-                                    .deleteclient(_list[index].clientId);
-                                mess.showSnackBar(
-                                  const SnackBar(
-                                    content: Text("El cliente ha sido borrado"),
-                                  ),
-                                );
-                                nav.push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const ClientsPage(), // por ahora redirige a homepage
-                                  ),
-                                );
-                              } catch (e) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text("Error: $e"),
-                                  ),
-                                );
-                              }
+                              warningDelete(context, index);
                             },
                           ),
                         ),
@@ -181,6 +160,66 @@ class _ClientsPageState extends State<ClientsPage> {
             _listClients();
           },
         ));
+  }
+
+  warningDelete(BuildContext context, index) {
+    // set up the buttons
+    Widget cancel = TextButton(
+        child: const Text("Cancelar"),
+        onPressed: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  const DashboardPage(), // por ahora redirige a homepage
+            ),
+          );
+        });
+    Widget delete = TextButton(
+      child: const Text("Borrar"),
+      onPressed: () async {
+        try {
+          final mess = ScaffoldMessenger.of(context);
+          final nav = Navigator.of(context);
+
+          await _clientController.deleteclient(_list[index].clientId);
+          mess.showSnackBar(
+            const SnackBar(
+              content: Text("El cliente ha sido borrado"),
+            ),
+          );
+          nav.pushReplacement(
+            MaterialPageRoute(
+              builder: (context) =>
+                  const DashboardPage(), // por ahora redirige a homepage
+            ),
+          );
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text("Error: $e"),
+            ),
+          );
+        }
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Advertencia"),
+      content: Text(
+          "Va a borrar al cliente ${_list[index].clientName}. Esta acción es irreversible"),
+      actions: [
+        cancel,
+        delete,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   void _listClients() {

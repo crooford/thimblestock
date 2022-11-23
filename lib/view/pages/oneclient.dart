@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'updateclient.dart';
 
@@ -47,9 +45,9 @@ class OneClientPage extends StatelessWidget {
               child: CircleAvatar(
                 radius: 50,
                 backgroundImage: client.clientAvatar != null
-                    ? FileImage(File(client.clientAvatar!))
-                    : const AssetImage('assets/clientDefault.jpg')
-                        as ImageProvider,
+                    ? NetworkImage(client.clientAvatar!)
+                    : const NetworkImage(
+                        "https://firebasestorage.googleapis.com/v0/b/thimblestock1.appspot.com/o/clientDefault.jpg?alt=media&token=938d2907-f7d7-48f5-ae90-0f0d7eae8044"),
                 // FileImage(File(client.clientAvatar!))
                 // backgroundImage: FileImage(File('/data/user/0/com.example.thimblestock/cache/CAP6212320448003122403.jpg')),
                 // backgroundImage: AssetImage('assets/clientDefault.jpg'),

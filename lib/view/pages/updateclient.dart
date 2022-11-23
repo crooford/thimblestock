@@ -43,7 +43,7 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
       key: formKey,
       child: Column(
         children: [
-          PhotoAvatarWidget(client: widget._client),
+          PhotoAvatarWidget(client: widget._client, action: "update"),
           Column(
             children: [
               Card(

@@ -44,7 +44,7 @@ class _NewClientPageState extends State<NewClientPage> {
       key: formKey,
       child: Column(
         children: [
-          PhotoAvatarWidget(client: widget._client),
+          PhotoAvatarWidget(client: widget._client, action: "create"),
           Column(
             children: [
               Card(
