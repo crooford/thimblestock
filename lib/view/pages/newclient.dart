@@ -1,23 +1,28 @@
-
-import 'dart:io';
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thimblestock/view/pages/capture_image.dart';
+import 'package:thimblestock/controller/activity.dart';
+import 'package:thimblestock/model/entity/activity.dart';
 import '../../controller/clients.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
+import '../widgets/photo_avatar.dart';
 
 class NewClientPage extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
+  late final ActivityEntity _activity;
+  late final ActivityController _activitycontroller;
+  final String action = "createClient";
 
   NewClientPage({super.key}) {
     _client = ClientEntity();
     _controller = ClientController();
+    _activitycontroller = ActivityController();
+    _activity = ActivityEntity();
     _pref.then((pref) {
       _client.user = pref.getString("uid");
+      _activity.user = pref.getString("uid");
     });
   }
 
@@ -47,45 +52,7 @@ class _NewClientPageState extends State<NewClientPage> {
       key: formKey,
       child: Column(
         children: [
-          Center(
-              child: Stack(
-            children: [
-              Column(
-                children: const [
-                  CircleAvatar(
-                    backgroundColor: Color(0xFF17B890),
-                    radius: 55,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: AssetImage('assets/clientDefault.jpg'),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                width: 120,
-                height: 120,
-                child: IconButton(
-                  icon: const Icon(Icons.camera_alt),
-                  alignment: Alignment.bottomRight,
-                  color: const Color(0xFF3185FC),
-                  onPressed: () async {
-                    final nav = Navigator.of(context);
-
-                    final cameras = await availableCameras();
-                    final camera = cameras.first;
-                    var imagePath = await nav.push<String>(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            CaptureImageWidget(camera: camera),
-                      ),
-                    );
-                    widget._client.clientAvatar = imagePath;
-                  },
-                ),
-              )
-            ],
-          )),
+          PhotoAvatarWidget(client: widget._client, action: widget.action),
           Column(
             children: [
               Card(
@@ -510,6 +477,13 @@ class _NewClientPageState extends State<NewClientPage> {
                           content: Text("Información de cliente registrada"),
                         ),
                       );
+                      // Almacenar el documento de la creacion de cliente en la BD de Activities
+                      widget._activity.user = widget._client.user;
+                      widget._activity.typeOfActivity = widget.action;
+                      widget._activity.detailOfActivity =
+                          widget._client.clientName;
+                      await widget._activitycontroller
+                          .saveActivity(widget._activity);
                       // Volver a la pantalla anterior
                       nav.pop();
                     } catch (e) {
@@ -544,6 +518,7 @@ class _NewClientPageState extends State<NewClientPage> {
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+                textCapitalization: TextCapitalization.words,
                 maxLength: 60,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(

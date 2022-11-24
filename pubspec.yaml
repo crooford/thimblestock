@@ -47,6 +47,9 @@ dependencies:
   path_provider: ^2.0.11
   path: ^1.8.2
   http: ^0.13.5
+  firebase_storage: ^11.0.6
+  url_launcher: ^6.1.7
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:

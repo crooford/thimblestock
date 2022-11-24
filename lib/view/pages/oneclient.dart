@@ -4,7 +4,6 @@ import 'updateclient.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
-
 class OneClientPage extends StatelessWidget {
   ClientEntity client;
 
@@ -26,7 +25,8 @@ class OneClientPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UpdateClientPage(client),  // añadir logica para enviar datos a formulario
+                builder: (context) => UpdateClientPage(
+                    client), // añadir logica para enviar datos a formulario
               ),
             );
           },
@@ -38,13 +38,19 @@ class OneClientPage extends StatelessWidget {
       children: [
         Center(
             child: Column(
-          children: const [
+          children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF17B890),
+              backgroundColor: const Color(0xFF17B890),
               radius: 55,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/clientDefault.jpg'),
+                backgroundImage: client.clientAvatar != null
+                    ? NetworkImage(client.clientAvatar!)
+                    : const NetworkImage(
+                        "https://firebasestorage.googleapis.com/v0/b/thimblestock1.appspot.com/o/clientDefault.jpg?alt=media&token=938d2907-f7d7-48f5-ae90-0f0d7eae8044"),
+                // FileImage(File(client.clientAvatar!))
+                // backgroundImage: FileImage(File('/data/user/0/com.example.thimblestock/cache/CAP6212320448003122403.jpg')),
+                // backgroundImage: AssetImage('assets/clientDefault.jpg'),
               ),
             )
           ],

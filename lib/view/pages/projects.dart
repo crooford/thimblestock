@@ -7,17 +7,13 @@ import '../../controller/projects.dart';
 import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
 
-
-
-
 class ProjectsPage extends StatefulWidget {
-  const ProjectsPage ({super.key});
+  const ProjectsPage({super.key});
   @override
   State<ProjectsPage> createState() => _ProjectsPageState();
+}
 
-} 
-
-class _ProjectsPageState extends State<ProjectsPage> {  
+class _ProjectsPageState extends State<ProjectsPage> {
   List<ProjectEntity> _list = [];
   final _pref = SharedPreferences.getInstance();
   final _projectController = ProjectController();
@@ -30,9 +26,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
-      appBar: CusAppBar(pageTitle:"Proyectos",), // Reemplazar por appBar widget
+      appBar: CusAppBar(
+        pageTitle: "Proyectos",
+      ), // Reemplazar por appBar widget
       // Aqui va el cuerpo de la app
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -40,12 +37,14 @@ class _ProjectsPageState extends State<ProjectsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
-              padding:  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-              child:  Text("Listado de Projectos" , style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),)
-            ),
+                padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                child: Text(
+                  "Listado de Projectos",
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )),
             Expanded(
               child: ListView.builder(
                 itemCount: _list.length,
@@ -65,10 +64,11 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  OneProjectPage(project: _list[index]),
+                        builder: (context) =>
+                            OneProjectPage(project: _list[index]),
                       ),
                     );
-                  }, 
+                  },
                 ),
               ),
             )
@@ -86,7 +86,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ),
           );
           if (!mounted) return;
-            _listProjects();
+          _listProjects();
         },
       ),
     );
@@ -101,6 +101,5 @@ class _ProjectsPageState extends State<ProjectsPage> {
         });
       });
     });
-    
   }
 }
