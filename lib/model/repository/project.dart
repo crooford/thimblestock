@@ -39,7 +39,7 @@ class ProjectRepository {
     // clients.sort((a, b) => a.clientName.compareTo(b.clientName));
     return projects.toList()
       ..sort((a, b) =>
-          a.clientName!.toLowerCase().compareTo(b.clientName!.toLowerCase()));
+          a.projectName!.toLowerCase().compareTo(b.projectName!.toLowerCase()));
   }
 
 }

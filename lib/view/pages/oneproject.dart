@@ -55,7 +55,7 @@ class OneProjectPage extends StatelessWidget {
                                           const SizedBox(
                                             height: 20,
                                           ),
-                                          // _dateProject(project.date!),
+                                          _dateProject(project.date!),
                                         ],
                                       ),
                               )
@@ -123,8 +123,8 @@ class OneProjectPage extends StatelessWidget {
     ));
   }
 
-  Widget _dateProject(DateTime date ) {
-    DateTime _dateProject = date;
+  Widget _dateProject(String date ) {
+    String _dateProject = date;
     return Padding(
       padding: const EdgeInsets.all(9.0),
       child: Column(
@@ -134,9 +134,9 @@ class OneProjectPage extends StatelessWidget {
           ),
           const Text("Fecha de entrega"),
           TableCalendar(
-            firstDay: DateTime.utc(2010, 01, 01),
-            lastDay: DateTime.utc(2040, 12, 31),
-            focusedDay: DateTime.now(),
+            firstDay: DateTime(2000),
+            lastDay: DateTime(2101),
+            focusedDay: DateTime.parse(_dateProject),
             
           ),
           

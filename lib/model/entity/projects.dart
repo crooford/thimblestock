@@ -6,7 +6,7 @@ class ProjectEntity{
   late String? clientName;
   late String? clientEmail;
   late String? details;
-  late DateTime? date;
+  late String? date;
 
   ProjectEntity({
       this.user,

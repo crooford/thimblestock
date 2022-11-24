@@ -30,7 +30,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lista = _listProjects();
+   
     return Scaffold(
       appBar: CusAppBar(pageTitle:"Proyectos",), // Reemplazar por appBar widget
       // Aqui va el cuerpo de la app
@@ -52,7 +52,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 itemBuilder: (context, index) => ListTile(
                   leading: const CircleAvatar(),
                   title: Text(_list[index].projectName!),
-                  subtitle: Text(_list[index].projectName!),
+                  subtitle: Text(_list[index].projectName! +' -- '+_list[index].projectName!),
                   trailing: IconButton(
                     icon: const Icon(Icons.view_headline),
                     onPressed: () {
