@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../controller/clients.dart';
 import '../../controller/projects.dart';
+import '../../model/entity/clients.dart';
 import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
 
@@ -24,6 +28,8 @@ class NewProject extends StatefulWidget {
 }
 
 class _NewProjectState extends State<NewProject> {
+  
+  TextEditingController _date = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,21 +57,28 @@ class _NewProjectState extends State<NewProject> {
                   color: const Color(0xFFFBFBF2),
                   child: SizedBox(
                     width: 350,
-                    height: 600,
+                    height: 400,
                     child: Column(
                       children: [
                         const SizedBox(
+                          height: 40,
+                        ),
+                        _dateProject((newValue) {
+                                          widget._project.date = newValue!;
+                                        },context),
+                        const SizedBox(
                           height: 10,
                         ),
+                        _clientName((newValue) {
+                                          widget._project.clientName = newValue!;
+                                        }),
                         _projectName((newValue) {
                                           widget._project.projectName = newValue!;
                                         }),
                         _description((newValue) {
                                           widget._project.details = newValue!;
                                         }),
-                        _dateProject((newValue) {
-                                          widget._project.date = newValue!;
-                                        }),
+                        
                       ],
                     ),
                   ),
@@ -104,6 +117,36 @@ class _NewProjectState extends State<NewProject> {
       ),
     );
   }
+  Widget _clientName(FormFieldSetter<String?> save) {
+    return Column(
+      children: [
+        Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: TextFormField(
+              maxLength: 60,
+              keyboardType: TextInputType.name,
+              decoration: const InputDecoration(
+                isDense: true,
+                contentPadding: EdgeInsets.all(15),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
+                labelText: 'Nombre del Cliente',
+              ),
+              onSaved: save,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Debe Ingresar un nombre de cliente para el proyecto";
+                }
+                return null;
+              },
+            )),
+        const SizedBox(
+          height: 5,
+        ),
+      ],
+    );
+  }
 
   Widget _projectName(FormFieldSetter<String?> save) {
     return Column(
@@ -115,7 +158,7 @@ class _NewProjectState extends State<NewProject> {
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
                 isDense: true,
-                contentPadding: EdgeInsets.all(6),
+                contentPadding: EdgeInsets.all(15),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
@@ -124,7 +167,7 @@ class _NewProjectState extends State<NewProject> {
               onSaved: save,
               validator: (value) {
                 if (value == null || value.isEmpty) {
-                  return "Debes Ingresar un nombre para el proyecto";
+                  return "Debe Ingresar un nombre para el proyecto";
                 }
                 return null;
               },
@@ -146,7 +189,7 @@ class _NewProjectState extends State<NewProject> {
         maxLines: 5,
         decoration: const InputDecoration(
           isDense: true,
-          contentPadding: EdgeInsets.all(6),
+          contentPadding: EdgeInsets.all(15),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(6)),
           ),
@@ -157,25 +200,38 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget _dateProject(FormFieldSetter<DateTime?> save) {
+  Widget _dateProject(FormFieldSetter<String?> save ,BuildContext context ) {
     return Padding(
       padding: const EdgeInsets.all(9.0),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          const Text("Fecha de entrega"),
-          TableCalendar(
-            firstDay: DateTime.utc(2010, 01, 01),
-            lastDay: DateTime.utc(2040, 12, 31),
-            focusedDay: DateTime.now(),
+      child: TextFormField(
+        controller: _date,
+        decoration: const InputDecoration(
+          icon: Icon(Icons.calendar_today_rounded),
+          labelText: "Fecha de entrega",
+
+        ),
+        onTap: () async {
+          DateTime? pickeddate = await showDatePicker(
+            context: context, 
+            initialDate: DateTime.now(), 
+            firstDate: DateTime(2000), 
+            lastDate: DateTime(2101));
+          if (pickeddate != null) {
+                setState(() {
+                  _date.text = DateFormat("yyyy-MM-dd").format(pickeddate);
+                });
+              } 
+
             
-          ),
+
+        },
+        onSaved: save
+      )
           
-        ],
+        
     
-      ),
+      
     );
   }
+  
 }
