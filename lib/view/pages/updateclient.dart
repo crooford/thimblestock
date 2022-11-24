@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../controller/activity.dart';
 import '../../controller/clients.dart';
+import '../../model/entity/activity.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 import '../widgets/photo_avatar.dart';
@@ -10,12 +12,18 @@ class UpdateClientPage extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ClientEntity _client;
   late final ClientController _controller;
+  late final ActivityEntity _activity;
+  late final ActivityController _activitycontroller;
+  final String action = "updateClient";
 
   UpdateClientPage(ClientEntity client, {super.key}) {
     _client = client;
     _controller = ClientController();
+    _activitycontroller = ActivityController();
+    _activity = ActivityEntity();
     _pref.then((pref) {
       _client.user = pref.getString("uid");
+      _activity.user = pref.getString("uid");
     });
   }
 
@@ -43,7 +51,7 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
       key: formKey,
       child: Column(
         children: [
-          PhotoAvatarWidget(client: widget._client, action: "update"),
+          PhotoAvatarWidget(client: widget._client, action: widget.action),
           Column(
             children: [
               Card(
@@ -494,9 +502,16 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
                           content: Text("Información de cliente actualizada"),
                         ),
                       );
+                      // Almacenar el documento de la actualizacion de cliente en la BD de Activities
+                      widget._activity.user = widget._client.user;
+                      widget._activity.typeOfActivity = widget.action;
+                      widget._activity.detailOfActivity =
+                          widget._client.clientName;
+                      await widget._activitycontroller
+                          .saveActivity(widget._activity);
                       // Volver a la pantalla anterior
                       nav.pushReplacement(MaterialPageRoute(
-                          builder: (context) => const ClientsPage()));
+                          builder: (context) => ClientsPage()));
                     } catch (e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -535,6 +550,7 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
             child: TextFormField(
                 initialValue: inVal,
                 maxLength: 60,
+                textCapitalization: TextCapitalization.words,
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(
                   isDense: true,
