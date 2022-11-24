@@ -218,7 +218,7 @@ class _NewProjectState extends State<NewProject> {
             lastDate: DateTime(2101));
           if (pickeddate != null) {
                 setState(() {
-                  _date.text = DateFormat("yyyy-MM-dd").format(pickeddate);
+                  _date.text = DateFormat("dd-MMM-yyyy").format(pickeddate);
                 });
               } 
 

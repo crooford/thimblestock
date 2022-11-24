@@ -39,23 +39,29 @@ class OneProjectPage extends StatelessWidget {
                 color: const Color(0xFFFBFBF2),
                 child: SizedBox(
                         width: 350,
-                        height: 200,
+                        height: 600,
                         child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           const SizedBox(
-                                            height: 8,
+                                            height: 30,
+                                          ),
+                                          _clientName(project.clientName!),
+                                          const SizedBox(
+                                            height: 30,
                                           ),
                                           _projectName(project.projectName!),
                                           const SizedBox(
-                                            height: 20,
-                                          ),
-                                          _description(project.details!),
-                                          const SizedBox(
-                                            height: 20,
+                                            height: 30,
                                           ),
                                           _dateProject(project.date!),
+                                          const SizedBox(
+                                            height: 30,
+                                          ),
+                                          _description(project.details!),
                                         ],
                                       ),
                               )
@@ -63,6 +69,38 @@ class OneProjectPage extends StatelessWidget {
               ),
             ],
           );
+  }
+
+  Widget _clientName(String clientName ) {
+    String _clientName = clientName;
+    return  Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Nombre del cliente: ",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            decoration: const BoxDecoration(),
+            child: Text(
+              _clientName,
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+              
+              fontSize: 20,)
+            ))
+      ],
+    ));
   }
 
   Widget _projectName(String nameProject) {
@@ -76,7 +114,7 @@ class OneProjectPage extends StatelessWidget {
         const Text("Nombre del Proyecto:",
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 12,
+              fontSize: 15,
               fontWeight: FontWeight.w500,
               color: Color(0xFF17B890),
             )),
@@ -89,6 +127,9 @@ class OneProjectPage extends StatelessWidget {
             child: Text(
               _nameProject,
               textAlign: TextAlign.start,
+              style: const TextStyle(
+              
+              fontSize: 20,)
             ))
       ],
     ));
@@ -105,7 +146,40 @@ class OneProjectPage extends StatelessWidget {
         const Text("Descripcion del Proyecto:",
             style: TextStyle(
               fontFamily: 'Poppins',
-              fontSize: 12,
+              fontSize: 15,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF17B890),
+            )),
+        const SizedBox(
+          height: 3,
+        ),
+        Container(
+            width: 100,
+            
+            decoration: const BoxDecoration(),
+            child: Text(
+              _description,
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+              
+              fontSize: 20,)
+            ))
+      ],
+    ));
+  }
+
+  Widget _dateProject(String date ) {
+    String _dateProject = date;
+    return  Flexible(
+        child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Text("Fecha de entrega: ",
+            style: TextStyle(
+              fontFamily: 'Poppins',
+              fontSize: 15,
               fontWeight: FontWeight.w500,
               color: Color(0xFF17B890),
             )),
@@ -116,34 +190,14 @@ class OneProjectPage extends StatelessWidget {
             width: 100,
             decoration: const BoxDecoration(),
             child: Text(
-              _description,
+              _dateProject,
               textAlign: TextAlign.start,
+              style: const TextStyle(
+              
+              fontSize: 20,)
             ))
       ],
     ));
-  }
-
-  Widget _dateProject(String date ) {
-    String _dateProject = date;
-    return Padding(
-      padding: const EdgeInsets.all(9.0),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          const Text("Fecha de entrega"),
-          TableCalendar(
-            firstDay: DateTime(2000),
-            lastDay: DateTime(2101),
-            focusedDay: DateTime.parse(_dateProject),
-            
-          ),
-          
-        ],
-    
-      ),
-    );
   }
 }
 
