@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/controller/activity.dart';
+import '../../model/entity/activity.dart';
 import '../widgets/customAppBar.dart';
-import '../pages/dashboard.dart';
 
 //import '../widgets/barraNavAbajo.dart';
 
@@ -13,23 +14,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<ActivityEntity> _list = [];
   final _pref = SharedPreferences.getInstance();
+  final _activityController = ActivityController();
   String _name = "";
+  String _user = "";
 
   @override
   void initState() {
     super.initState();
 
+    _listActivities();
     _pref.then((pref) {
       setState(() {
         _name = pref.getString("name") ?? "N/A";
+        _user = pref.getString("uid") ?? "N/A";
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final lista = _listClients();
     return Scaffold(
       appBar: CusAppBar(pageTitle: "Inicio"),
       body: Padding(
@@ -80,20 +85,11 @@ class _HomePageState extends State<HomePage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: lista.length,
+                itemCount: _list.length,
                 itemBuilder: (context, index) => ListTile(
-                  title: Text(lista[index]),
-                  subtitle: Text("fecha / hora de actividad"),
-                  onTap: () {
-                    // TODO: Debe redirigir la activdad especifica
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            const DashboardPage(), // por ahora redirige a homepage
-                      ),
-                    );
-                  },
+                  title: Text(
+                      "${_list[index].typeOfActivity!} ${_list[index].detailOfActivity!}"),
+                  subtitle: Text(_list[index].timeOfActivity!),
                 ),
               ),
             )
@@ -103,12 +99,14 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  List<String> _listClients() {
-    //TODO:  Base de Datos
-
-    return List<String>.generate(
-      5,
-      (index) => "Evento ${index + 1}",
-    );
+  void _listActivities() {
+    _pref.then((pref) {
+      var id = pref.getString("uid") ?? "";
+      _activityController.listAll(id).then((value) {
+        setState(() {
+          _list = value;
+        });
+      });
+    });
   }
 }

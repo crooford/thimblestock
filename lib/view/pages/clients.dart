@@ -1,20 +1,31 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thimblestock/controller/clients.dart';
 import 'package:thimblestock/model/entity/clients.dart';
-import 'package:thimblestock/view/pages/dashboard.dart';
-import 'package:thimblestock/view/pages/home.dart';
-
+import '../../controller/activity.dart';
+import '../../model/entity/activity.dart';
 import '../widgets/customAppBar.dart';
 import 'newclient.dart';
 import 'oneclient.dart';
 import 'updateclient.dart';
 
 class ClientsPage extends StatefulWidget {
-  const ClientsPage({super.key});
+  final _pref = SharedPreferences.getInstance();
+  late final ClientEntity _client;
+  late final ActivityEntity _activity;
+  late final ActivityController _activitycontroller;
+  final String action = "deleteClient";
+
+  ClientsPage({super.key}) {
+    _client = ClientEntity();
+    _activitycontroller = ActivityController();
+    _activity = ActivityEntity();
+    _pref.then((pref) {
+      _client.user = pref.getString("uid");
+      _activity.user = pref.getString("uid");
+    });
+  }
 
   @override
   State<ClientsPage> createState() => _ClientsPageState();
@@ -24,11 +35,17 @@ class _ClientsPageState extends State<ClientsPage> {
   List<ClientEntity> _list = [];
   final _pref = SharedPreferences.getInstance();
   final _clientController = ClientController();
+  final _activitycontroller = ActivityController();
+  final _activity = ActivityEntity();
 
   @override
   void initState() {
     super.initState();
-    _listClients();
+
+    _pref.then((pref) {
+      _activity.user = pref.getString("uid");
+      _listClients();
+    });
   }
 
   @override
@@ -58,8 +75,8 @@ class _ClientsPageState extends State<ClientsPage> {
                       radius: 30,
                       backgroundImage: _list[index].clientAvatar != null
                           ? NetworkImage(_list[index].clientAvatar!)
-                          : const AssetImage('assets/clientDefault.jpg')
-                              as ImageProvider,
+                          : const NetworkImage(
+                              'https://firebasestorage.googleapis.com/v0/b/thimblestock1.appspot.com/o/clientDefault.jpg?alt=media&token=938d2907-f7d7-48f5-ae90-0f0d7eae8044'),
                     ),
                     title: Text(_list[index].clientName!),
                     subtitle: Text(_list[index].clientPhone!),
@@ -80,6 +97,7 @@ class _ClientsPageState extends State<ClientsPage> {
                               ],
                             ),
                             onTap: () {
+                              Navigator.pop(context);
                               _callPhone(_list[index].clientPhone!);
                             },
                           ),
@@ -99,6 +117,7 @@ class _ClientsPageState extends State<ClientsPage> {
                               ],
                             ),
                             onTap: () {
+                              Navigator.pop(context);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -121,6 +140,8 @@ class _ClientsPageState extends State<ClientsPage> {
                               ],
                             ),
                             onTap: () async {
+                              Navigator.pop(context);
+
                               warningDelete(context, index);
                             },
                           ),
@@ -167,33 +188,28 @@ class _ClientsPageState extends State<ClientsPage> {
     Widget cancel = TextButton(
         child: const Text("Cancelar"),
         onPressed: () {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  const DashboardPage(), // por ahora redirige a homepage
-            ),
-          );
+          Navigator.pop(context);
         });
     Widget delete = TextButton(
       child: const Text("Borrar"),
-      onPressed: () async {
+      onPressed: () async {        
         try {
           final mess = ScaffoldMessenger.of(context);
-          final nav = Navigator.of(context);
-
-          await _clientController.deleteclient(_list[index].clientId);
+          await _clientController.deleteclient(
+              _list[index].clientAvatar, _list[index].clientId);
           mess.showSnackBar(
             const SnackBar(
               content: Text("El cliente ha sido borrado"),
             ),
           );
-          nav.pushReplacement(
-            MaterialPageRoute(
-              builder: (context) =>
-                  const DashboardPage(), // por ahora redirige a homepage
-            ),
-          );
+          // Almacenar el documento de la eliminacion de un cliente en la BD de Activities
+          _activity.typeOfActivity = widget.action;
+          _activity.detailOfActivity = _list[index].clientName;
+          await _activitycontroller.saveActivity(_activity);
+
+          setState(() {
+            _listClients();            
+          });
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -202,8 +218,7 @@ class _ClientsPageState extends State<ClientsPage> {
           );
         }
       },
-    );
-    // set up the AlertDialog
+    ); // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("Advertencia"),
       content: Text(
