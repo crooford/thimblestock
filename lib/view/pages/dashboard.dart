@@ -51,7 +51,7 @@ class _DashboardPageState extends State<DashboardPage> {
         const HomePage(),
         ClientsPage(),
         ProjectsPage(),
-        const CatalogPage()
+        CatalogPage()
         //const SettingsPage()
       ];
 
