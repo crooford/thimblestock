@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thimblestock/model/entity/catalog.dart';
+import '../../controller/catalog.dart';
+import '../../controller/projects.dart';
 import '../widgets/customAppBar.dart';
 import 'newcatalog.dart';
 import 'onecatalog.dart';
 
 //import '../widgets/barraNavAbajo.dart';\
-class CatalogPage extends StatelessWidget {
+class CatalogPage extends StatefulWidget {
   const CatalogPage({super.key});
- 
+  @override
+  State<CatalogPage> createState() => _CatalogPageState();
+}
+class _CatalogPageState extends State<CatalogPage>{
+  List<CatalogEntity> _listCatalog = [];
+  final _pref = SharedPreferences.getInstance();
+  final _CatalogController = CatalogController();
+
+  @override
+  void initState() {
+    super.initState();
+    _listCatalogo();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var lista = _listCatalogo();
     return Scaffold(
-      appBar: CusAppBar(pageTitle: "Catalogo"),
+      appBar: CusAppBar(
+        pageTitle: "Catalogo"
+        ),
       // Aqui va el cuerpo de la app
       body: Padding(
         padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, 
+          children: [
           Expanded(
             child: ListView.builder(
-              itemCount: lista.length,
+              itemCount: _listCatalog.length,
               itemBuilder: (context, index) => ListTile(
-                trailing: iconscatalogo(lista[index]),
+
+                title: Text(_listCatalog[index].addclass!),
+                trailing: iconscatalogo(_listCatalog[index].addclass!),
                 //   IconButton(
                 //   icon: Image.asset(
                 //     'assets/catalogo/blusa.png',
@@ -28,14 +50,11 @@ class CatalogPage extends StatelessWidget {
                 //   ),
                 //   onPressed: () {},
                 // ),
-                title: Text(
-                  lista[index],
-                ),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => OneCatalogPage(lista[index]),
+                      builder: (context) => OneCatalogPage(_listCatalog[index]),
                     ),
                   );
                 },
@@ -58,11 +77,15 @@ class CatalogPage extends StatelessWidget {
     );
   }
 
-  List _listCatalogo() {
-    return List<String>.generate(
-      5,
-      (index) => "TIPO DE ROPA",
-    );
+  void _listCatalogo() {
+  _pref.then((pref) {
+      var id = pref.getString("uid") ?? "";
+      _CatalogController.listAll(id).then((value) {
+        setState(() {
+          _listCatalog = value;
+        });
+      });
+    });
   }
     // List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
     // // return List<String>.generate(
@@ -72,8 +95,8 @@ class CatalogPage extends StatelessWidget {
     // return lista;
   }
 
-  iconscatalogo(lista) {
-    if ('Blusas' == lista) {
+  iconscatalogo(_listCatalog) {
+    if ('Blusas' == _listCatalog) {
       return IconButton(
         icon: Image.asset(
           'assets/catalogo/blusa.png',
@@ -82,7 +105,7 @@ class CatalogPage extends StatelessWidget {
         onPressed: () {},
       );
     }
-    if ('Camisas' == lista) {
+    if ('Camisas' == _listCatalog) {
       return IconButton(
         icon: Image.asset(
           'assets/catalogo/camisa.png',
@@ -91,7 +114,7 @@ class CatalogPage extends StatelessWidget {
         onPressed: () {},
       );
     }
-    if ('Pantalones' == lista) {
+    if ('Pantalones' == _listCatalog) {
       return IconButton(
         icon: Image.asset(
           'assets/catalogo/pantalones.png',
@@ -100,7 +123,7 @@ class CatalogPage extends StatelessWidget {
         onPressed: () {},
       );
     }
-    if ('Vestidos' == lista) {
+    if ('Vestidos' == _listCatalog) {
       return IconButton(
         icon: Image.asset(
           'assets/catalogo/vestido.png',
@@ -109,4 +132,4 @@ class CatalogPage extends StatelessWidget {
         onPressed: () {},
       );
     }
-  }
+}
