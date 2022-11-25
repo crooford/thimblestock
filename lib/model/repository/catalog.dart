@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../entity/clients.dart';
+import '../entity/catalog.dart';
 
 class CatalogtRepository {
   late final CollectionReference _collection;
   // _clients = <String, ClientEntity>{};
 
-  CatalogRepository() {
+  CatalogtRepository() {
     _collection = FirebaseFirestore.instance.collection("catalogo");
   }
 
@@ -16,10 +16,10 @@ class CatalogtRepository {
     return client;
   } */
 
-  Future<void> editClient(CatalogEntity client) async {
+  Future<void> editCatalog(CatalogEntity catalog) async {
     _collection.withConverter(
         fromFirestore: CatalogEntity.fromFirestore,
         toFirestore: (value, options) => value.toFirestore())
-        .add(client);
+        .add(catalog);
   }
 }

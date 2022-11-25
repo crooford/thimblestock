@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../widgets/customAppBar.dart';
+import 'newcatalog.dart';
 import 'onecatalog.dart';
 
 //import '../widgets/barraNavAbajo.dart';\
@@ -47,19 +48,31 @@ class CatalogPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.shopping_basket_rounded),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewCatalogPage(email),
+            )
+          );
+        },
       ),
     );
   }
 
-  // List _listCatalogo() {
-  //   List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
-  //   // return List<String>.generate(
-  //   //   5,
-  //   //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
-  //   // );
-  //   return lista;
-  // }
+  List _listCatalogo() {
+    return List<String>.generate(
+      5,
+      (index) => "TIPO DE ROPA",
+    );
+  }
+    // List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
+    // // return List<String>.generate(
+    // //   5,
+    // //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
+    // // );
+    // return lista;
+  }
 
   iconscatalogo(lista) {
     if ('Blusas' == lista) {
@@ -99,4 +112,3 @@ class CatalogPage extends StatelessWidget {
       );
     }
   }
-}

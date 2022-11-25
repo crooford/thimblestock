@@ -1,13 +1,14 @@
-
+import '../model/entity/catalog.dart';
+import '../model/repository/catalog.dart';
 
 class CatalogController {
-  late Catalogepository _repository;
+  late CatalogtRepository _catalogrepository;
 
-  ClientController() {
-    _repository = CatalogRepository();
+  CatalogController() {
+    _catalogrepository = CatalogtRepository();
   }
 
-  Future<void> save(CatalogEntity client) async {
-    await _repository.editClient(client);
+  Future<void> save(CatalogEntity catalog) async {
+    await _catalogrepository.editCatalog(catalog);
   }
 }
