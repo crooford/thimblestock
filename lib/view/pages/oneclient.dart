@@ -4,12 +4,16 @@ import 'updateclient.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 
-
-class OneClientPage extends StatelessWidget {
+class OneClientPage extends StatefulWidget {
   ClientEntity client;
 
   OneClientPage({super.key, required this.client});
 
+  @override
+  State<OneClientPage> createState() => _OneClientPageState();
+}
+
+class _OneClientPageState extends State<OneClientPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,13 +26,17 @@ class OneClientPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.edit),
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            await Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => UpdateClientPage(client),  // añadir logica para enviar datos a formulario
+                builder: (context) => UpdateClientPage(widget
+                    .client), // añadir logica para enviar datos a formulario
               ),
             );
+            setState(() {
+              widget.client.clientAvatar;
+            });
           },
         ));
   }
@@ -38,13 +46,19 @@ class OneClientPage extends StatelessWidget {
       children: [
         Center(
             child: Column(
-          children: const [
+          children: [
             CircleAvatar(
-              backgroundColor: Color(0xFF17B890),
+              backgroundColor: const Color(0xFF17B890),
               radius: 55,
               child: CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/clientDefault.jpg'),
+                backgroundImage: widget.client.clientAvatar != null
+                    ? NetworkImage(widget.client.clientAvatar!)
+                    : const NetworkImage(
+                        "https://firebasestorage.googleapis.com/v0/b/thimblestock1.appspot.com/o/clientDefault.jpg?alt=media&token=938d2907-f7d7-48f5-ae90-0f0d7eae8044"),
+                // FileImage(File(client.clientAvatar!))
+                // backgroundImage: FileImage(File('/data/user/0/com.example.thimblestock/cache/CAP6212320448003122403.jpg')),
+                // backgroundImage: AssetImage('assets/clientDefault.jpg'),
               ),
             )
           ],
@@ -64,15 +78,15 @@ class OneClientPage extends StatelessWidget {
                           const SizedBox(
                             height: 8,
                           ),
-                          _clientName(client.clientName!),
+                          _clientName(widget.client.clientName!),
                           const SizedBox(
                             height: 20,
                           ),
-                          _clientPhone(client.clientPhone!),
+                          _clientPhone(widget.client.clientPhone!),
                           const SizedBox(
                             height: 20,
                           ),
-                          _clientEmail(client.clientEmail!),
+                          _clientEmail(widget.client.clientEmail!),
                         ],
                       ),
                     ))),
@@ -104,14 +118,14 @@ class OneClientPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _basicData(
-                                          "Edad", client.clientAge!, "años"),
+                                      _basicData("Edad",
+                                          widget.client.clientAge!, "años"),
                                       const SizedBox(width: 10),
                                       _basicData("Estatura",
-                                          client.clientHeight!, "m"),
+                                          widget.client.clientHeight!, "m"),
                                       const SizedBox(width: 10),
-                                      _basicData(
-                                          "Peso", client.clientWeight!, "Kg"),
+                                      _basicData("Peso",
+                                          widget.client.clientWeight!, "Kg"),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
@@ -125,23 +139,27 @@ class OneClientPage extends StatelessWidget {
                                   const SizedBox(height: 10),
                                   Row(
                                     children: [
-                                      _garmentSize('Blusa', client.blouseSize!),
+                                      _garmentSize(
+                                          'Blusa', widget.client.blouseSize!),
                                       const SizedBox(width: 10),
                                       _garmentSize(
-                                          'Pantalón', client.pantSize!),
+                                          'Pantalón', widget.client.pantSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Falda', client.skirtSize!),
+                                      _garmentSize(
+                                          'Falda', widget.client.skirtSize!),
                                     ],
                                   ),
                                   const SizedBox(height: 20),
                                   Row(
                                     children: [
                                       _garmentSize(
-                                          'Brassiere', client.braSize!),
+                                          'Brassiere', widget.client.braSize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Panty', client.pantySize!),
+                                      _garmentSize(
+                                          'Panty', widget.client.pantySize!),
                                       const SizedBox(width: 10),
-                                      _garmentSize('Calzado', client.shoeSize!),
+                                      _garmentSize(
+                                          'Calzado', widget.client.shoeSize!),
                                     ],
                                   ),
                                 ],
@@ -178,13 +196,13 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               _basicField('Contorno cuello',
-                                                  client.contCuel!),
+                                                  widget.client.contCuel!),
                                               const SizedBox(width: 10),
                                               _basicField('Ancho hombro',
-                                                  client.anchHomb!),
+                                                  widget.client.anchHomb!),
                                               const SizedBox(width: 10),
                                               _basicField('Ancho cuello',
-                                                  client.anchCuel!),
+                                                  widget.client.anchCuel!),
                                             ],
                                           ))
                                         ],
@@ -205,13 +223,13 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               _basicField('Ancho de espalda',
-                                                  client.anchEspa!),
+                                                  widget.client.anchEspa!),
                                               const SizedBox(width: 10),
                                               _basicField('Contorno busto',
-                                                  client.contBust!),
+                                                  widget.client.contBust!),
                                               const SizedBox(width: 10),
                                               _basicField('Con torno tórax',
-                                                  client.contTora!),
+                                                  widget.client.contTora!),
                                             ],
                                           ))
                                         ],
@@ -232,13 +250,13 @@ class OneClientPage extends StatelessWidget {
                                                 MainAxisAlignment.spaceEvenly,
                                             children: [
                                               _basicField('Contorno cintura',
-                                                  client.contCint!),
+                                                  widget.client.contCint!),
                                               const SizedBox(width: 10),
                                               _basicField('L. talle-espalda',
-                                                  client.largTalEsp!),
+                                                  widget.client.largTalEsp!),
                                               const SizedBox(width: 10),
                                               _basicField('L. talle delantero',
-                                                  client.largTalDel!),
+                                                  widget.client.largTalDel!),
                                             ],
                                           ))
                                         ],
@@ -279,13 +297,13 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Altura de busto',
-                                            client.altuBust!),
+                                            widget.client.altuBust!),
                                         const SizedBox(width: 10),
                                         _basicField('Separación busto',
-                                            client.sepaBust!),
+                                            widget.client.sepaBust!),
                                         const SizedBox(width: 10),
                                         _basicField('Largo total brazo',
-                                            client.largTotBra!),
+                                            widget.client.largTotBra!),
                                       ],
                                     ))
                                   ],
@@ -306,13 +324,13 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('L. brazo al codo',
-                                            client.largBraCod!),
+                                            widget.client.largBraCod!),
                                         const SizedBox(width: 10),
-                                        _basicField(
-                                            'Contorno brazo', client.contBraz!),
+                                        _basicField('Contorno brazo',
+                                            widget.client.contBraz!),
                                         const SizedBox(width: 10),
                                         _basicField('Contorno cadera',
-                                            client.contCade!),
+                                            widget.client.contCade!),
                                       ],
                                     ))
                                   ],
@@ -333,13 +351,13 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Altura de cadera',
-                                            client.altuCade!),
+                                            widget.client.altuCade!),
                                         const SizedBox(width: 10),
                                         _basicField('Cont 1/2 cadera',
-                                            client.contMedCade!),
+                                            widget.client.contMedCade!),
                                         const SizedBox(width: 10),
-                                        _basicField(
-                                            'Largo de tiro', client.largTiro!),
+                                        _basicField('Largo de tiro',
+                                            widget.client.largTiro!),
                                       ],
                                     ))
                                   ],
@@ -383,13 +401,13 @@ class OneClientPage extends StatelessWidget {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         _basicField('Largo total pierna',
-                                            client.largTotPie!),
+                                            widget.client.largTotPie!),
                                         const SizedBox(width: 10),
                                         _basicField('Contorno pierna',
-                                            client.contPier!),
+                                            widget.client.contPier!),
                                         const SizedBox(width: 10),
                                         _basicField('Largo a la rodilla',
-                                            client.largRodi!),
+                                            widget.client.largRodi!),
                                       ],
                                     ))
                                   ],
@@ -413,7 +431,7 @@ class OneClientPage extends StatelessWidget {
                             const SizedBox(height: 5),
                             Row(
                               children: [
-                                _observ(client.observ!),
+                                _observ(widget.client.observ!),
                               ],
                             ),
                           ],

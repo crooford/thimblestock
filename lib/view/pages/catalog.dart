@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thimblestock/view/pages/clients.dart';
 import '../widgets/customAppBar.dart';
+import 'newcatalog.dart';
 import 'onecatalog.dart';
 
 //import '../widgets/barraNavAbajo.dart';\
@@ -45,19 +45,31 @@ class CatalogPage extends StatelessWidget {
         ]),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_card),
-        onPressed: () {},
+        child: const Icon(Icons.shopping_basket_rounded),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NewCatalogPage(),
+            )
+          );
+        },
       ),
     );
   }
 
   List _listCatalogo() {
-    List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
-    // return List<String>.generate(
-    //   5,
-    //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
-    // );
-    return lista;
+    return List<String>.generate(
+      5,
+      (index) => "TIPO DE ROPA",
+    );
+  }
+    // List lista = ['Blusas', 'Camisas', 'Pantalones', 'Vestidos'];
+    // // return List<String>.generate(
+    // //   5,
+    // //   (index) => "Blusas, Polos, Jeans, Pantalones, chaquetas",
+    // // );
+    // return lista;
   }
 
   iconscatalogo(lista) {
@@ -98,4 +110,3 @@ class CatalogPage extends StatelessWidget {
       );
     }
   }
-}

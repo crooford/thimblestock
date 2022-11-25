@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 import '../../controller/activity.dart';
-import '../../controller/clients.dart';
 import '../../controller/projects.dart';
 import '../../model/entity/activity.dart';
-import '../../model/entity/clients.dart';
 import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
 
-class NewProject extends StatefulWidget {
+
+class UpdateProjectPage extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ProjectEntity _project;
   late final ProjectController _controller;
   late final ActivityEntity _activity;
   late final ActivityController _activitycontroller;
-  final String action = "createProject";
+  final String action = "updateProject";
 
-  NewProject({super.key}) {
-    _project = ProjectEntity();
+  UpdateProjectPage(ProjectEntity project, {super.key}) {
+    _project = project;
     _controller = ProjectController();
     _activitycontroller = ActivityController();
     _activity = ActivityEntity();
@@ -32,15 +29,16 @@ class NewProject extends StatefulWidget {
   }
 
   @override
-  State<NewProject> createState() => _NewProjectState();
+  State<UpdateProjectPage> createState() => _UpdateProjectPageState();
 }
 
-class _NewProjectState extends State<NewProject> {
-  final TextEditingController _date = TextEditingController();
+class _UpdateProjectPageState extends State<UpdateProjectPage> {
+  late TextEditingController _date = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CusAppBar(pageTitle: 'Proyecto'),
+      appBar: CusAppBar(pageTitle: 'Actualizar Información'),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -50,7 +48,7 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget _formProject(BuildContext context) {
+   Widget _formProject(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
@@ -90,20 +88,19 @@ class _NewProjectState extends State<NewProject> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () async {
-                    if (formKey.currentState!.validate()) {
-                      formKey.currentState!.save();
-                      try {
-                        final mess = ScaffoldMessenger.of(context);
-                        final nav = Navigator.of(context);
+                onPressed: () async {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    try {
+                      final mess = ScaffoldMessenger.of(context);
+                      final nav = Navigator.of(context);
 
-                        await widget._controller.save(widget._project);
-                        mess.showSnackBar(
-                          const SnackBar(
-                            content:
-                                Text("Información del Proyecto registrada"),
-                          ),
-                        );
+                      await widget._controller.save(widget._project);
+                      mess.showSnackBar(
+                        const SnackBar(
+                          content: Text("Información de proyecto actualizada"),
+                        ),
+                      );
 
                         widget._activity.typeOfActivity = widget.action;
                         widget._activity.detailOfActivity =
@@ -132,11 +129,16 @@ class _NewProjectState extends State<NewProject> {
   }
 
   Widget _clientName(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._project.clientName == "-"
+        ? inVal = ""
+        : inVal = widget._project.clientName!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+              initialValue: inVal,
               maxLength: 60,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
@@ -163,11 +165,16 @@ class _NewProjectState extends State<NewProject> {
   }
 
   Widget _projectName(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._project.projectName == "-"
+        ? inVal = ""
+        : inVal = widget._project.projectName!;
     return Column(
       children: [
         Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: TextFormField(
+              initialValue: inVal,
               maxLength: 60,
               keyboardType: TextInputType.name,
               decoration: const InputDecoration(
@@ -194,9 +201,14 @@ class _NewProjectState extends State<NewProject> {
   }
 
   Widget _description(FormFieldSetter<String?> save) {
+    String inVal;
+    widget._project.details == "-"
+        ? inVal = ""
+        : inVal = widget._project.details!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TextFormField(
+        initialValue: inVal,
         keyboardType: TextInputType.text,
         textInputAction: TextInputAction.done,
         minLines: 4,
@@ -215,10 +227,15 @@ class _NewProjectState extends State<NewProject> {
   }
 
   Widget _dateProject(FormFieldSetter<String?> save, BuildContext context) {
+    var inVal;
+    widget._project.date == "-"
+        ? inVal = ""
+        : inVal = widget._project.date!;
+    
     return Padding(
         padding: const EdgeInsets.all(9.0),
         child: TextFormField(
-            controller: _date,
+            initialValue: inVal,
             decoration: const InputDecoration(
               icon: Icon(Icons.calendar_today_rounded),
               labelText: "Fecha de entrega",
@@ -231,10 +248,11 @@ class _NewProjectState extends State<NewProject> {
                   lastDate: DateTime(2101));
               if (pickeddate != null) {
                 setState(() {
-                  _date.text = DateFormat("dd-MMM-yyyy").format(pickeddate);
+                  widget._project.date = DateFormat("dd-MMM-yyyy").format(pickeddate);
                 });
               }
             },
             onSaved: save));
   }
+
 }

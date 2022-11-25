@@ -1,14 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProjectEntity{
+  late String? projectId;
+
   late String? user;
   late String? projectName;
   late String? clientName;
   late String? clientEmail;
   late String? details;
-  late DateTime? date;
+  late String? date;
 
   ProjectEntity({
+      this.projectId,
       this.user,
       this.projectName,
       this.clientName, 
@@ -20,6 +23,7 @@ class ProjectEntity{
   factory ProjectEntity.fromFirestore( DocumentSnapshot<Map<String, dynamic>> snapshot,SnapshotOptions? options) {
       var data = snapshot.data();
       return ProjectEntity(
+        projectId: snapshot.id,
         user: data?["user"],
         projectName:data?["projectName"],
         details: data?["details"],

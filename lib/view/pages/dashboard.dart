@@ -14,7 +14,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
   Future<bool> _onWillPop(BuildContext context) async {
     bool? exitResult = await showDialog(
       context: context,
@@ -23,12 +22,12 @@ class _DashboardPageState extends State<DashboardPage> {
     return exitResult ?? false;
   }
 
-  /* Future<bool?> _showExitDialog(BuildContext context) async {
+/*   Future<bool?> _showExitDialog(BuildContext context) async {
     return await showDialog(
       context: context,
       builder: (context) => _buildExitDialog(context),
     );
-  } */
+  }  */
 
   AlertDialog _buildExitDialog(BuildContext context) {
     return AlertDialog(
@@ -50,10 +49,10 @@ class _DashboardPageState extends State<DashboardPage> {
   int _currentPage = 0;
   List<Widget> _pages() => [
         const HomePage(),
-        const ClientsPage(),
-        const CatalogPage(),
+        ClientsPage(),
         const ProjectsPage(),
-        const SettingsPage()
+        const CatalogPage()
+        //const SettingsPage()
       ];
 
   @override
@@ -70,9 +69,11 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           child: BottomNavigationBar(
-            onTap: (page) {
-              setState(() {
-                _currentPage = page;
+            onTap: (page) async {
+              await Future.delayed(const Duration(milliseconds: 500), () {
+                setState(() {
+                  _currentPage = page;
+                });
               });
             },
             currentIndex: _currentPage,
@@ -89,17 +90,17 @@ class _DashboardPageState extends State<DashboardPage> {
                 label: 'Clientes',
               ),
               BottomNavigationBarItem(
-                icon: Icon(ThimbleStockIcons.catalogo),
-                label: 'Catalogo',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(ThimbleStockIcons.proyectos),
                 label: 'Proyectos',
               ),
               BottomNavigationBarItem(
+                icon: Icon(ThimbleStockIcons.catalogo),
+                label: 'Catalogo',
+              ),
+/*               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
                 label: 'Ajustes',
-              ),
+              ), */
             ],
           ),
         ),

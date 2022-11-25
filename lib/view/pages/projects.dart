@@ -49,11 +49,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
               child: ListView.builder(
                 itemCount: _list.length,
                 itemBuilder: (context, index) => ListTile(
-                  leading: const CircleAvatar(),
+                  
                   title: Text(_list[index].projectName!),
-                  subtitle: Text(_list[index].projectName!),
+                  subtitle: Text(_list[index].clientName! +'   '+_list[index].date!),
                   trailing: IconButton(
-                    icon: const Icon(Icons.view_headline),
+                    icon: const Icon(Icons.more_horiz_rounded,
+                        size: 30.0,),
                     onPressed: () {
                       // TODO Realizar la llamada Telefonica
                     },

@@ -41,7 +41,11 @@ class LoginWidget extends StatelessWidget {
                       children: [
                         _logo(),
                         _formulario(context),
-                        _inicioAlternativo(),
+
+                        // TODO: implementar login con Facebook y Google
+
+                        // _inicioAlternativo(),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -276,7 +280,6 @@ class LoginWidget extends StatelessWidget {
               pref.setString("name", userInfo.name!);
               pref.setString("email", userInfo.email!);
               pref.setBool("isAdmin", userInfo.isAdmin!);
-
 
               nav.pushReplacement(MaterialPageRoute(
                 builder: (context) => const DashboardPage(),
