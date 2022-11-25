@@ -51,4 +51,7 @@ class ProjectRepository {
       ..sort((a, b) =>
           a.projectName!.toLowerCase().compareTo(b.projectName!.toLowerCase()));
   }
+  Future<void> deleteClientById(String? projectId) async {
+    await _collection.doc(projectId).delete();
+  }
 }
