@@ -50,7 +50,7 @@ class CatalogPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NewCatalogPage(email),
+              builder: (context) => NewCatalogPage(),
             )
           );
         },

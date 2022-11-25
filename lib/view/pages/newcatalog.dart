@@ -7,8 +7,8 @@ class NewCatalogPage extends StatelessWidget {
   late final CatalogEntity _catalogEntity;
   late final CatalogController _catalogController;
 
-  NewCatalogPage(String user, {super.key}) {
-    _catalogEntity = CatalogEntity(user: user);
+  NewCatalogPage({super.key}) {
+    _catalogEntity = CatalogEntity();
     _catalogController = CatalogController();
   }
 
