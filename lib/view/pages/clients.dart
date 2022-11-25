@@ -154,15 +154,18 @@ class _ClientsPageState extends State<ClientsPage> {
                         size: 30.0,
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async {
                       // redirige a los datos del cliente especifico
-                      Navigator.push(
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
                               OneClientPage(client: _list[index]),
                         ),
                       );
+                      setState(() {
+                        _listClients();
+                      });
                     },
                   ),
                 ),
