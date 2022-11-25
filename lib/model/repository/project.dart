@@ -10,19 +10,20 @@ class ProjectRepository {
     _collection = FirebaseFirestore.instance.collection("projects");
   }
 
- /*  ClientEntity? findByClientEmail(String clientEmail) {
+  /*  ClientEntity? findByClientEmail(String clientEmail) {
     var client = _clients[clientEmail];
 
     return client;
   } */
 
   Future<void> editProject(ProjectEntity project) async {
-    _collection.withConverter(
-        fromFirestore: ProjectEntity.fromFirestore,
-        toFirestore: (value, options) => value.toFirestore())
+    _collection
+        .withConverter(
+            fromFirestore: ProjectEntity.fromFirestore,
+            toFirestore: (value, options) => value.toFirestore())
         .add(project);
   }
-  
+
   Future<List<ProjectEntity>> getAllByUserId(String id) async {
     var query = await _collection
         .where("user", isEqualTo: id)
@@ -31,7 +32,7 @@ class ProjectRepository {
             toFirestore: (value, options) => value.toFirestore())
         .get();
 
-    var projects= query.docs.cast().map<ProjectEntity>((e) {
+    var projects = query.docs.cast().map<ProjectEntity>((e) {
       var projects = e.data();
       projects.user = e.id;
       return projects;
@@ -41,5 +42,4 @@ class ProjectRepository {
       ..sort((a, b) =>
           a.projectName!.toLowerCase().compareTo(b.projectName!.toLowerCase()));
   }
-
 }

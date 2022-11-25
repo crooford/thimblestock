@@ -192,7 +192,8 @@ class _ClientsPageState extends State<ClientsPage> {
         });
     Widget delete = TextButton(
       child: const Text("Borrar"),
-      onPressed: () async {        
+      onPressed: () async {
+        Navigator.pop(context);
         try {
           final mess = ScaffoldMessenger.of(context);
           await _clientController.deleteclient(
@@ -208,7 +209,7 @@ class _ClientsPageState extends State<ClientsPage> {
           await _activitycontroller.saveActivity(_activity);
 
           setState(() {
-            _listClients();            
+            _listClients();
           });
         } catch (e) {
           ScaffoldMessenger.of(context).showSnackBar(

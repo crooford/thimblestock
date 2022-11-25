@@ -100,7 +100,7 @@ class _PhotoAvatarWidgetState extends State<PhotoAvatarWidget> {
           }
         },
       );
-    } else if (widget.action == "create") {
+    } else if (widget.action == "createClient") {
       avatar = InkWell(
         child: CircleAvatar(
           backgroundColor: const Color(0xFF17B890),
