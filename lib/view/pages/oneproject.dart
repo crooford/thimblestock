@@ -5,9 +5,15 @@ import '../pages/newproject.dart';
 import '../widgets/customAppBar.dart';
 import 'updateproject.dart';
 
-class OneProjectPage extends StatelessWidget {
+class OneProjectPage extends StatefulWidget {
   ProjectEntity project;
   OneProjectPage ({super.key , required this.project});
+
+  @override
+  State<OneProjectPage> createState() => _OneProjectPageState();
+}
+
+class _OneProjectPageState extends State<OneProjectPage> {
   @override
   Widget build(BuildContext context) {
     
@@ -21,18 +27,22 @@ class OneProjectPage extends StatelessWidget {
         ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit),
-        onPressed: () {
-          Navigator.push(
+        onPressed: () async {
+          await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => UpdateProjectPage(
-                    project), // añadir logica para enviar datos a formulario
+                    widget.project), // añadir logica para enviar datos a formulario
               ),
             );
+          setState(() {
+            widget.project;
+          });
         },
       ),  
     );
   }
+
   Widget _project(BuildContext context) {
     return Column(
             children: [
@@ -51,19 +61,19 @@ class OneProjectPage extends StatelessWidget {
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          _clientName(project.clientName!),
+                                          _clientName(widget.project.clientName!),
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          _projectName(project.projectName!),
+                                          _projectName(widget.project.projectName!),
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          _dateProject(project.date!),
+                                          _dateProject(widget.project.date!),
                                           const SizedBox(
                                             height: 30,
                                           ),
-                                          _description(project.details!),
+                                          _description(widget.project.details!),
                                         ],
                                       ),
                               )

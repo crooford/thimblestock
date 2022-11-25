@@ -15,4 +15,9 @@ class ProjectController {
   Future<List<ProjectEntity>> listAll(String id) async {
     return await _repository.getAllByUserId(id);
   }
+
+  Future<void> deleteproject(String? projectId) async {
+    return await _repository.deleteClientById(projectId);
+  }
+
 }
