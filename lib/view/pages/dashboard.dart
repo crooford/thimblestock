@@ -50,9 +50,9 @@ class _DashboardPageState extends State<DashboardPage> {
   List<Widget> _pages() => [
         const HomePage(),
         ClientsPage(),
-        const CatalogPage(),
         const ProjectsPage(),
-        const SettingsPage()
+        const CatalogPage()
+        //const SettingsPage()
       ];
 
   @override
@@ -90,17 +90,17 @@ class _DashboardPageState extends State<DashboardPage> {
                 label: 'Clientes',
               ),
               BottomNavigationBarItem(
-                icon: Icon(ThimbleStockIcons.catalogo),
-                label: 'Catalogo',
-              ),
-              BottomNavigationBarItem(
                 icon: Icon(ThimbleStockIcons.proyectos),
                 label: 'Proyectos',
               ),
               BottomNavigationBarItem(
+                icon: Icon(ThimbleStockIcons.catalogo),
+                label: 'Catalogo',
+              ),
+/*               BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
                 label: 'Ajustes',
-              ),
+              ), */
             ],
           ),
         ),

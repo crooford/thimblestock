@@ -510,6 +510,7 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
                           .saveActivity(widget._activity);
                       // Volver a la pantalla anterior
                       nav.pop();
+                      
                     } catch (_) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
