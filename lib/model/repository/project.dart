@@ -17,11 +17,20 @@ class ProjectRepository {
   } */
 
   Future<void> editProject(ProjectEntity project) async {
-    _collection
-        .withConverter(
-            fromFirestore: ProjectEntity.fromFirestore,
-            toFirestore: (value, options) => value.toFirestore())
-        .add(project);
+    if (project.projectId != null) {
+      _collection
+          .withConverter<ProjectEntity>(
+              fromFirestore: ProjectEntity.fromFirestore,
+              toFirestore: (value, options) => value.toFirestore())
+          .doc(project.projectId)
+          .set(project, SetOptions(merge: true));
+    } else {
+      _collection
+          .withConverter<ProjectEntity>(
+              fromFirestore: ProjectEntity.fromFirestore,
+              toFirestore: (value, options) => value.toFirestore())
+          .add(project);
+    }
   }
 
   Future<List<ProjectEntity>> getAllByUserId(String id) async {

@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import '../../model/entity/projects.dart';
 import '../pages/newproject.dart';
 import '../widgets/customAppBar.dart';
+import 'updateproject.dart';
 
 class OneProjectPage extends StatelessWidget {
   ProjectEntity project;
@@ -22,11 +23,12 @@ class OneProjectPage extends StatelessWidget {
         child: const Icon(Icons.edit),
         onPressed: () {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>  NewProject(),
-            ),
-          );
+              context,
+              MaterialPageRoute(
+                builder: (context) => UpdateProjectPage(
+                    project), // añadir logica para enviar datos a formulario
+              ),
+            );
         },
       ),  
     );
