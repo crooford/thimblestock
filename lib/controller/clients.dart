@@ -15,7 +15,9 @@ class ClientController {
 
   Future<void> save(ClientEntity client) async {
     // si el cliente tiene foto
-    if (client.clientAvatar != null) {
+
+    if (client.clientAvatar != null &&
+        !client.clientAvatar!.startsWith("http")) {
       var url = await _storageRepository.uploadFile(
           client.clientAvatar!, "${client.user}/client/avatar");
       // cambio la direccion de la foto por la del storage

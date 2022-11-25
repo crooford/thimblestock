@@ -26,13 +26,13 @@ class ActivityRepository {
       case "deleteClient":
         activity.typeOfActivity = "Borraste al cliente";
         break;
-      case "createProyect":
+      case "createProject":
         activity.typeOfActivity = "Creaste el proyecto";
         break; // The switch statement must be told to exit, or it will execute every case.
-      case "updateProyect":
+      case "updateProject":
         activity.typeOfActivity = "Actualizaste el proyecto";
         break;
-      case "deleteProyect":
+      case "deleteProject":
         activity.typeOfActivity = "Borraste el proyecto";
         break;
       default:

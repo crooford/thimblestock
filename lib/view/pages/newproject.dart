@@ -4,8 +4,10 @@ import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../controller/activity.dart';
 import '../../controller/clients.dart';
 import '../../controller/projects.dart';
+import '../../model/entity/activity.dart';
 import '../../model/entity/clients.dart';
 import '../../model/entity/projects.dart';
 import '../widgets/customAppBar.dart';
@@ -14,12 +16,18 @@ class NewProject extends StatefulWidget {
   final _pref = SharedPreferences.getInstance();
   late final ProjectEntity _project;
   late final ProjectController _controller;
-  
+  late final ActivityEntity _activity;
+  late final ActivityController _activitycontroller;
+  final String action = "createProject";
+
   NewProject({super.key}) {
     _project = ProjectEntity();
     _controller = ProjectController();
+    _activitycontroller = ActivityController();
+    _activity = ActivityEntity();
     _pref.then((pref) {
       _project.user = pref.getString("uid");
+      _activity.user = pref.getString("uid");
     });
   }
 
@@ -28,8 +36,7 @@ class NewProject extends StatefulWidget {
 }
 
 class _NewProjectState extends State<NewProject> {
-  
-  TextEditingController _date = TextEditingController();
+  final TextEditingController _date = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,28 +71,26 @@ class _NewProjectState extends State<NewProject> {
                           height: 40,
                         ),
                         _dateProject((newValue) {
-                                          widget._project.date = newValue!;
-                                        },context),
+                          widget._project.date = newValue!;
+                        }, context),
                         const SizedBox(
                           height: 10,
                         ),
                         _clientName((newValue) {
-                                          widget._project.clientName = newValue!;
-                                        }),
+                          widget._project.clientName = newValue!;
+                        }),
                         _projectName((newValue) {
-                                          widget._project.projectName = newValue!;
-                                        }),
+                          widget._project.projectName = newValue!;
+                        }),
                         _description((newValue) {
-                                          widget._project.details = newValue!;
-                                        }),
-                        
+                          widget._project.details = newValue!;
+                        }),
                       ],
                     ),
                   ),
                 ),
                 ElevatedButton(
-                  child: const Text("Guardar"),
-                    onPressed: () async {
+                  onPressed: () async {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       try {
@@ -95,9 +100,16 @@ class _NewProjectState extends State<NewProject> {
                         await widget._controller.save(widget._project);
                         mess.showSnackBar(
                           const SnackBar(
-                            content: Text("Información del Proyecto registrada"),
+                            content:
+                                Text("Información del Proyecto registrada"),
                           ),
                         );
+
+                        widget._activity.typeOfActivity = widget.action;
+                        widget._activity.detailOfActivity =
+                            widget._project.projectName;
+                        await widget._activitycontroller
+                            .saveActivity(widget._activity);
                         // Volver a la pantalla anterior
                         nav.pop();
                       } catch (e) {
@@ -109,6 +121,7 @@ class _NewProjectState extends State<NewProject> {
                       }
                     }
                   },
+                  child: const Text("Guardar"),
                 ),
               ],
             ),
@@ -117,6 +130,7 @@ class _NewProjectState extends State<NewProject> {
       ),
     );
   }
+
   Widget _clientName(FormFieldSetter<String?> save) {
     return Column(
       children: [
@@ -200,38 +214,27 @@ class _NewProjectState extends State<NewProject> {
     );
   }
 
-  Widget _dateProject(FormFieldSetter<String?> save ,BuildContext context ) {
+  Widget _dateProject(FormFieldSetter<String?> save, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(9.0),
-      child: TextFormField(
-        controller: _date,
-        decoration: const InputDecoration(
-          icon: Icon(Icons.calendar_today_rounded),
-          labelText: "Fecha de entrega",
-
-        ),
-        onTap: () async {
-          DateTime? pickeddate = await showDatePicker(
-            context: context, 
-            initialDate: DateTime.now(), 
-            firstDate: DateTime(2000), 
-            lastDate: DateTime(2101));
-          if (pickeddate != null) {
+        padding: const EdgeInsets.all(9.0),
+        child: TextFormField(
+            controller: _date,
+            decoration: const InputDecoration(
+              icon: Icon(Icons.calendar_today_rounded),
+              labelText: "Fecha de entrega",
+            ),
+            onTap: () async {
+              DateTime? pickeddate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101));
+              if (pickeddate != null) {
                 setState(() {
                   _date.text = DateFormat("dd-MMM-yyyy").format(pickeddate);
                 });
-              } 
-
-            
-
-        },
-        onSaved: save
-      )
-          
-        
-    
-      
-    );
+              }
+            },
+            onSaved: save));
   }
-  
 }

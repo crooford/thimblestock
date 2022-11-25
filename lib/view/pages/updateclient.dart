@@ -503,19 +503,17 @@ class _UpdateClientPageState extends State<UpdateClientPage> {
                         ),
                       );
                       // Almacenar el documento de la actualizacion de cliente en la BD de Activities
-                      widget._activity.user = widget._client.user;
                       widget._activity.typeOfActivity = widget.action;
                       widget._activity.detailOfActivity =
                           widget._client.clientName;
                       await widget._activitycontroller
                           .saveActivity(widget._activity);
                       // Volver a la pantalla anterior
-                      nav.pushReplacement(MaterialPageRoute(
-                          builder: (context) => ClientsPage()));
-                    } catch (e) {
+                      nav.pop();
+                    } catch (_) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text("Error: $e"),
+                          content: Text("$_"),
                         ),
                       );
                     }

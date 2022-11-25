@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thimblestock/controller/activity.dart';
-import 'package:thimblestock/model/entity/activity.dart';
+import '../../controller/activity.dart';
 import '../../controller/clients.dart';
+import '../../model/entity/activity.dart';
 import '../../model/entity/clients.dart';
 import '../widgets/customAppBar.dart';
 import '../widgets/photo_avatar.dart';
@@ -45,8 +45,7 @@ class _NewClientPageState extends State<NewClientPage> {
   }
 
   Widget _formclient(BuildContext context) {
-    // widget._client.clientAvatar ??= 'assets/clientDefault.jpg';
-
+  
     final formKey = GlobalKey<FormState>();
     return Form(
       key: formKey,
@@ -478,7 +477,7 @@ class _NewClientPageState extends State<NewClientPage> {
                         ),
                       );
                       // Almacenar el documento de la creacion de cliente en la BD de Activities
-                      widget._activity.user = widget._client.user;
+                      
                       widget._activity.typeOfActivity = widget.action;
                       widget._activity.detailOfActivity =
                           widget._client.clientName;
