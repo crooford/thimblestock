@@ -116,15 +116,17 @@ class _ClientsPageState extends State<ClientsPage> {
                                 Text("Editar cliente"),
                               ],
                             ),
-                            onTap: () {
+                            onTap: () async {
                               Navigator.pop(context);
-                              Navigator.push(
+                              await Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => UpdateClientPage(_list[
                                       index]), // añadir logica para enviar datos a formulario
                                 ),
                               );
+                              if (!mounted) return;
+                              _listClients();
                             },
                           ),
                         ),
