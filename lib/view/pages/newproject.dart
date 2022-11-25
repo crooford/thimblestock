@@ -32,7 +32,7 @@ class NewProject extends StatefulWidget {
   }
 
   @override
-  State<NewProject> get createState => _NewProjectState();
+  State<NewProject> createState() => _NewProjectState();
 }
 
 class _NewProjectState extends State<NewProject> {
