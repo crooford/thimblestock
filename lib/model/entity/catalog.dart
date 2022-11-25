@@ -1,10 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CatalogEntity {
+  late String? catalogId;
   late String? user;
   late String? addclass;
 
-  CatalogEntity({this.user, this.addclass});
+  CatalogEntity({this.user, this.addclass, this.catalogId});
 
   factory CatalogEntity.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -12,8 +13,9 @@ class CatalogEntity {
     var data = snapshot.data();
 
      return CatalogEntity(
-        user: data?["user"],
-        addclass: data?["addclass"]);
+      catalogId: snapshot.id,
+      user: data?["user"],
+      addclass: data?["addclass"],);
   }
 
   Map<String, dynamic> toFirestore() {

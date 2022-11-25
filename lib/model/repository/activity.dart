@@ -35,6 +35,21 @@ class ActivityRepository {
       case "deleteProject":
         activity.typeOfActivity = "Borraste el proyecto";
         break;
+      case "createCatalog":
+        activity.typeOfActivity = "Creaste el catalogo";
+        break; // The switch statement must be told to exit, or it will execute every case.
+      case "updateCatalog":
+        activity.typeOfActivity = "Actualizaste el catalogo";
+        break;
+      case "deleteCatalog":
+        activity.typeOfActivity = "Borraste el catalogo";
+        break;
+      case "addImage":
+        activity.typeOfActivity = "Actualizaste una imagen en";
+        break;
+      case "deleteImage":
+        activity.typeOfActivity = "Borraste una imagen en";
+        break;
       default:
         activity.typeOfActivity = "Actividad desconocida";
     }
