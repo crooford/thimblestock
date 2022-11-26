@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1073978072982",
+    "project_id": "thimblestock1",
+    "storage_bucket": "thimblestock1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1073978072982:android:81a398fd7c344fa599c7b7",
+        "android_client_info": {
+          "package_name": "com.example.thimblestock"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1073978072982-ja6js6f9771j0ahrfnr1ata5g3dajeri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtvkyIhNJSHUrddtWc0JHwU2xY_K-baXY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1073978072982-ja6js6f9771j0ahrfnr1ata5g3dajeri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1073978072982-d2k6dugrms2f6jaapfk9eojm0crnl24m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.thimblestock"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -50,8 +50,8 @@ class _DashboardPageState extends State<DashboardPage> {
   List<Widget> _pages() => [
         const HomePage(),
         ClientsPage(),
-        const ProjectsPage(),
-        const CatalogPage()
+        ProjectsPage(),
+        CatalogPage()
         //const SettingsPage()
       ];
 
